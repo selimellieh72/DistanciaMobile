@@ -1,15 +1,25 @@
 import 'package:edulb/screens/homework_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 import 'package:edulb/screens/auth_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+    );
     return MaterialApp(
       title: 'EduLB',
       theme: ThemeData(
@@ -25,7 +35,14 @@ class MyApp extends StatelessWidget {
               ),
             ),
       ),
-      home: AuthScreen(),
+      home: StreamBuilder<User>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return HomeworkScreen();
+            }
+            return AuthScreen();
+          }),
       routes: {HomeworkScreen.routeName: (ctx) => HomeworkScreen()},
     );
   }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "482868322114",
+    "firebase_url": "https://edulb-34185.firebaseio.com",
+    "project_id": "edulb-34185",
+    "storage_bucket": "edulb-34185.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482868322114:android:6b2812dc8a5a26c741f2db",
+        "android_client_info": {
+          "package_name": "com.example.edulb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482868322114-9r372mdregm4h80fbdmgc08kbiafe20g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFGjauPSeyWzP3fZ1jjQcDHumPqKYXo4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482868322114-9r372mdregm4h80fbdmgc08kbiafe20g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

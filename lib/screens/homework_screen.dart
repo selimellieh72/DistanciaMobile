@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:edulb/widgets/drawer.dart';
+
 class HomeworkScreen extends StatelessWidget {
   static const routeName = '/homework-screen';
 
@@ -11,6 +13,7 @@ class HomeworkScreen extends StatelessWidget {
           'Homeworks',
         ),
       ),
+      drawer: AppDrawer(),
       body: Column(
         children: [
           SizedBox(
