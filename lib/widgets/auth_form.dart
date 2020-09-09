@@ -1,3 +1,4 @@
+import 'package:edulb/screens/homework_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:edulb/helpers/word_filtering_helper.dart';
@@ -10,10 +11,12 @@ class AuthForm extends StatefulWidget {
 class _AuthFormState extends State<AuthForm> {
   var _isLogin = true;
   final _formKey = GlobalKey<FormState>();
+  final _passwordController = TextEditingController();
 
-  Widget _buildCustomTextField(String text, Function validation) {
+  Widget _buildCustomTextField(String text, Function validation,
+      [TextEditingController controller]) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 30),
+      padding: EdgeInsets.only(bottom: 10),
       child: Padding(
         padding: EdgeInsets.only(right: 15, left: 15),
         child: TextFormField(
@@ -22,7 +25,7 @@ class _AuthFormState extends State<AuthForm> {
           keyboardType: TextInputType.emailAddress,
           textCapitalization: TextCapitalization.none,
           decoration: InputDecoration(
-            // // contentPadding: EdgeInsets.only(bottom: -1, top: 2),
+            // contentPadding: EdgeInsets.only(bottom: -1, top: 2),
             errorStyle: TextStyle(
               fontSize: 12,
               color: Colors.red[900],
@@ -39,6 +42,7 @@ class _AuthFormState extends State<AuthForm> {
     if (!_formKey.currentState.validate()) {
       return;
     }
+    Navigator.of(context).pushReplacementNamed(HomeworkScreen.routeName);
   }
 
   @override
@@ -49,8 +53,9 @@ class _AuthFormState extends State<AuthForm> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            if (!_isLogin)
-              _buildCustomTextField('Email address', (String value) {
+            _buildCustomTextField(
+              'Email address',
+              (String value) {
                 if (value.isEmpty) {
                   return 'Please enter an email address.';
                 }
@@ -58,7 +63,8 @@ class _AuthFormState extends State<AuthForm> {
                   return 'Please enter a valid email address.';
                 }
                 return null;
-              }),
+              },
+            ),
             if (!_isLogin)
               Row(
                 children: [
@@ -107,7 +113,10 @@ class _AuthFormState extends State<AuthForm> {
               }
               return null;
             }),
-            _buildCustomTextField('Confirm password', null),
+            if (!_isLogin)
+              _buildCustomTextField('Confirm password', (String value) {
+                return;
+              }),
             RaisedButton(
               onPressed: _saveForm,
               child: Text(
@@ -126,7 +135,7 @@ class _AuthFormState extends State<AuthForm> {
                     : 'Already have an account? Log in!',
                 style: TextStyle(
                   decoration: TextDecoration.underline,
-                  color: Theme.of(context).accentColor,
+                  color: Color.fromRGBO(0, 113, 227, 1),
                 ),
               ),
             ),

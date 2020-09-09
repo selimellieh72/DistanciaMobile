@@ -1,3 +1,4 @@
+import 'package:edulb/screens/homework_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:edulb/screens/auth_screen.dart';
@@ -12,8 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'EduLB',
       theme: ThemeData(
+        // backgroundColor: Color.fromRGBO(43, 43, 43, 1),
         primaryColor: Color.fromRGBO(43, 43, 43, 1),
-        accentColor: Colors.blue,
+        accentColor: Color.fromRGBO(112, 112, 112, 1),
         fontFamily: 'Poppins',
         buttonTheme: ThemeData.light().buttonTheme.copyWith(
               buttonColor: Colors.blue[800],
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
             ),
       ),
       home: AuthScreen(),
+      routes: {HomeworkScreen.routeName: (ctx) => HomeworkScreen()},
     );
   }
 }
