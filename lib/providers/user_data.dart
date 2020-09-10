@@ -8,6 +8,8 @@ class UserData with ChangeNotifier {
 
   String _email;
 
+  bool _dataSet = false;
+
   String get firstName {
     return _firstName;
   }
@@ -18,6 +20,17 @@ class UserData with ChangeNotifier {
 
   String get email {
     return _email;
+  }
+
+  bool get dataSet {
+    return _dataSet;
+  }
+
+  void setDataSet(bool value) {
+    _dataSet = value;
+    print(
+        "i am getting executed hello there dont touch me their this is my nono square");
+    notifyListeners();
   }
 
   Future<void> fetchUserData(String id) async {

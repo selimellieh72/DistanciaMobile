@@ -29,7 +29,7 @@ class _AuthFormState extends State<AuthForm> {
   File _image;
 
   Widget _buildCustomTextField(
-      String text, Function validation, Function onSaved,
+      String text, Function validation, Function onSave,
       [TextEditingController controller]) {
     return Padding(
       padding: EdgeInsets.only(bottom: 10),
@@ -50,7 +50,7 @@ class _AuthFormState extends State<AuthForm> {
             labelText: text,
           ),
           validator: validation,
-          onSaved: onSaved,
+          onSaved: onSave,
         ),
       ),
     );

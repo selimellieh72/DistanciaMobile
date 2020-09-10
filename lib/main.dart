@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
               if (snapshot.hasData) {
                 return HomeworkScreen();
               }
-              return AuthScreen();
+              return AuthScreen(context);
             }),
         routes: {
           HomeworkScreen.routeName: (ctx) => HomeworkScreen(),
