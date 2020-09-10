@@ -1,5 +1,6 @@
+import 'package:edulb/providers/user_data.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -13,35 +14,27 @@ class AppDrawer extends StatelessWidget {
             padding: EdgeInsets.all(10),
             height: 150,
             color: Theme.of(context).primaryColor,
-            child: Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  minRadius: 45.0,
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: FittedBox(
-                    child: FutureBuilder<DocumentSnapshot>(
-                      future: FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(FirebaseAuth.instance.currentUser.uid)
-                          .get(),
-                      builder: (context, snapshot) => Text(
-                        snapshot.connectionState == ConnectionState.waiting
-                            ? 'Loading...'
-                            : '${snapshot.data.data()['firstName']} ${snapshot.data.data()['lastName']}',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+            child: Row(children: [
+              CircleAvatar(
+                backgroundColor: Colors.white,
+                minRadius: 45.0,
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: FittedBox(
+                  child: Consumer<UserData>(
+                    builder: (_, data, __) => Text(
+                      '${data.firstName} ${data.lastName}',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ]),
           ),
           Spacer(),
           Align(

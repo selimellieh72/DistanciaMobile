@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:edulb/helpers/word_filtering_helper.dart';
+import 'package:edulb/widgets/images/image_picker.dart';
 
 class AuthForm extends StatefulWidget {
   final Function submitData;
@@ -22,6 +25,8 @@ class _AuthFormState extends State<AuthForm> {
   var _password = '';
   var _firstName = '';
   var _lastName = '';
+  var _isLoading = false;
+  File _image;
 
   Widget _buildCustomTextField(
       String text, Function validation, Function onSaved,
@@ -51,8 +56,25 @@ class _AuthFormState extends State<AuthForm> {
     );
   }
 
+  void _setLoading(bool value) {
+    setState(() {
+      _isLoading = value;
+    });
+  }
+
   void _saveForm() {
     if (!_formKey.currentState.validate()) {
+      return;
+    }
+    if (_image == null && !_isLogin) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Please choose an image for your profile picture.',
+          ),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
       return;
     }
     _formKey.currentState.save();
@@ -62,19 +84,25 @@ class _AuthFormState extends State<AuthForm> {
     print(_password);
     print(_isTeacher);
     widget.submitData(
-      email: _email,
-      password: _password,
-      firstName: _firstName,
-      lastName: _lastName,
-      isLogin: _isLogin,
-      isTeacher: _isTeacher,
-    );
+        email: _email,
+        password: _password,
+        firstName: _firstName,
+        lastName: _lastName,
+        image: _image,
+        isLogin: _isLogin,
+        isTeacher: _isTeacher,
+        ctx: context,
+        setLoading: _setLoading);
+  }
+
+  void setImage(File image) {
+    _image = image;
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      height: _isLogin ? 294 : 500,
+      height: _isLogin ? 300 : 580,
       duration: Duration(milliseconds: 500),
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -190,12 +218,17 @@ class _AuthFormState extends State<AuthForm> {
                         ],
                       ),
                     ),
+                  if (!_isLogin) ImagePicker(setImage),
                   RaisedButton(
                     onPressed: _saveForm,
-                    child: Text(
-                      _isLogin ? 'Log In' : 'Sign Up',
-                      style: TextStyle(fontSize: 15),
-                    ),
+                    child: _isLoading
+                        ? CircularProgressIndicator(
+                            backgroundColor: Theme.of(context).primaryColor,
+                          )
+                        : Text(
+                            _isLogin ? 'Log In' : 'Sign Up',
+                            style: TextStyle(fontSize: 15),
+                          ),
                   ),
                   SizedBox(
                     height: 10,

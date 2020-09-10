@@ -1,4 +1,6 @@
-import 'package:edulb/widgets/auth_form.dart';
+import 'dart:io';
+
+import 'package:edulb/widgets/auth/auth_form.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,27 +17,46 @@ class _AuthScreenState extends State<AuthScreen> {
     @required String password,
     @required String firstName,
     @required String lastName,
+    @required File image,
     @required bool isLogin,
     @required bool isTeacher,
+    @required BuildContext ctx,
+    @required void Function(bool value) setLoading,
   }) async {
-    if (isLogin) {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-    } else {
-      final _userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      _userCredential.user.uid;
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(_userCredential.user.uid)
-          .set(
-        {
-          "firstName": firstName,
-          "lastName": lastName,
-          "email": email,
-          "isTeacher": isTeacher
-        },
+    setLoading(true);
+    try {
+      if (isLogin) {
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
+      } else {
+        final _userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+        _userCredential.user.uid;
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(_userCredential.user.uid)
+            .set(
+          {
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "isTeacher": isTeacher
+          },
+        );
+      }
+    } on FirebaseAuthException catch (error) {
+      Scaffold.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text(
+            error.message,
+          ),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
       );
+    } catch (error) {
+      print(error);
+    } finally {
+      setLoading(false);
     }
   }
 
