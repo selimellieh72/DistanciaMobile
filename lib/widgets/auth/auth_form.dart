@@ -29,13 +29,14 @@ class _AuthFormState extends State<AuthForm> {
   File _image;
 
   Widget _buildCustomTextField(
-      String text, Function validation, Function onSave,
+      String text, Function validation, Function onSave, bool isObscure,
       [TextEditingController controller]) {
     return Padding(
       padding: EdgeInsets.only(bottom: 10),
       child: Padding(
         padding: EdgeInsets.only(right: 15, left: 15),
         child: TextFormField(
+          obscureText: isObscure,
           controller: controller == null ? null : controller,
           autocorrect: false,
           enableSuggestions: false,
@@ -113,51 +114,42 @@ class _AuthFormState extends State<AuthForm> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _buildCustomTextField(
-                    'Email address',
-                    (String value) {
-                      if (value.isEmpty) {
-                        return 'Please enter an email address.';
-                      }
-                      if (!value.contains('@')) {
-                        return 'Please enter a valid email address.';
-                      }
-                      return null;
-                    },
-                    (String email) => _email = email,
-                  ),
+                  _buildCustomTextField('Email address', (String value) {
+                    if (value.isEmpty) {
+                      return 'Please enter an email address.';
+                    }
+                    if (!value.contains('@')) {
+                      return 'Please enter a valid email address.';
+                    }
+                    return null;
+                  }, (String email) => _email = email, false),
                   if (!_isLogin)
                     Row(
                       children: [
                         Expanded(
-                          child: _buildCustomTextField(
-                            'First name',
-                            (String value) {
-                              if (value.isEmpty) {
-                                return 'Please enter a First name.';
-                              }
-                              if (WordHelper.wordContainsSymbols(value)) {
-                                return 'Please enter a valid first name (Symbols are not allowed).';
-                              }
-                              return null;
-                            },
-                            (String firstName) => _firstName = firstName,
-                          ),
+                          child: _buildCustomTextField('First name',
+                              (String value) {
+                            if (value.isEmpty) {
+                              return 'Please enter a First name.';
+                            }
+                            if (WordHelper.wordContainsSymbols(value)) {
+                              return 'Please enter a valid first name (Symbols are not allowed).';
+                            }
+                            return null;
+                          }, (String firstName) => _firstName = firstName,
+                              false),
                         ),
                         Expanded(
-                          child: _buildCustomTextField(
-                            'Last name',
-                            (String value) {
-                              if (value.isEmpty) {
-                                return 'Please enter a Last name.';
-                              }
-                              if (WordHelper.wordContainsSymbols(value)) {
-                                return 'Please enter a valid last name (Symbols are not allowed).';
-                              }
-                              return null;
-                            },
-                            (String lastName) => _lastName = lastName,
-                          ),
+                          child: _buildCustomTextField('Last name',
+                              (String value) {
+                            if (value.isEmpty) {
+                              return 'Please enter a Last name.';
+                            }
+                            if (WordHelper.wordContainsSymbols(value)) {
+                              return 'Please enter a valid last name (Symbols are not allowed).';
+                            }
+                            return null;
+                          }, (String lastName) => _lastName = lastName, false),
                         ),
                       ],
                     ),
@@ -179,6 +171,7 @@ class _AuthFormState extends State<AuthForm> {
                       return null;
                     },
                     (String password) => _password = password,
+                    true,
                     _passwordController,
                   ),
                   if (!_isLogin)
@@ -187,7 +180,7 @@ class _AuthFormState extends State<AuthForm> {
                         return "Your passwords doesn't match";
                       }
                       return null;
-                    }, null),
+                    }, null, true),
                   if (!_isLogin)
                     Padding(
                       padding: const EdgeInsets.only(

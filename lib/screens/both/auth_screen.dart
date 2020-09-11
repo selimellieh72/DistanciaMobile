@@ -2,18 +2,12 @@ import 'dart:io';
 
 import 'package:edulb/widgets/auth/auth_form.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import '../providers/user_data.dart';
 
 class AuthScreen extends StatefulWidget {
-  final BuildContext c;
-
-  AuthScreen(this.c);
-
   @override
   _AuthScreenState createState() => _AuthScreenState();
 }
@@ -35,7 +29,6 @@ class _AuthScreenState extends State<AuthScreen> {
       if (isLogin) {
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
-        Provider.of<UserData>(widget.c, listen: false).setDataSet(true);
       } else {
         final _userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
@@ -58,12 +51,9 @@ class _AuthScreenState extends State<AuthScreen> {
             'imageURL': _imageURL,
           },
         );
-        Provider.of<UserData>(
-          widget.c,
-          listen: false,
-        ).setDataSet(true);
       }
     } on FirebaseAuthException catch (error) {
+      setLoading(false);
       Scaffold.of(ctx).showSnackBar(
         SnackBar(
           content: Text(
@@ -73,6 +63,7 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       );
     } catch (error) {
+      setLoading(false);
       print(error);
     }
   }

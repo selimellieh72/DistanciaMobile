@@ -1,4 +1,4 @@
-import 'package:edulb/providers/user_data.dart';
+import 'package:edulb/models/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,9 +15,13 @@ class AppDrawer extends StatelessWidget {
             height: 150,
             color: Theme.of(context).primaryColor,
             child: Row(children: [
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                minRadius: 45.0,
+              Consumer<UserData>(
+                builder: (_, data, __) => CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 45.0,
+                  backgroundImage:
+                      data.imageUrl == '' ? null : NetworkImage(data.imageUrl),
+                ),
               ),
               SizedBox(
                 width: 20,
