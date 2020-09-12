@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/widgets/auth/auth_form.dart';
 import 'package:flutter/material.dart';
 
@@ -64,7 +65,7 @@ class _AuthScreenState extends State<AuthScreen> {
       );
     } catch (error) {
       setLoading(false);
-      print(error);
+      CustomBuilders.showErrorSnackBar(context);
     }
   }
 

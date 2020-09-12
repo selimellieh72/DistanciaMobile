@@ -1,22 +1,21 @@
-import 'package:edulb/widgets/homeworks/add_homework_form.dart';
+import 'package:edulb/widgets/grades/add_grade_form.dart';
 import 'package:flutter/material.dart';
 
-class AddHomework extends StatelessWidget {
+class AddGrade extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 15,
-        ),
         Chip(
           label: Text(
-            'Add homework',
+            'Add grade',
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
-        Divider(),
-        AddHomeworkForm(),
+        SizedBox(
+          height: 15,
+        ),
+        AddGradeForm(),
       ],
     );
   }

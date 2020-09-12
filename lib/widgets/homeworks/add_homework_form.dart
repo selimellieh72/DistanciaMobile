@@ -1,3 +1,4 @@
+import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/helpers/word_filtering_helper.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +32,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
       );
       Navigator.of(context).pop();
     } catch (error) {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('An error occured. Please try again later.'),
-          backgroundColor: Theme.of(context).errorColor,
-        ),
-      );
+      CustomBuilders.showErrorSnackBar(context);
       setState(() {
         _isLoading = false;
       });
@@ -54,7 +50,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
           children: [
             Text(
               'Title',
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.subtitle2,
             ),
             TextFormField(
               decoration: InputDecoration(hintText: 'Physics'),
@@ -74,7 +70,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
             ),
             Text(
               'Instructions',
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.subtitle2,
             ),
             TextFormField(
               maxLines: 4,
