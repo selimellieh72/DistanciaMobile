@@ -27,6 +27,7 @@ class GradesList extends StatelessWidget {
               ),
               itemCount: _gradeItems.length,
               itemBuilder: (_, i) => g.GradeItem(
+                gradeId: _gradeItems[i].id,
                 gradeName: _gradeItems[i].gradeName,
                 discipline: _gradeItems[i].discipline,
                 studentsNumber: 1,

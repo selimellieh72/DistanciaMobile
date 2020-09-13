@@ -19,9 +19,12 @@ class DBHELPER {
   static Future<void> addHomework({
     @required String title,
     @required String instructions,
+    @required String gradeId,
   }) async {
     try {
-      await FirebaseFirestore.instance.collection('homeworks').add({
+      await FirebaseFirestore.instance
+          .collection('grades/$gradeId/homeworks')
+          .add({
         'title': title,
         'instructions': instructions,
         'teacherId': FirebaseAuth.instance.currentUser.uid,

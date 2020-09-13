@@ -27,6 +27,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
     });
     try {
       await DBHELPER.addHomework(
+        gradeId: null,
         title: _title,
         instructions: _instructions,
       );
