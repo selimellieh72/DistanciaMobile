@@ -5,10 +5,13 @@ import 'package:edulb/helpers/db_helper.dart';
 import 'homework_item.dart';
 
 class Homeworks extends StatelessWidget {
+  final String id;
+
+  Homeworks(this.id);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: DBHELPER.fetchHomeworks(),
+      stream: DBHELPER.fetchHomeworks(id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(

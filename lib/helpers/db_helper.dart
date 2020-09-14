@@ -35,9 +35,9 @@ class DBHELPER {
     }
   }
 
-  static Stream<QuerySnapshot> fetchHomeworks() {
+  static Stream<QuerySnapshot> fetchHomeworks(String gradeId) {
     return FirebaseFirestore.instance
-        .collection('homeworks')
+        .collection('grades/$gradeId/homeworks')
         .orderBy('createdAt')
         .snapshots();
   }

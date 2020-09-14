@@ -1,4 +1,4 @@
-import 'package:edulb/screens/students/grades_screen.dart';
+import 'package:edulb/screens/both/grades_screen.dart';
 import 'package:edulb/widgets/auth/logout_button.dart';
 import 'package:edulb/widgets/others/profile.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +15,10 @@ class StudentAppDrawer extends StatelessWidget {
             height: 10,
           ),
           FlatButton.icon(
-            onPressed: () =>
-                Navigator.of(context).pushNamed(GradesScreenStudent.routeName),
+            onPressed: () => Navigator.of(context)
+                .pushReplacementNamed(GradesScreen.routeName),
             icon: Icon(Icons.people),
-            label: Text('Grades'),
+            label: Text('Materials'),
           ),
           Spacer(),
           Align(

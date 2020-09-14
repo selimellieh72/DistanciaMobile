@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddHomeworkForm extends StatefulWidget {
+  final String id;
+
+  AddHomeworkForm(this.id);
+
   @override
   _AddHomeworkFormState createState() => _AddHomeworkFormState();
 }
@@ -28,7 +32,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
     });
     try {
       await DBHELPER.addHomework(
-        gradeId: Provider.of<String>(context, listen: false),
+        gradeId: widget.id,
         title: _title,
         instructions: _instructions,
       );

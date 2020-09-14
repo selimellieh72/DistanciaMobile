@@ -1,14 +1,17 @@
-import 'package:edulb/screens/teachers/homework_screen.dart';
+import 'package:edulb/screens/both/homework_screen.dart';
 import 'package:flutter/material.dart';
 
 class GradeItem extends StatelessWidget {
   final String gradeName;
+
+  final String id;
 
   final String discipline;
 
   final int studentsNumber;
 
   GradeItem({
+    @required this.id,
     @required this.gradeName,
     @required this.discipline,
     @required this.studentsNumber,
@@ -18,7 +21,8 @@ class GradeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(HomeworkScreenTeacher.routeName);
+        Navigator.of(context)
+            .pushNamed(HomeworkScreen.routeName, arguments: id);
       },
       child: GridTile(
         child: Container(

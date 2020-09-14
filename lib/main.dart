@@ -1,6 +1,5 @@
-import 'package:edulb/screens/students/grades_screen.dart';
-import 'package:edulb/screens/teachers/grades_screen.dart';
-import 'package:edulb/screens/teachers/homework_screen.dart';
+import 'package:edulb/screens/both/grades_screen.dart';
+import 'package:edulb/screens/both/homework_screen.dart';
 import 'package:edulb/screens/teachers/requests.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,7 +10,6 @@ import 'package:edulb/screens/both/auth_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/models/user_data.dart';
-import 'package:edulb/screens/students/homework_screen.dart';
 import 'package:edulb/screens/both/splash_screen.dart';
 
 void main() async {
@@ -33,6 +31,9 @@ class MyApp extends StatelessWidget {
         StreamProvider<UserData>(
           create: (_) =>
               DBHELPER.streamUser(FirebaseAuth.instance.currentUser.uid),
+        ),
+        StreamProvider<User>(
+          create: (_) => FirebaseAuth.instance.authStateChanges(),
         )
       ],
       child: MaterialApp(
@@ -65,30 +66,27 @@ class MyApp extends StatelessWidget {
                 ),
               ),
         ),
-        home: StreamBuilder<User>(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                print('here');
-                return Builder(builder: (ctx) {
-                  final userData = Provider.of<UserData>(ctx);
-                  if (userData == null || userData.isTeacher == null) {
-                    return SplashScreen();
-                  }
-                  if (userData.isTeacher) {
-                    return GradesScreenTeacher();
-                  }
-                  return HomeworkScreenStudent();
-                });
+        home: Builder(builder: (ctx) {
+          final User user = Provider.of<User>(context);
+          if (user != null) {
+            print('here');
+            return Builder(builder: (ctx) {
+              final userData = Provider.of<UserData>(ctx);
+              if (userData == null || userData.isTeacher == null) {
+                return SplashScreen();
               }
-              print('or here');
-              return AuthScreen();
-            }),
+              if (userData.isTeacher) {
+                return GradesScreen();
+              }
+              return GradesScreen();
+            });
+          }
+          print('or here');
+          return AuthScreen();
+        }),
         routes: {
-          GradesScreenStudent.routeName: (_) => GradesScreenStudent(),
-          GradesScreenTeacher.routeName: (_) => GradesScreenTeacher(),
-          HomeworkScreenStudent.routeName: (_) => HomeworkScreenStudent(),
-          HomeworkScreenTeacher.routeName: (_) => HomeworkScreenTeacher(),
+          GradesScreen.routeName: (_) => GradesScreen(),
+          HomeworkScreen.routeName: (_) => HomeworkScreen(),
           RequestsScreen.routeName: (_) => RequestsScreen(),
         },
       ),

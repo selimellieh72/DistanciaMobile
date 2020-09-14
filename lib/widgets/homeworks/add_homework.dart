@@ -2,6 +2,9 @@ import 'package:edulb/widgets/homeworks/add_homework_form.dart';
 import 'package:flutter/material.dart';
 
 class AddHomework extends StatelessWidget {
+  final String id;
+
+  AddHomework(this.id);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -16,7 +19,7 @@ class AddHomework extends StatelessWidget {
           ),
         ),
         Divider(),
-        AddHomeworkForm(),
+        AddHomeworkForm(id),
       ],
     );
   }

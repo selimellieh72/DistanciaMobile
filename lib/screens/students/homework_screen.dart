@@ -15,7 +15,7 @@ class HomeworkScreenStudent extends StatelessWidget {
         ),
       ),
       drawer: StudentAppDrawer(),
-      body: Homeworks(),
+      body: Homeworks(null),
     );
   }
 }

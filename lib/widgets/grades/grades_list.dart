@@ -27,13 +27,11 @@ class GradesList extends StatelessWidget {
               crossAxisSpacing: 20,
             ),
             itemCount: _gradeItems.length,
-            itemBuilder: (_, i) => Provider.value(
-              value: _gradeItems[i].id,
-              builder: (_, __) => g.GradeItem(
-                gradeName: _gradeItems[i].gradeName,
-                discipline: _gradeItems[i].discipline,
-                studentsNumber: 1,
-              ),
+            itemBuilder: (_, i) => g.GradeItem(
+              id: _gradeItems[i].id,
+              gradeName: _gradeItems[i].gradeName,
+              discipline: _gradeItems[i].discipline,
+              studentsNumber: 1,
             ),
           ),
         );
