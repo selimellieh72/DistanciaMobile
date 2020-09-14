@@ -2,7 +2,6 @@ import 'package:edulb/screens/teachers/homework_screen.dart';
 import 'package:flutter/material.dart';
 
 class GradeItem extends StatelessWidget {
-  final String gradeId;
   final String gradeName;
 
   final String discipline;
@@ -13,7 +12,6 @@ class GradeItem extends StatelessWidget {
     @required this.gradeName,
     @required this.discipline,
     @required this.studentsNumber,
-    @required this.gradeId,
   });
 
   @override

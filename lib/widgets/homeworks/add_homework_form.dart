@@ -2,6 +2,7 @@ import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/helpers/word_filtering_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddHomeworkForm extends StatefulWidget {
   @override
@@ -27,13 +28,14 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
     });
     try {
       await DBHELPER.addHomework(
-        gradeId: null,
+        gradeId: Provider.of<String>(context, listen: false),
         title: _title,
         instructions: _instructions,
       );
       Navigator.of(context).pop();
     } catch (error) {
-      CustomBuilders.showErrorSnackBar(context);
+      // CustomBuilders.showErrorSnackBar(context);
+      print(error);
       setState(() {
         _isLoading = false;
       });
