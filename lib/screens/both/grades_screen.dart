@@ -16,6 +16,7 @@ class GradesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserData userData = Provider.of<UserData>(context);
+    print(userData.firstName);
     return Scaffold(
       appBar: AppBar(
         title: Text(userData.isTeacher ? 'Grades' : 'Materials'),

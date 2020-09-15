@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'package:edulb/helpers/word_filtering_helper.dart';
+import 'package:edulb/helpers/auth_validation.dart';
 import 'package:edulb/widgets/images/image_picker.dart';
 
 class AuthForm extends StatefulWidget {
@@ -114,73 +114,46 @@ class _AuthFormState extends State<AuthForm> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _buildCustomTextField('Email address', (String value) {
-                    if (value.isEmpty) {
-                      return 'Please enter an email address.';
-                    }
-                    if (!value.contains('@')) {
-                      return 'Please enter a valid email address.';
-                    }
-                    return null;
-                  }, (String email) => _email = email, false),
+                  _buildCustomTextField(
+                      'Email address',
+                      (email) => AuthValidation.validateEmail(email),
+                      (String email) => _email = email,
+                      false),
                   if (!_isLogin)
                     Row(
                       children: [
                         Expanded(
-                          child: _buildCustomTextField('First name',
-                              (String value) {
-                            if (value.isEmpty) {
-                              return 'Please enter a First name.';
-                            }
-                            if (WordHelper.wordContainsSymbols(value)) {
-                              return 'Please enter a valid first name (Symbols are not allowed).';
-                            }
-                            return null;
-                          }, (String firstName) => _firstName = firstName,
+                          child: _buildCustomTextField(
+                              'First name',
+                              (name) => AuthValidation.validateName(name, true),
+                              (String firstName) => _firstName = firstName,
                               false),
                         ),
                         Expanded(
-                          child: _buildCustomTextField('Last name',
-                              (String value) {
-                            if (value.isEmpty) {
-                              return 'Please enter a Last name.';
-                            }
-                            if (WordHelper.wordContainsSymbols(value)) {
-                              return 'Please enter a valid last name (Symbols are not allowed).';
-                            }
-                            return null;
-                          }, (String lastName) => _lastName = lastName, false),
+                          child: _buildCustomTextField(
+                              'Last name',
+                              (name) =>
+                                  AuthValidation.validateName(name, false),
+                              (String lastName) => _lastName = lastName,
+                              false),
                         ),
                       ],
                     ),
                   _buildCustomTextField(
                     'Password',
-                    (String value) {
-                      if (value.isEmpty) {
-                        return 'Please enter a password.';
-                      }
-                      if (!WordHelper.hasUppercase(value)) {
-                        return 'Your password must atleast have one uppercase.';
-                      }
-                      if (!WordHelper.wordContainsSymbols(value)) {
-                        return 'Your password must have at least one symbol.';
-                      }
-                      if (value.length <= 6) {
-                        return 'Your password must be atleast 7 characters long.';
-                      }
-                      return null;
-                    },
+                    (password) => AuthValidation.validatePassword(password),
                     (String password) => _password = password,
                     true,
                     _passwordController,
                   ),
                   if (!_isLogin)
-                    _buildCustomTextField('Confirm password', (String value) {
-                      if (_passwordController.text != value) {
-                        return "Your passwords doesn't match";
-                      }
-                      return null;
-                    }, null, true),
+                    _buildCustomTextField(
+                        'Confirm password',
+                        (secondPassword) =>
+                            AuthValidation.validateConfirmPassword(
+                                secondPassword, _passwordController.text),
+                        null,
+                        true),
                   if (!_isLogin)
                     Padding(
                       padding: const EdgeInsets.only(

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:edulb/models/grade.dart';
 import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/widgets/grades/grade_item.dart' as g;
-import 'package:provider/provider.dart';
 
 class GradesList extends StatelessWidget {
   @override
