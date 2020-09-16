@@ -1,3 +1,4 @@
+import 'package:edulb/screens/both/tab_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,7 +10,6 @@ import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/models/user_data.dart';
 import 'package:edulb/screens/both/splash_screen.dart';
 import 'package:edulb/screens/both/grades_screen.dart';
-import 'package:edulb/screens/both/homework_screen.dart';
 import 'package:edulb/screens/teachers/requests.dart';
 
 void main() async {
@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
             ),
             routes: {
               GradesScreen.routeName: (_) => GradesScreen(),
-              HomeworkScreen.routeName: (_) => HomeworkScreen(),
+              TabsScreen.routeName: (_) => TabsScreen(),
               RequestsScreen.routeName: (_) => RequestsScreen(),
             },
             home: _choosehomeScreen(snapshot, ctx),

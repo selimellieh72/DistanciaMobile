@@ -1,4 +1,4 @@
-import 'package:edulb/screens/both/homework_screen.dart';
+import 'package:edulb/screens/both/tab_screen.dart';
 import 'package:flutter/material.dart';
 
 class GradeItem extends StatelessWidget {
@@ -21,8 +21,7 @@ class GradeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(HomeworkScreen.routeName, arguments: id);
+        Navigator.of(context).pushNamed(TabsScreen.routeName, arguments: id);
       },
       child: GridTile(
         child: Container(
@@ -50,7 +49,7 @@ class GradeItem extends StatelessWidget {
               bottomLeft: Radius.circular(15),
               bottomRight: Radius.circular(15),
             ),
-            color: Color.fromRGBO(112, 112, 112, 1),
+            color: Color.fromRGBO(210, 210, 210, 1),
           ),
           padding: const EdgeInsets.all(10.0),
           child: Row(

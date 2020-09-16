@@ -10,6 +10,14 @@ class HomeworkItem extends StatelessWidget {
   final String title;
   final String instructions;
   final DateTime date;
+
+  String _formatInstructions(String instructions) {
+    if (instructions.length >= 23) {
+      return instructions.substring(0, 20) + '...';
+    }
+    return instructions;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,6 +32,7 @@ class HomeworkItem extends StatelessWidget {
         child: Stack(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                   flex: 2,
@@ -52,7 +61,7 @@ class HomeworkItem extends StatelessWidget {
                     padding: EdgeInsets.all(3),
                     alignment: Alignment.center,
                     child: Text(
-                      instructions,
+                      _formatInstructions(instructions),
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
@@ -69,6 +78,7 @@ class HomeworkItem extends StatelessWidget {
                       fontSize: 14,
                       color: Colors.white,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 )
               ],

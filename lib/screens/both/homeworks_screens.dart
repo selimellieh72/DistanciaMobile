@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:edulb/helpers/db_helper.dart';
-import 'homework_item.dart';
+import '../../widgets/homeworks/homework_item.dart';
 
-class Homeworks extends StatelessWidget {
+class HomeworksScreen extends StatelessWidget {
   final String id;
 
-  Homeworks(this.id);
+  HomeworksScreen(this.id);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
