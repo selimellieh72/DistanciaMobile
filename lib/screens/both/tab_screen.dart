@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:edulb/screens/students/exams_screen.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/widgets/homeworks/add_homework.dart';
-import 'package:edulb/widgets/others/student_drawer.dart';
-import 'package:edulb/widgets/others/teacher_drawer.dart';
 import 'package:provider/provider.dart';
 
 class TabsScreen extends StatefulWidget {

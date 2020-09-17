@@ -20,8 +20,8 @@ class GradesList extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 3 / 2,
+              crossAxisCount: 3,
+              childAspectRatio: 1 / 1,
               mainAxisSpacing: 10,
               crossAxisSpacing: 20,
             ),

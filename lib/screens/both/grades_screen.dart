@@ -42,6 +42,7 @@ class GradesScreen extends StatelessWidget {
           ),
         ],
       ),
+      backgroundColor: Color.fromRGBO(230, 230, 230, 1),
       drawer: userData.isTeacher ? TeacherAppDrawer() : StudentAppDrawer(),
       body: GradesList(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class TeacherAppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+    return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -57,8 +57,7 @@ class MyApp extends StatelessWidget {
           builder: (ctx, _) => MaterialApp(
             title: 'EduLB',
             theme: ThemeData(
-              // backgroundColor: Color.fromRGBO(43, 43, 43, 1),
-              primaryColor: Color.fromRGBO(43, 43, 43, 1),
+              primaryColor: Color.fromRGBO(42, 42, 42, 1),
               accentColor: Color.fromRGBO(112, 112, 112, 1),
               fontFamily: 'Poppins',
               buttonTheme: ThemeData.light().buttonTheme.copyWith(
