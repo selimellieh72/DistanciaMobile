@@ -9,34 +9,38 @@ class Profile extends StatelessWidget {
       padding: EdgeInsets.all(10),
       height: 150,
       color: Theme.of(context).primaryColor,
-      child: Row(children: [
-        Consumer<UserData>(
-          builder: (_, data, __) => CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 45.0,
-            backgroundImage: data.imageUrl == ''
-                ? null
-                : NetworkImage(
-                    data.imageUrl,
-                  ),
+      child: Row(
+        children: [
+          Consumer<UserData>(
+            builder: (_, data, __) => FittedBox(
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 45.0,
+                backgroundImage: data.imageUrl == ''
+                    ? null
+                    : NetworkImage(
+                        data.imageUrl,
+                      ),
+              ),
+            ),
           ),
-        ),
-        SizedBox(
-          width: 20,
-        ),
-        Expanded(
-          child: FittedBox(
-            child: Consumer<UserData>(
-              builder: (_, data, __) => Text(
-                '${data.firstName} ${data.lastName}',
-                style: TextStyle(
-                  color: Colors.white,
+          SizedBox(
+            width: 20,
+          ),
+          Expanded(
+            child: FittedBox(
+              child: Consumer<UserData>(
+                builder: (_, data, __) => Text(
+                  '${data.firstName} ${data.lastName}',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

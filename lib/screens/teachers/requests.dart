@@ -11,7 +11,6 @@ class RequestsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Requests'),
       ),
-      drawer: TeacherAppDrawer(),
       body: RequestItem(
         firstName: null,
         gradeName: null,

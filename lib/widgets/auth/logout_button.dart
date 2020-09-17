@@ -10,12 +10,20 @@ class LogoutButton extends StatelessWidget {
         Icons.exit_to_app,
         color: Theme.of(context).primaryColor,
       ),
-      label: Text(
-        'Log Out',
-        style: TextStyle(
-          color: Theme.of(context).primaryColor,
-          fontWeight: FontWeight.bold,
-        ),
+      label: Row(
+        children: [
+          Icon(
+            Icons.exit_to_app,
+            color: Colors.white,
+          ),
+          Text(
+            'Log Out',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }
