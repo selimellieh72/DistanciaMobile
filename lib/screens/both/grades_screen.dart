@@ -29,15 +29,36 @@ class GradesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserData userData = Provider.of<UserData>(context);
+    final widthValue = 45;
     print(userData.firstName);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        toolbarHeight: 1,
+      ),
       body: Stack(
         children: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _addButtonHandler(userData.isTeacher, context),
+          Column(
+            children: [
+              SizedBox(
+                height: 40,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Your Grades',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ],
+              ),
+            ],
           ),
+          // IconButton(
+          //   icon: Icon(Icons.add),
+          //   onPressed: () => _addButtonHandler(userData.isTeacher, context),
+          // ),
           GradesList(),
           userData.isTeacher ? TeacherDrawer() : StudentDrawer(),
         ],

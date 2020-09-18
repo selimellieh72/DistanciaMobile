@@ -64,7 +64,7 @@ class _TeacherDrawer extends State<TeacherDrawer>
           top: 0,
           bottom: 0,
           left: isSideBarOpenedAsync.data ? 0 : 0,
-          right: isSideBarOpenedAsync.data ? 10 : screenWidth - 35,
+          right: isSideBarOpenedAsync.data ? 10 : screenWidth - 40,
           child: Row(
             children: [
               Expanded(
@@ -101,24 +101,28 @@ class _TeacherDrawer extends State<TeacherDrawer>
                 ),
               ),
               Align(
-                alignment: Alignment(0, -0.9),
+                alignment: Alignment(0, -1),
                 child: GestureDetector(
                   onTap: () {
                     onIconPressed();
                   },
                   child: ClipPath(
-                    clipper: CustomMenuClipper(),
-                    child: Container(
-                      width: 35,
-                      height: 110,
-                      color: Color.fromRGBO(42, 42, 42, 1),
-                      alignment: Alignment.centerLeft,
-                      child: AnimatedIcon(
-                        icon: AnimatedIcons.menu_close,
-                        color: Colors.white,
-                        progress: _animationController.view,
-                        size: 25,
-                      ),
+                    // clipper: CustomMenuClipper(),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          child: AnimatedIcon(
+                            icon: AnimatedIcons.menu_close,
+                            color: Color.fromRGBO(42, 42, 42, 1),
+                            progress: _animationController.view,
+                            size: 40,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -131,29 +135,29 @@ class _TeacherDrawer extends State<TeacherDrawer>
   }
 }
 
-class CustomMenuClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Paint paint = Paint();
-    paint.color = Colors.white;
+// class CustomMenuClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     Paint paint = Paint();
+//     paint.color = Colors.white;
 
-    final width = size.width;
-    final height = size.height;
+//     final width = size.width;
+//     final height = size.height;
 
-    Path path = Path();
-    path.moveTo(0, 0);
-    path.quadraticBezierTo(0, 8, 10, 16);
-    path.quadraticBezierTo(width - 1, height / 2 - 20, width, height / 2);
-    path.quadraticBezierTo(width + 1, height / 2 + 20, 10, height - 16);
-    path.quadraticBezierTo(0, height - 8, 0, height);
+//     Path path = Path();
+//     path.moveTo(0, 0);
+//     path.quadraticBezierTo(0, 8, 10, 16);
+//     path.quadraticBezierTo(width - 1, height / 2 - 20, width, height / 2);
+//     path.quadraticBezierTo(width + 1, height / 2 + 20, 10, height - 16);
+//     path.quadraticBezierTo(0, height - 8, 0, height);
 
-    path.close();
+//     path.close();
 
-    return path;
-  }
+//     return path;
+//   }
 
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
-  }
-}
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) {
+//     return true;
+//   }
+// }

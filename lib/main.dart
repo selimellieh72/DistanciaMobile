@@ -70,7 +70,8 @@ class MyApp extends StatelessWidget {
               textTheme: ThemeData.light().textTheme.copyWith(
                     headline6: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 22,
+                      fontSize: 35,
+                      color: Color.fromRGBO(42, 42, 42, 1),
                     ),
                     subtitle2: TextStyle(
                       fontFamily: 'OpenSans',
