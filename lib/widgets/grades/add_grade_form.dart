@@ -1,6 +1,9 @@
+import 'package:edulb/helpers/already_exists_exception.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/models/user_data.dart';
+import 'package:edulb/widgets/others/form_label.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:edulb/helpers/word_filtering_helper.dart';
@@ -46,10 +49,22 @@ class _AddGradeFormState extends State<AddGradeForm> {
         isTeacher: Provider.of<UserData>(context, listen: false).isTeacher,
         gradeName: _gradeName,
         discipline: _discipline,
+        teacherId: FirebaseAuth.instance.currentUser.uid,
       );
       Navigator.of(context).pop();
+    } on AlreadyExistsException catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+      bool _isExited = await CustomBuilders.showErrorDialog(
+        context: context,
+        title: 'Name already exists',
+        content: error.toString(),
+      );
+      if (_isExited) {
+        Navigator.of(context).pop();
+      }
     } catch (_) {
-      print(_);
       setState(() {
         _isLoading = false;
       });
@@ -62,17 +77,10 @@ class _AddGradeFormState extends State<AddGradeForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              child: Text(
-                'Grade name:',
-                textAlign: TextAlign.start,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
+            FormLabel('Grade name'),
             TextFormField(
               maxLength: 20,
               decoration: InputDecoration(
@@ -87,14 +95,7 @@ class _AddGradeFormState extends State<AddGradeForm> {
             SizedBox(
               height: 15,
             ),
-            Container(
-              width: double.infinity,
-              child: Text(
-                'Discipline:',
-                textAlign: TextAlign.start,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
+            FormLabel('Discipline'),
             TextFormField(
               maxLength: 14,
               decoration: InputDecoration(

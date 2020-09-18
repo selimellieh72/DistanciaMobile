@@ -10,22 +10,23 @@ class Profile extends StatelessWidget {
       height: 150,
       color: Theme.of(context).primaryColor,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Consumer<UserData>(
-            builder: (_, data, __) => FittedBox(
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 45.0,
-                backgroundImage: data.imageUrl == ''
-                    ? null
-                    : NetworkImage(
-                        data.imageUrl,
-                      ),
-              ),
+            builder: (_, data, __) => Flexible(
+              child: LayoutBuilder(builder: (_, constraints) {
+                final maxWidth = constraints.maxWidth;
+                return CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: maxWidth >= 45 ? 45 : 0,
+                  backgroundImage: data.imageUrl == ''
+                      ? null
+                      : NetworkImage(
+                          data.imageUrl,
+                        ),
+                );
+              }),
             ),
-          ),
-          SizedBox(
-            width: 20,
           ),
           Expanded(
             child: FittedBox(

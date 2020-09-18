@@ -1,5 +1,6 @@
 import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/helpers/word_filtering_helper.dart';
+import 'package:edulb/widgets/others/form_label.dart';
 import 'package:flutter/material.dart';
 
 class AddHomeworkForm extends StatefulWidget {
@@ -53,10 +54,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Title',
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
+            FormLabel('Title'),
             TextFormField(
               decoration: InputDecoration(hintText: 'Physics'),
               validator: (value) {
@@ -73,10 +71,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
             SizedBox(
               height: 10,
             ),
-            Text(
-              'Instructions',
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
+            FormLabel('Instructions'),
             TextFormField(
               maxLines: 4,
               maxLength: 160,

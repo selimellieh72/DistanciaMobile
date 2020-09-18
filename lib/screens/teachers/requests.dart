@@ -1,4 +1,3 @@
-import 'package:edulb/widgets/others/teacher_drawer.dart';
 import 'package:flutter/material.dart';
 
 import 'package:edulb/widgets/requests/request_items.dart';
@@ -11,7 +10,7 @@ class RequestsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Requests'),
       ),
-      body: RequestItem(
+      body: RequestItems(
         firstName: null,
         gradeName: null,
         lastName: null,

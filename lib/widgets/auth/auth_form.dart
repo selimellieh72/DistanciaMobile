@@ -16,7 +16,8 @@ class AuthForm extends StatefulWidget {
   _AuthFormState createState() => _AuthFormState();
 }
 
-class _AuthFormState extends State<AuthForm> {
+class _AuthFormState extends State<AuthForm>
+    with SingleTickerProviderStateMixin {
   var _isLogin = true;
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
@@ -27,6 +28,31 @@ class _AuthFormState extends State<AuthForm> {
   var _lastName = '';
   var _isLoading = false;
   File _image;
+  AnimationController _animationController;
+  Animation<double> _fadeAnimation;
+  Animation<Offset> _switchAnimation;
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: 300,
+      ),
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeIn));
+    _switchAnimation =
+        Tween<Offset>(begin: Offset(0, -1.5), end: Offset(0, 0)).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   Widget _buildCustomTextField(
       String text, Function validation, Function onSave, bool isObscure,
@@ -57,6 +83,21 @@ class _AuthFormState extends State<AuthForm> {
     );
   }
 
+  Widget _buildFadeTransition({Widget child}) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeIn,
+      constraints: BoxConstraints(
+        minHeight: _isLogin ? 0 : 60,
+        maxHeight: _isLogin ? 0 : 140,
+      ),
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: child,
+      ),
+    );
+  }
+
   void _setLoading(bool value) {
     setState(() {
       _isLoading = value;
@@ -67,6 +108,7 @@ class _AuthFormState extends State<AuthForm> {
     if (!_formKey.currentState.validate()) {
       return;
     }
+    print('we are here');
     if (_image == null && !_isLogin) {
       Scaffold.of(context).showSnackBar(
         SnackBar(
@@ -100,6 +142,15 @@ class _AuthFormState extends State<AuthForm> {
     _image = image;
   }
 
+  void _changeMode() {
+    setState(() => _isLogin = !_isLogin);
+    if (!_isLogin) {
+      _animationController.forward();
+    } else {
+      _animationController.reverse();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
@@ -119,26 +170,35 @@ class _AuthFormState extends State<AuthForm> {
                       (email) => AuthValidation.validateEmail(email),
                       (String email) => _email = email,
                       false),
-                  if (!_isLogin)
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildCustomTextField(
-                              'First name',
-                              (name) => AuthValidation.validateName(name, true),
-                              (String firstName) => _firstName = firstName,
-                              false),
-                        ),
-                        Expanded(
-                          child: _buildCustomTextField(
-                              'Last name',
-                              (name) =>
-                                  AuthValidation.validateName(name, false),
-                              (String lastName) => _lastName = lastName,
-                              false),
-                        ),
-                      ],
+                  _buildFadeTransition(
+                    child: SlideTransition(
+                      position: _switchAnimation,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: _buildCustomTextField(
+                                'First name',
+                                _isLogin
+                                    ? null
+                                    : (name) =>
+                                        AuthValidation.validateName(name, true),
+                                (String firstName) => _firstName = firstName,
+                                false),
+                          ),
+                          Expanded(
+                            child: _buildCustomTextField(
+                                'Last name',
+                                _isLogin
+                                    ? null
+                                    : (name) => AuthValidation.validateName(
+                                        name, false),
+                                (String lastName) => _lastName = lastName,
+                                false),
+                          ),
+                        ],
+                      ),
                     ),
+                  ),
                   _buildCustomTextField(
                     'Password',
                     (password) => AuthValidation.validatePassword(password),
@@ -146,16 +206,22 @@ class _AuthFormState extends State<AuthForm> {
                     true,
                     _passwordController,
                   ),
-                  if (!_isLogin)
-                    _buildCustomTextField(
-                        'Confirm password',
-                        (secondPassword) =>
-                            AuthValidation.validateConfirmPassword(
-                                secondPassword, _passwordController.text),
-                        null,
-                        true),
-                  if (!_isLogin)
-                    Padding(
+                  _buildFadeTransition(
+                    child: SlideTransition(
+                      position: _switchAnimation,
+                      child: _buildCustomTextField(
+                          'Confirm password',
+                          _isLogin
+                              ? null
+                              : (secondPassword) =>
+                                  AuthValidation.validateConfirmPassword(
+                                      secondPassword, _passwordController.text),
+                          null,
+                          true),
+                    ),
+                  ),
+                  _buildFadeTransition(
+                    child: Padding(
                       padding: const EdgeInsets.only(
                         left: 15.0,
                         right: 15,
@@ -184,7 +250,9 @@ class _AuthFormState extends State<AuthForm> {
                         ],
                       ),
                     ),
-                  if (!_isLogin) ImagePicker(setImage),
+                  ),
+                  if (!_isLogin)
+                    _buildFadeTransition(child: ImagePicker(setImage)),
                   RaisedButton(
                     onPressed: _saveForm,
                     child: _isLoading
@@ -200,7 +268,7 @@ class _AuthFormState extends State<AuthForm> {
                     height: 10,
                   ),
                   FlatButton(
-                    onPressed: () => setState(() => _isLogin = !_isLogin),
+                    onPressed: _changeMode,
                     child: Text(
                       _isLogin
                           ? 'Don\'t have an account? Create one!'

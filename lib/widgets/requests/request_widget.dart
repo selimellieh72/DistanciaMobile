@@ -1,3 +1,4 @@
+import 'package:edulb/widgets/requests/request_form.dart';
 import 'package:flutter/material.dart';
 
 class Request extends StatelessWidget {
@@ -5,7 +6,16 @@ class Request extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Request to join a grade'),
+        Chip(
+          label: Text(
+            'Request to join grade',
+            style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 22),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        RequestForm(),
       ],
     );
   }

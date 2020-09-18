@@ -1,19 +1,24 @@
 import 'dart:async';
+import 'package:edulb/models/user_data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:edulb/screens/both/grades_screen.dart';
 import 'package:edulb/screens/teachers/requests.dart';
 import 'package:edulb/widgets/auth/logout_button.dart';
 import 'package:edulb/widgets/others/profile.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
-class TeacherDrawer extends StatefulWidget {
+class AppDrawer extends StatefulWidget {
+  final void Function(bool value) setIsDrawerOpened;
+
+  const AppDrawer({Key key, this.setIsDrawerOpened}) : super(key: key);
   @override
-  _TeacherDrawer createState() => _TeacherDrawer();
+  _AppDrawerState createState() => _AppDrawerState();
 }
 
-class _TeacherDrawer extends State<TeacherDrawer>
-    with SingleTickerProviderStateMixin<TeacherDrawer> {
+class _AppDrawerState extends State<AppDrawer>
+    with SingleTickerProviderStateMixin<AppDrawer> {
   AnimationController _animationController;
   StreamController<bool> isSideBarOpenedeStreamedController;
   Stream<bool> isSideBarOpenedStream;
@@ -45,16 +50,38 @@ class _TeacherDrawer extends State<TeacherDrawer>
     if (isAnimationCompleted) {
       isSideBarOpenedSink.add(false);
       _animationController.reverse();
+      widget.setIsDrawerOpened(false);
     } else {
       isSideBarOpenedSink.add(true);
       _animationController.forward();
+      widget.setIsDrawerOpened(true);
     }
+  }
+
+  Widget _buildResponsiveFlatButton(
+      {Widget button, String title, Function onPressed, Icon icon}) {
+    return LayoutBuilder(
+      builder: (ctx, constraints) {
+        final maxWidth = constraints.maxWidth;
+        if (maxWidth >= 150) {
+          if (button != null) {
+            return button;
+          }
+          return FlatButton.icon(
+            onPressed: onPressed,
+            icon: icon,
+            label: Text(title),
+          );
+        }
+        return Container();
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
+    final _isTeacher = Provider.of<UserData>(context).isTeacher;
     return StreamBuilder<bool>(
       initialData: false,
       stream: isSideBarOpenedStream,
@@ -70,33 +97,34 @@ class _TeacherDrawer extends State<TeacherDrawer>
               Expanded(
                 child: Container(
                   color: Color.fromRGBO(42, 42, 42, 1),
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Profile(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        FlatButton.icon(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Profile(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      if (_isTeacher)
+                        _buildResponsiveFlatButton(
+                          title: 'Grades',
                           onPressed: () => Navigator.of(context)
                               .pushReplacementNamed(GradesScreen.routeName),
-                          icon: Icon(Icons.people),
-                          label: Text('Grades'),
+                          icon: Icon(Icons.grade),
                         ),
-                        FlatButton.icon(
+                      if (_isTeacher)
+                        _buildResponsiveFlatButton(
+                          title: 'Requests',
                           onPressed: () => Navigator.of(context)
-                              .pushReplacementNamed(RequestsScreen.routeName),
+                              .pushNamed(RequestsScreen.routeName),
                           icon: Icon(Icons.record_voice_over),
-                          label: Text('Requests'),
                         ),
-                        Spacer(),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: LogoutButton(),
-                        )
-                      ],
-                    ),
+                      Spacer(),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child:
+                            _buildResponsiveFlatButton(button: LogoutButton()),
+                      )
+                    ],
                   ),
                 ),
               ),

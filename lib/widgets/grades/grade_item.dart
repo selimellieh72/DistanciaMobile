@@ -65,13 +65,17 @@ class GradeItem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      discipline,
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromRGBO(230, 230, 230, 1),
-                          letterSpacing: -0.5,
-                          wordSpacing: 0),
+                    Flexible(
+                      child: FittedBox(
+                        child: Text(
+                          discipline,
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Color.fromRGBO(230, 230, 230, 1),
+                              letterSpacing: -0.5,
+                              wordSpacing: 0),
+                        ),
+                      ),
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,

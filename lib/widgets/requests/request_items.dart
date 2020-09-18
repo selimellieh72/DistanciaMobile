@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class RequestItem extends StatelessWidget {
-  const RequestItem({
+import 'package:edulb/helpers/db_helper.dart';
+import 'package:edulb/models/pending_request.dart';
+import 'package:edulb/models/user_data.dart';
+import 'package:edulb/widgets/requests/request_item.dart';
+
+class RequestItems extends StatelessWidget {
+  const RequestItems({
     Key key,
     @required String firstName,
     @required String lastName,
@@ -11,41 +17,33 @@ class RequestItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 3,
-        child: ListTile(
-          contentPadding: EdgeInsets.all(10),
-          leading: CircleAvatar(
-            radius: 45,
-          ),
-          title: Text(
-            'Selim Ellieh',
-            style: Theme.of(context).textTheme.headline5,
-          ),
-          subtitle: Text(
-            'Wants to join.',
-            style: Theme.of(context).textTheme.bodyText1,
-            overflow: TextOverflow.clip,
-          ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(Icons.check),
-                onPressed: () {},
-                color: Colors.green,
-              ),
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {},
-                color: Colors.red,
-              ),
-            ],
-          ),
-        ),
-      ),
+    return StreamBuilder<List<PendingStudentGradeRequest>>(
+      stream: DBHELPER.fetchPendingStudentGradeRequests(
+          FirebaseAuth.instance.currentUser.uid),
+      builder: (_, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        final _requests = snapshot.data;
+
+        return ListView.builder(
+          itemCount: _requests.length,
+          itemBuilder: (_, i) => FutureBuilder<UserData>(
+              future: DBHELPER.fetchUser(_requests[i].studentId),
+              builder: (_, snap) =>
+                  snap.connectionState != ConnectionState.waiting
+                      ? RequestItem(
+                          _requests[i].id,
+                          snap.data.firstName,
+                          snap.data.lastName,
+                          snap.data.imageUrl,
+                          _requests[i].gradeName,
+                        )
+                      : Container()),
+        );
+      },
     );
   }
 }

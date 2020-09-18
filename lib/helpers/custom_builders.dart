@@ -20,6 +20,32 @@ class CustomBuilders {
     );
   }
 
+  static Future<bool> showErrorDialog({
+    BuildContext context,
+    String title,
+    String content,
+  }) {
+    return showDialog<bool>(
+        context: context,
+        child: AlertDialog(
+          backgroundColor: Theme.of(context).errorColor,
+          title: Text(
+            title,
+            style: Theme.of(context)
+                .textTheme
+                .headline5
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          content: Text(content),
+          actions: [
+            FlatButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text('I understand'),
+            ),
+          ],
+        ));
+  }
+
   static void showErrorSnackBar(BuildContext context) {
     Scaffold.of(context).showSnackBar(
       SnackBar(
