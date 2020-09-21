@@ -6,10 +6,21 @@ class Request extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: 20,
+        ),
         Chip(
-          label: Text(
-            'Request to join grade',
-            style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 22),
+          backgroundColor: Color.fromRGBO(42, 42, 42, 1),
+          elevation: 10,
+          label: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text(
+              'Request to join grade',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(color: Colors.white),
+            ),
           ),
         ),
         SizedBox(

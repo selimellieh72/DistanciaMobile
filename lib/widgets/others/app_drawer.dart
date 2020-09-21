@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:edulb/models/app_info.dart';
 import 'package:edulb/models/user_data.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AppDrawer extends StatefulWidget {
-  final void Function(bool value) setIsDrawerOpened;
-
-  const AppDrawer({Key key, this.setIsDrawerOpened}) : super(key: key);
   @override
   _AppDrawerState createState() => _AppDrawerState();
 }
@@ -50,11 +48,11 @@ class _AppDrawerState extends State<AppDrawer>
     if (isAnimationCompleted) {
       isSideBarOpenedSink.add(false);
       _animationController.reverse();
-      widget.setIsDrawerOpened(false);
+      Provider.of<AppInfo>(context, listen: false).setIsDrawerOpened(false);
     } else {
       isSideBarOpenedSink.add(true);
       _animationController.forward();
-      widget.setIsDrawerOpened(true);
+      Provider.of<AppInfo>(context, listen: false).setIsDrawerOpened(true);
     }
   }
 
@@ -91,7 +89,7 @@ class _AppDrawerState extends State<AppDrawer>
           top: 0,
           bottom: 0,
           left: isSideBarOpenedAsync.data ? 0 : 0,
-          right: isSideBarOpenedAsync.data ? 10 : screenWidth - 40,
+          right: isSideBarOpenedAsync.data ? 10 : screenWidth - 31,
           child: Row(
             children: [
               Expanded(
@@ -100,7 +98,10 @@ class _AppDrawerState extends State<AppDrawer>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Profile(),
+                      Container(
+                        // color: Colors.white,
+                        child: Profile(),
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -120,7 +121,7 @@ class _AppDrawerState extends State<AppDrawer>
                         ),
                       Spacer(),
                       Align(
-                        alignment: Alignment.bottomLeft,
+                        alignment: Alignment.center,
                         child:
                             _buildResponsiveFlatButton(button: LogoutButton()),
                       )
@@ -129,7 +130,7 @@ class _AppDrawerState extends State<AppDrawer>
                 ),
               ),
               Align(
-                alignment: Alignment(0, -1),
+                alignment: Alignment(0, 1),
                 child: GestureDetector(
                   onTap: () {
                     onIconPressed();
@@ -147,7 +148,7 @@ class _AppDrawerState extends State<AppDrawer>
                             icon: AnimatedIcons.menu_close,
                             color: Color.fromRGBO(42, 42, 42, 1),
                             progress: _animationController.view,
-                            size: 40,
+                            size: 30,
                           ),
                         ),
                       ],

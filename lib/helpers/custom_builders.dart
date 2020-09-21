@@ -12,6 +12,11 @@ class CustomBuilders {
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
+          // decoration:  BoxDecoration(
+          //     color: Colors.white,
+          //     borderRadius:  BorderRadius.only(
+          //         topLeft: const Radius.circular(10.0),
+          //         topRight: const Radius.circular(10.0))),
           child: SingleChildScrollView(
             child: child,
           ),

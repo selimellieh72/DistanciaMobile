@@ -1,6 +1,8 @@
+import 'package:edulb/models/app_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:edulb/widgets/edit/edit_widget.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/models/user_data.dart';
 import 'package:edulb/widgets/requests/request_widget.dart';
@@ -16,76 +18,6 @@ class GradesScreen extends StatefulWidget {
 }
 
 class _GradesScreenState extends State<GradesScreen> {
-  final _buttonKey = GlobalKey<AddFloatingButtonState>();
-
-  @override
-  Widget build(BuildContext context) {
-    final UserData userData = Provider.of<UserData>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 1,
-      ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              SizedBox(
-                height: 40,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'Your Grades',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                ],
-              ),
-              Expanded(
-                child: GradesList(),
-              ),
-            ],
-          ),
-          FutureBuilder(
-            future: Future.delayed(Duration(microseconds: 0)),
-            builder: (_, snapshot) =>
-                snapshot.connectionState == ConnectionState.waiting
-                    ? Container()
-                    : AppDrawer(
-                        setIsDrawerOpened:
-                            _buttonKey.currentState.setIsDrawerOpened,
-                      ),
-          ),
-        ],
-      ),
-      floatingActionButton: AddFloatingButton(
-        ctx: context,
-        key: _buttonKey,
-        isTeacher: userData.isTeacher,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
-  }
-}
-
-class AddFloatingButton extends StatefulWidget {
-  final bool isTeacher;
-  final BuildContext ctx;
-
-  const AddFloatingButton({
-    @required Key key,
-    @required this.isTeacher,
-    @required this.ctx,
-  }) : super(key: key);
-  @override
-  AddFloatingButtonState createState() => AddFloatingButtonState();
-}
-
-class AddFloatingButtonState extends State<AddFloatingButton> {
-  var _isDrawerOpened = false;
   void _addButtonHandler(bool isTeacher, BuildContext ctx) {
     if (isTeacher) {
       CustomBuilders.showResponsiveBottomSheet(
@@ -100,20 +32,67 @@ class AddFloatingButtonState extends State<AddFloatingButton> {
     }
   }
 
-  void setIsDrawerOpened(bool value) {
-    setState(() {
-      _isDrawerOpened = value;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (!_isDrawerOpened) {
-      return FloatingActionButton(
-        onPressed: () => _addButtonHandler(widget.isTeacher, widget.ctx),
-        child: Icon(Icons.add),
-      );
-    }
-    return Container();
+    final userData = Provider.of<UserData>(context);
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 1,
+      ),
+      body: Stack(
+        children: [
+          Positioned(
+            right: 5,
+            child: EditWidget(),
+          ),
+          Column(
+            children: [
+              SizedBox(
+                height: 45,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Your Grades',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ],
+              ),
+              Divider(
+                height: 2,
+                color: Colors.black,
+                indent: 10,
+                endIndent: 10,
+                thickness: 0.5,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Expanded(
+                child: GradesList(),
+              ),
+            ],
+          ),
+          AppDrawer(),
+        ],
+      ),
+      floatingActionButton: Consumer<AppInfo>(
+        builder: (_, appInfo, ch) {
+          print(appInfo.isDrawerOpened.toString() + " drawer");
+          print(appInfo.isEditting.toString() + " edit mode");
+          if (appInfo.isEditting || appInfo.isDrawerOpened) {
+            return Container();
+          }
+          return FloatingActionButton(
+            onPressed: () => _addButtonHandler(userData.isTeacher, context),
+            child: Icon(Icons.add),
+          );
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
   }
 }

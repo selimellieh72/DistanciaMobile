@@ -1,3 +1,4 @@
+import 'package:edulb/models/app_info.dart';
 import 'package:edulb/screens/both/tab_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
                 create: (_) =>
                     DBHELPER.streamUser(FirebaseAuth.instance.currentUser.uid),
               ),
+              ChangeNotifierProvider(
+                create: (_) => AppInfo(),
+              )
             ],
             builder: (ctx, _) => MainApp(isAuth: true),
           );
@@ -71,7 +75,7 @@ class MainApp extends StatelessWidget {
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 35,
+                fontSize: 30,
                 color: Color.fromRGBO(42, 42, 42, 1),
               ),
               subtitle2: TextStyle(

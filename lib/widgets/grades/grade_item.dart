@@ -1,10 +1,12 @@
+import 'package:edulb/models/app_info.dart';
 import 'package:edulb/models/user_data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:edulb/screens/both/tab_screen.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
-class GradeItem extends StatelessWidget {
+class GradeItem extends StatefulWidget {
   final String gradeName;
 
   final String id;
@@ -21,119 +23,125 @@ class GradeItem extends StatelessWidget {
   });
 
   @override
+  _GradeItemState createState() => _GradeItemState();
+}
+
+class _GradeItemState extends State<GradeItem> {
+  bool _isSelected;
+  @override
+  void initState() {
+    _isSelected = false;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context);
+    final appInfo = Provider.of<AppInfo>(context);
     return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(TabsScreen.routeName, arguments: id);
-      },
-      child: userData.isTeacher
-          ? GridTile(
-              child: Container(
-                alignment: Alignment.topCenter,
-                width: double.infinity,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color.fromRGBO(180, 180, 180, 1),
-                ),
-                child: Text(
-                  gradeName,
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(
-                    color: Color.fromRGBO(42, 42, 42, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 23,
-                    letterSpacing: 0.5,
-                    wordSpacing: 2,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              footer: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
-                  ),
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomRight,
-                      colors: [Colors.blue, Colors.red]),
-                ),
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: FittedBox(
-                        child: Text(
-                          discipline,
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Color.fromRGBO(230, 230, 230, 1),
-                              letterSpacing: -0.5,
-                              wordSpacing: 0),
+        onTap: appInfo.isEditting
+            ? () => setState(() => _isSelected = !_isSelected)
+            : () {
+                Navigator.of(context)
+                    .pushNamed(TabsScreen.routeName, arguments: widget.id);
+              },
+        child: userData.isTeacher
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  appInfo.isEditting
+                      ? Stack(
+                          children: [
+                            Icon(
+                              MdiIcons.book,
+                              size: 100,
+                              color: Color.fromRGBO(90, 90, 90, 1),
+                            ),
+                            Positioned.fill(
+                              bottom: 15,
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 45,
+                                        color: Color.fromRGBO(90, 90, 90, 1),
+                                      ),
+                                    ],
+                                  ),
+                                  child: !_isSelected
+                                      ? Icon(
+                                          MdiIcons.checkCircleOutline,
+                                          size: 25,
+                                          color:
+                                              Color.fromRGBO(230, 230, 230, 1),
+                                        )
+                                      : Icon(
+                                          MdiIcons.checkCircle,
+                                          size: 25,
+                                          color:
+                                              Color.fromRGBO(230, 230, 230, 1),
+                                        ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Icon(
+                          MdiIcons.book,
+                          size: 100,
+                          color: Color.fromRGBO(90, 90, 90, 1),
                         ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.people,
-                          color: Color.fromRGBO(230, 230, 230, 1),
-                        ),
-                        SizedBox(
-                          width: 3,
-                        ),
-                        Text(
-                          studentsNumber.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(230, 230, 230, 1),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            )
-          : GridTile(
-              child: Container(
-                alignment: Alignment.topCenter,
-                width: double.infinity,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color.fromRGBO(43, 43, 43, 1),
-                        Color.fromRGBO(110, 110, 110, 1)
-                      ]),
-                ),
-                child: Center(
-                  child: FittedBox(
+                  FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      discipline,
-                      overflow: TextOverflow.fade,
+                      widget.discipline,
                       style: TextStyle(
-                        color: Color.fromRGBO(230, 230, 230, 1),
-                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(42, 42, 42, 1),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        letterSpacing: 0.5,
+                        wordSpacing: 2,
+                      ),
+                    ),
+                  ),
+                  FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      widget.gradeName,
+                      style: TextStyle(
+                        color: Color.fromRGBO(42, 42, 42, 1),
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 0.5,
+                        wordSpacing: 2,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    MdiIcons.book,
+                    size: 100,
+                    color: Color.fromRGBO(90, 90, 90, 1),
+                  ),
+                  FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      widget.discipline,
+                      style: TextStyle(
+                        color: Color.fromRGBO(42, 42, 42, 1),
+                        fontWeight: FontWeight.w500,
                         fontSize: 23,
                         letterSpacing: 0.5,
                         wordSpacing: 2,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-              ),
-            ),
-    );
+                ],
+              ));
   }
 }

@@ -68,7 +68,7 @@ class _RequestFormState extends State<RequestForm> {
           children: [
             FormLabel('Teacher email'),
             TextFormField(
-              decoration: InputDecoration(hintText: 'tony@gmail.com'),
+              decoration: InputDecoration(hintText: 'ex: example@example.com'),
               onSaved: (value) => _teacherEmail = value,
               validator: (value) => AuthValidation.validateEmail(value),
             ),
@@ -77,7 +77,7 @@ class _RequestFormState extends State<RequestForm> {
             ),
             FormLabel('Grade name'),
             TextFormField(
-              decoration: InputDecoration(hintText: 'Grade 9'),
+              decoration: InputDecoration(hintText: 'ex: Grade 9'),
               onSaved: (value) => _gradeName = value,
               maxLength: 22,
               validator: (value) {
