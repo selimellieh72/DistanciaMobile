@@ -1,13 +1,12 @@
-import 'package:edulb/models/app_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:edulb/widgets/grades/edit_widget.dart';
+import 'package:edulb/models/app_info.dart';
+import 'package:edulb/widgets/grades/grades_list.dart';
+import 'package:edulb/widgets/stack/stack_widget.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/models/user_data.dart';
 import 'package:edulb/widgets/requests/request_widget.dart';
-import 'package:edulb/widgets/grades/grades_list.dart';
-import 'package:edulb/widgets/others/app_drawer.dart';
 import 'package:edulb/widgets/grades/add_grade.dart';
 
 class GradesScreen extends StatefulWidget {
@@ -39,45 +38,9 @@ class _GradesScreenState extends State<GradesScreen> {
       appBar: AppBar(
         toolbarHeight: 1,
       ),
-      body: Stack(
-        children: [
-          Positioned(
-            right: 5,
-            child: EditWidget(),
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 45,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'Your Grades',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                ],
-              ),
-              Divider(
-                height: 2,
-                color: Colors.black,
-                indent: 10,
-                endIndent: 10,
-                thickness: 0.5,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Expanded(
-                child: GradesList(),
-              ),
-            ],
-          ),
-          AppDrawer(),
-        ],
+      body: StackWidget(
+        screenTitle: 'Grades',
+        widget: GradesList(),
       ),
       floatingActionButton: Consumer<AppInfo>(
         builder: (_, appInfo, ch) {

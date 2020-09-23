@@ -1,11 +1,11 @@
-import 'package:edulb/models/user_data.dart';
-import 'package:edulb/screens/both/homeworks_screens.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:edulb/models/user_data.dart';
+import 'package:edulb/screens/both/homework_screen.dart';
 import 'package:edulb/screens/students/exams_screen.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/widgets/homeworks/add_homework.dart';
-import 'package:provider/provider.dart';
 
 class TabsScreen extends StatefulWidget {
   static const routeName = '/tabs-screen';
@@ -24,7 +24,7 @@ class _TabsScreenState extends State<TabsScreen> {
       userData = Provider.of<UserData>(context);
       gradeId = ModalRoute.of(context).settings.arguments;
       _pages = [
-        HomeworksScreen(gradeId),
+        HomeworkScreen(),
         ExamsScreen(),
       ];
       hasInit = true;
@@ -45,19 +45,19 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_selectedPageIndex == 0 ? 'Homeworks' : 'Exams'),
-        actions: [
-          if (_selectedPageIndex == 0)
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => CustomBuilders.showResponsiveBottomSheet(
-                context: context,
-                child: AddHomework(gradeId),
-              ),
-            ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text(_selectedPageIndex == 0 ? 'Homeworks' : 'Exams'),
+      //   actions: [
+      //     if (_selectedPageIndex == 0)
+      //       IconButton(
+      //         icon: Icon(Icons.add),
+      //         onPressed: () => CustomBuilders.showResponsiveBottomSheet(
+      //           context: context,
+      //           child: AddHomework(gradeId),
+      //         ),
+      //       ),
+      //   ],
+      // ),
       body: _pages[_selectedPageIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,

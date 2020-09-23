@@ -1,10 +1,10 @@
-import 'package:edulb/helpers/already_exists_exception.dart';
-import 'package:edulb/helpers/does_not_exist_exception.dart';
-import 'package:edulb/models/pending_request.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:edulb/helpers/already_exists_exception.dart';
+import 'package:edulb/helpers/does_not_exist_exception.dart';
+import 'package:edulb/models/pending_request.dart';
 import 'package:edulb/models/user_data.dart';
 import 'package:edulb/models/grade.dart';
 
@@ -230,11 +230,11 @@ class DBHELPER {
             .collection('requests')
             .where('gradeName', isEqualTo: _gradeName)
             .where('teacherId', isEqualTo: _teacherId)
-            .get(); 
+            .get();
         _toRemoveRequests.docs.forEach((request) {
           request.reference.delete();
         });
       },
     );
-  }                                                                    
+  }
 }

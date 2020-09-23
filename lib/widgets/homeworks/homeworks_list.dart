@@ -1,17 +1,17 @@
+import 'package:edulb/models/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:edulb/helpers/db_helper.dart';
-import '../../widgets/homeworks/homework_item.dart';
+import 'package:provider/provider.dart';
+import 'homework_item.dart';
 
-class HomeworksScreen extends StatelessWidget {
-  final String id;
-
-  HomeworksScreen(this.id);
+class HomeworksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserData>(context);
     return StreamBuilder<QuerySnapshot>(
-      stream: DBHELPER.fetchHomeworks(id),
+      stream: DBHELPER.fetchHomeworks(userData.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
