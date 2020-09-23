@@ -28,109 +28,108 @@ class GradeItem extends StatelessWidget {
     final appInfo = Provider.of<AppInfo>(context);
 
     return InkWell(
-        onTap: appInfo.isEditting
-            ? () => appInfo.addOrRemoveSelectedGradeId(id)
-            : () {
-                Navigator.of(context)
-                    .pushNamed(TabsScreen.routeName, arguments: id);
-              },
-        child: userData.isTeacher
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  appInfo.isEditting
-                      ? Stack(
-                          children: [
-                            Icon(
-                              MdiIcons.book,
-                              size: 100,
-                              color: Color.fromRGBO(90, 90, 90, 1),
-                            ),
-                            Positioned.fill(
-                              bottom: 15,
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 45,
-                                        color: Color.fromRGBO(90, 90, 90, 1),
-                                      ),
-                                    ],
-                                  ),
-                                  child: !appInfo.selectedGradesIds.contains(id)
-                                      ? Icon(
-                                          MdiIcons.checkCircleOutline,
-                                          size: 25,
-                                          color:
-                                              Color.fromRGBO(230, 230, 230, 1),
-                                        )
-                                      : Icon(
-                                          MdiIcons.checkCircle,
-                                          size: 25,
-                                          color:
-                                              Color.fromRGBO(230, 230, 230, 1),
-                                        ),
+      onTap: appInfo.isEditting
+          ? () => appInfo.addOrRemoveSelectedGradeId(id)
+          : () {
+              Navigator.of(context)
+                  .pushNamed(TabsScreen.routeName, arguments: id);
+            },
+      child: userData.isTeacher
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                appInfo.isEditting
+                    ? Stack(
+                        children: [
+                          Icon(
+                            MdiIcons.book,
+                            size: 100,
+                            color: Color.fromRGBO(90, 90, 90, 1),
+                          ),
+                          Positioned.fill(
+                            bottom: 15,
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 45,
+                                      color: Color.fromRGBO(90, 90, 90, 1),
+                                    ),
+                                  ],
                                 ),
+                                child: !appInfo.selectedGradesIds.contains(id)
+                                    ? Icon(
+                                        MdiIcons.checkCircleOutline,
+                                        size: 25,
+                                        color: Color.fromRGBO(230, 230, 230, 1),
+                                      )
+                                    : Icon(
+                                        MdiIcons.checkCircle,
+                                        size: 25,
+                                        color: Color.fromRGBO(230, 230, 230, 1),
+                                      ),
                               ),
                             ),
-                          ],
-                        )
-                      : Icon(
-                          MdiIcons.book,
-                          size: 100,
-                          color: Color.fromRGBO(90, 90, 90, 1),
-                        ),
-                  FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
-                      discipline,
-                      style: TextStyle(
-                        color: Color.fromRGBO(42, 42, 42, 1),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                        letterSpacing: 0.5,
-                        wordSpacing: 2,
+                          ),
+                        ],
+                      )
+                    : Icon(
+                        MdiIcons.book,
+                        size: 100,
+                        color: Color.fromRGBO(90, 90, 90, 1),
                       ),
+                FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    discipline,
+                    style: TextStyle(
+                      color: Color.fromRGBO(42, 42, 42, 1),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      letterSpacing: 0.5,
+                      wordSpacing: 2,
                     ),
                   ),
-                  FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
-                      gradeName,
-                      style: TextStyle(
-                        color: Color.fromRGBO(42, 42, 42, 1),
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 0.5,
-                        wordSpacing: 2,
-                      ),
+                ),
+                FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    gradeName,
+                    style: TextStyle(
+                      color: Color.fromRGBO(42, 42, 42, 1),
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 0.5,
+                      wordSpacing: 2,
                     ),
                   ),
-                ],
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(
-                    MdiIcons.book,
-                    size: 100,
-                    color: Color.fromRGBO(90, 90, 90, 1),
-                  ),
-                  FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
-                      discipline,
-                      style: TextStyle(
-                        color: Color.fromRGBO(42, 42, 42, 1),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 23,
-                        letterSpacing: 0.5,
-                        wordSpacing: 2,
-                      ),
+                ),
+              ],
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  MdiIcons.book,
+                  size: 100,
+                  color: Color.fromRGBO(90, 90, 90, 1),
+                ),
+                FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    discipline,
+                    style: TextStyle(
+                      color: Color.fromRGBO(42, 42, 42, 1),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 23,
+                      letterSpacing: 0.5,
+                      wordSpacing: 2,
                     ),
                   ),
-                ],
-              ));
+                ),
+              ],
+            ),
+    );
   }
 }
