@@ -7,14 +7,6 @@ import 'package:edulb/models/user_data.dart';
 import 'package:edulb/widgets/requests/request_item.dart';
 
 class RequestItems extends StatelessWidget {
-  const RequestItems({
-    Key key,
-    @required String firstName,
-    @required String lastName,
-    @required String profileUrl,
-    @required String gradeName,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<PendingStudentGradeRequest>>(

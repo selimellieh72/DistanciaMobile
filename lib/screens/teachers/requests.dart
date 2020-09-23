@@ -10,12 +10,7 @@ class RequestsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Requests'),
       ),
-      body: RequestItems(
-        firstName: null,
-        gradeName: null,
-        lastName: null,
-        profileUrl: null,
-      ),
+      body: RequestItems(),
     );
   }
 }

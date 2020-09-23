@@ -2,7 +2,7 @@ import 'package:edulb/models/app_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:edulb/widgets/edit/edit_widget.dart';
+import 'package:edulb/widgets/grades/edit_widget.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/models/user_data.dart';
 import 'package:edulb/widgets/requests/request_widget.dart';

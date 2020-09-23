@@ -99,6 +99,7 @@ class DBHELPER {
   }) {
     return FirebaseFirestore.instance
         .collection('grades')
+        .orderBy('createdAt')
         .where(
           isTeacher ? 'teacherId' : 'usersIds',
           isEqualTo: isTeacher ? userId : null,
@@ -209,8 +210,31 @@ class DBHELPER {
         .where('teacherId', isEqualTo: _teacherId)
         .get();
     final _gradeDocRef = _gradeDocs.docs[0].reference;
-    _gradeDocRef.update({
-      'usersIds': FieldValue.arrayUnion([_studentId]),
-    });
+    _gradeDocRef.update(
+      {
+        'usersIds': FieldValue.arrayUnion([_studentId]),
+      },
+    );
   }
+
+  static void deleteGradeWithIds(List<String> gradeIds) {
+    gradeIds.forEach(
+      (id) async {
+        FirebaseFirestore.instance.collection('grades').doc(id).delete();
+        // TODO: Implement  with cloud functions for more security
+        final _grade =
+            await FirebaseFirestore.instance.collection('grades').doc(id).get();
+        final _gradeName = _grade.data()['gradeName'];
+        final _teacherId = _grade.data()['teacherId'];
+        final _toRemoveRequests = await FirebaseFirestore.instance
+            .collection('requests')
+            .where('gradeName', isEqualTo: _gradeName)
+            .where('teacherId', isEqualTo: _teacherId)
+            .get(); 
+        _toRemoveRequests.docs.forEach((request) {
+          request.reference.delete();
+        });
+      },
+    );
+  }                                                                    
 }

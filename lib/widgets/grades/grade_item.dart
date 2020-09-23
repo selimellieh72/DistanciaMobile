@@ -6,7 +6,7 @@ import 'package:edulb/screens/both/tab_screen.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
-class GradeItem extends StatefulWidget {
+class GradeItem extends StatelessWidget {
   final String gradeName;
 
   final String id;
@@ -23,27 +23,16 @@ class GradeItem extends StatefulWidget {
   });
 
   @override
-  _GradeItemState createState() => _GradeItemState();
-}
-
-class _GradeItemState extends State<GradeItem> {
-  bool _isSelected;
-  @override
-  void initState() {
-    _isSelected = false;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context);
     final appInfo = Provider.of<AppInfo>(context);
+
     return InkWell(
         onTap: appInfo.isEditting
-            ? () => setState(() => _isSelected = !_isSelected)
+            ? () => appInfo.addOrRemoveSelectedGradeId(id)
             : () {
                 Navigator.of(context)
-                    .pushNamed(TabsScreen.routeName, arguments: widget.id);
+                    .pushNamed(TabsScreen.routeName, arguments: id);
               },
         child: userData.isTeacher
             ? Column(
@@ -70,7 +59,7 @@ class _GradeItemState extends State<GradeItem> {
                                       ),
                                     ],
                                   ),
-                                  child: !_isSelected
+                                  child: !appInfo.selectedGradesIds.contains(id)
                                       ? Icon(
                                           MdiIcons.checkCircleOutline,
                                           size: 25,
@@ -96,7 +85,7 @@ class _GradeItemState extends State<GradeItem> {
                   FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      widget.discipline,
+                      discipline,
                       style: TextStyle(
                         color: Color.fromRGBO(42, 42, 42, 1),
                         fontWeight: FontWeight.w500,
@@ -109,7 +98,7 @@ class _GradeItemState extends State<GradeItem> {
                   FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      widget.gradeName,
+                      gradeName,
                       style: TextStyle(
                         color: Color.fromRGBO(42, 42, 42, 1),
                         fontWeight: FontWeight.w300,
@@ -131,7 +120,7 @@ class _GradeItemState extends State<GradeItem> {
                   FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      widget.discipline,
+                      discipline,
                       style: TextStyle(
                         color: Color.fromRGBO(42, 42, 42, 1),
                         fontWeight: FontWeight.w500,
