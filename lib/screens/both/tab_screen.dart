@@ -24,7 +24,7 @@ class _TabsScreenState extends State<TabsScreen> {
       userData = Provider.of<UserData>(context);
       gradeId = ModalRoute.of(context).settings.arguments;
       _pages = [
-        HomeworkScreen(),
+        HomeworkScreen(gradeId),
         ExamsScreen(),
       ];
       hasInit = true;

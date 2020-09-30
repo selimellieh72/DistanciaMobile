@@ -7,11 +7,13 @@ import 'package:provider/provider.dart';
 import 'homework_item.dart';
 
 class HomeworksList extends StatelessWidget {
+  final String gradeId;
+
+  const HomeworksList(this.gradeId);
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserData>(context);
     return StreamBuilder<QuerySnapshot>(
-      stream: DBHELPER.fetchHomeworks(userData.id),
+      stream: DBHELPER.fetchHomeworks(gradeId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
