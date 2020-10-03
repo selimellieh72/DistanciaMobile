@@ -1,25 +1,28 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:edulb/application/auth/auth_bloc.dart';
 
-import 'package:edulb/models/user_data.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edulb/widgets/grades/edit_widget.dart';
 import 'package:edulb/widgets/others/app_drawer.dart';
+import 'package:edulb/widgets/core/user_bloc_get_user_data.dart';
 
 class StackWidget extends StatelessWidget {
   final screenTitle;
   final Widget widget;
+  final bool showEdit;
   StackWidget({
-    this.screenTitle,
-    this.widget,
+    @required this.screenTitle,
+    @required this.widget,
+    this.showEdit = true,
   });
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserData>(context);
+    final userData = context.bloc<AuthBloc>().state.getUserData();
     return Stack(
       children: [
         Positioned(
           right: 5,
-          child: userData.isTeacher ? EditWidget() : Container(),
+          child: userData.isTeacher && showEdit ? EditWidget() : Container(),
         ),
         Column(
           children: [

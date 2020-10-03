@@ -1,7 +1,11 @@
 import 'dart:io';
 
+import 'package:edulb/application/auth/auth_bloc.dart';
+
 import 'package:edulb/helpers/custom_builders.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edulb/widgets/auth/auth_form.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +13,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class AuthScreen extends StatefulWidget {
+  static const routeName = '/auth';
   @override
   _AuthScreenState createState() => _AuthScreenState();
 }
@@ -33,7 +38,7 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         final _userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
-        _userCredential.user.uid;
+
         final _ref = FirebaseStorage.instance
             .ref()
             .child('user_profile_pics')
@@ -52,17 +57,14 @@ class _AuthScreenState extends State<AuthScreen> {
             'imageURL': _imageURL,
           },
         );
+        print('here');
       }
+      context.bloc<AuthBloc>().add(AuthEvent.checkAuthStatus());
+      print('here');
+      Navigator.of(context).pushNamed('/');
     } on FirebaseAuthException catch (error) {
       setLoading(false);
-      Scaffold.of(ctx).showSnackBar(
-        SnackBar(
-          content: Text(
-            error.message,
-          ),
-          backgroundColor: Theme.of(context).errorColor,
-        ),
-      );
+      FlushbarHelper.createError(message: error.message).show(context);
     } catch (error) {
       setLoading(false);
       CustomBuilders.showErrorSnackBar(context);

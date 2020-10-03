@@ -39,4 +39,10 @@ class AppInfo with ChangeNotifier {
     _isEditting = false;
     notifyListeners();
   }
+
+  void resetAppInfo() {
+    _isEditting = false;
+    _isDrawerOpened = false;
+    _selectedGradesIds = [];
+  }
 }

@@ -5,6 +5,7 @@ import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/helpers/does_not_exist_exception.dart';
 import 'package:edulb/widgets/others/form_label.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 
 class RequestForm extends StatefulWidget {
@@ -20,20 +21,6 @@ class _RequestFormState extends State<RequestForm> {
   final _formKey = GlobalKey<FormState>();
 
   var _isLoading = false;
-  void _onError(Exception error) async {
-    setState(() {
-      _isLoading = false;
-    });
-    bool _isExited = await CustomBuilders.showErrorDialog(
-      context: context,
-      title: 'Oops!',
-      content: error.toString(),
-    );
-
-    if (_isExited) {
-      Navigator.of(context).pop();
-    }
-  }
 
   void _saveForm(BuildContext context) async {
     if (!_formKey.currentState.validate()) {
@@ -50,11 +37,13 @@ class _RequestFormState extends State<RequestForm> {
         _teacherEmail,
         _gradeName,
       );
-      Navigator.of(context).pop();
+      FlushbarHelper.createSuccess(message: 'Succesfully sent the request!');
     } on DoesNotExistException catch (error) {
-      _onError(error);
+      Navigator.of(context).pop();
+      FlushbarHelper.createError(message: error.message).show(context);
     } on AlreadyExistsException catch (error) {
-      _onError(error);
+      Navigator.of(context).pop();
+      FlushbarHelper.createError(message: error.message).show(context);
     }
   }
 

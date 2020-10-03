@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:edulb/helpers/db_helper.dart';
-import 'package:edulb/models/pending_request.dart';
-import 'package:edulb/models/user_data.dart';
+import 'package:edulb/domain/pending_request.dart';
+import 'package:edulb/domain/user_data.dart';
 import 'package:edulb/widgets/requests/request_item.dart';
 
 class RequestItems extends StatelessWidget {
@@ -19,7 +19,11 @@ class RequestItems extends StatelessWidget {
           );
         }
         final _requests = snapshot.data;
-
+        if (_requests.length == 0) {
+          return Center(
+            child: Text('No requests available'),
+          );
+        }
         return ListView.builder(
           itemCount: _requests.length,
           itemBuilder: (_, i) => FutureBuilder<UserData>(

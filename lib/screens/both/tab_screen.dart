@@ -1,11 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:edulb/models/user_data.dart';
-import 'package:edulb/screens/both/homework_screen.dart';
-import 'package:edulb/screens/students/exams_screen.dart';
+import 'package:edulb/application/auth/auth_bloc.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/widgets/homeworks/add_homework.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:edulb/domain/user_data.dart';
+import 'package:edulb/screens/both/homework_screen.dart';
+import 'package:edulb/screens/students/exams_screen.dart';
+import 'package:edulb/widgets/core/user_bloc_get_user_data.dart';
 
 class TabsScreen extends StatefulWidget {
   static const routeName = '/tabs-screen';
@@ -21,7 +24,8 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void didChangeDependencies() {
     if (hasInit == false) {
-      userData = Provider.of<UserData>(context);
+      userData = context.bloc<AuthBloc>().state.getUserData();
+
       gradeId = ModalRoute.of(context).settings.arguments;
       _pages = [
         HomeworkScreen(gradeId),
@@ -86,6 +90,15 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
         ],
       ),
+      floatingActionButton: _selectedPageIndex == 0
+          ? FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () => CustomBuilders.showResponsiveBottomSheet(
+                context: context,
+                child: AddHomework(gradeId),
+              ),
+            )
+          : Container(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/helpers/word_filtering_helper.dart';
 import 'package:edulb/widgets/others/form_label.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 
 class AddHomeworkForm extends StatefulWidget {
@@ -36,6 +37,8 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
         instructions: _instructions,
       );
       Navigator.of(context).pop();
+      FlushbarHelper.createSuccess(message: 'Homework added successfuly')
+          .show(context);
     } catch (error) {
       // CustomBuilders.showErrorSnackBar(context);
       print(error);

@@ -1,7 +1,9 @@
-import 'package:edulb/models/app_info.dart';
-import 'package:edulb/models/user_data.dart';
-import 'package:flutter/material.dart';
+import 'package:edulb/application/auth/auth_bloc.dart';
 
+import 'package:edulb/domain/app_info.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edulb/screens/both/tab_screen.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +26,10 @@ class GradeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserData>(context);
+    final userData = context.bloc<AuthBloc>().state.maybeMap(
+          authenticated: (state) => state.user,
+          orElse: () {},
+        );
     final appInfo = Provider.of<AppInfo>(context);
 
     return InkWell(
@@ -32,7 +37,7 @@ class GradeItem extends StatelessWidget {
           ? () => appInfo.addOrRemoveSelectedGradeId(id)
           : () {
               Navigator.of(context)
-                  .pushNamed(TabsScreen.routeName, arguments: id);
+                  .pushReplacementNamed(TabsScreen.routeName, arguments: id);
             },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

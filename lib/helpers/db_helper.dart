@@ -4,21 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:edulb/helpers/already_exists_exception.dart';
 import 'package:edulb/helpers/does_not_exist_exception.dart';
-import 'package:edulb/models/pending_request.dart';
-import 'package:edulb/models/user_data.dart';
-import 'package:edulb/models/grade.dart';
+import 'package:edulb/domain/pending_request.dart';
+import 'package:edulb/domain/user_data.dart';
+import 'package:edulb/domain/grade.dart';
 
 class DBHELPER {
-  static Stream<UserData> streamUser(String id) {
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(id)
-        .snapshots()
-        .map(
-          (snap) => UserData.fromFirestore(snap),
-        );
-  }
-
   static Future<UserData> fetchUser(String id) async {
     final _userSnap =
         await FirebaseFirestore.instance.collection('users').doc(id).get();
@@ -220,10 +210,11 @@ class DBHELPER {
   static void deleteGradeWithIds(List<String> gradeIds) {
     gradeIds.forEach(
       (id) async {
-        FirebaseFirestore.instance.collection('grades').doc(id).delete();
-        // TODO: Implement  with cloud functions for more security
         final _grade =
             await FirebaseFirestore.instance.collection('grades').doc(id).get();
+        FirebaseFirestore.instance.collection('grades').doc(id).delete();
+        // TODO: Implement  with cloud functions for more security
+
         final _gradeName = _grade.data()['gradeName'];
         final _teacherId = _grade.data()['teacherId'];
         final _toRemoveRequests = await FirebaseFirestore.instance

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
 
-class UserData with ChangeNotifier {
+class UserData {
   String id;
 
   String firstName;
@@ -32,5 +31,8 @@ class UserData with ChangeNotifier {
       _data == null ? '' : _data['imageURL'] ?? '',
       _data == null ? null : _data['isTeacher'] ?? null,
     );
+  }
+  factory UserData.empty() {
+    return UserData('', '', '', '', '', null);
   }
 }

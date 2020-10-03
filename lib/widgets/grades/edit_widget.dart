@@ -1,4 +1,4 @@
-import 'package:edulb/models/app_info.dart';
+import 'package:edulb/domain/app_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

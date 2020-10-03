@@ -1,6 +1,13 @@
 import 'dart:async';
-import 'package:edulb/models/app_info.dart';
-import 'package:edulb/models/user_data.dart';
+import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edulb/application/auth/auth_bloc.dart';
+
+import 'package:edulb/domain/app_info.dart';
+import 'package:edulb/infrastracture/auth/firebase_auth.dart';
+import 'package:edulb/infrastracture/requests/firebase_requests.dart';
+import 'package:edulb/injectable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:edulb/screens/both/grades_screen.dart';
@@ -42,6 +49,7 @@ class _AppDrawerState extends State<AppDrawer>
   }
 
   void onIconPressed() {
+    print('pressed');
     final animationStatus = _animationController.status;
     final isAnimationCompleted = animationStatus == AnimationStatus.completed;
 
@@ -51,13 +59,18 @@ class _AppDrawerState extends State<AppDrawer>
       Provider.of<AppInfo>(context, listen: false).setIsDrawerOpened(false);
     } else {
       isSideBarOpenedSink.add(true);
+
       _animationController.forward();
-      Provider.of<AppInfo>(context, listen: false).setIsDrawerOpened(true);
+      final appInfo = Provider.of<AppInfo>(context, listen: false);
+      appInfo.setIsDrawerOpened(true);
+      if (appInfo.isEditting) {
+        appInfo.setIsEditting();
+      }
     }
   }
 
   Widget _buildResponsiveFlatButton(
-      {Widget button, String title, Function onPressed, Icon icon}) {
+      {Widget button, Widget title, Function onPressed, Icon icon}) {
     return LayoutBuilder(
       builder: (ctx, constraints) {
         final maxWidth = constraints.maxWidth;
@@ -68,7 +81,7 @@ class _AppDrawerState extends State<AppDrawer>
           return FlatButton.icon(
             onPressed: onPressed,
             icon: icon,
-            label: Text(title),
+            label: title,
           );
         }
         return Container();
@@ -79,7 +92,10 @@ class _AppDrawerState extends State<AppDrawer>
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final _isTeacher = Provider.of<UserData>(context).isTeacher;
+    final _isTeacher = context.bloc<AuthBloc>().state.maybeMap(
+          authenticated: (authenticated) => authenticated.user.isTeacher,
+          orElse: () {},
+        );
     return StreamBuilder<bool>(
       initialData: false,
       stream: isSideBarOpenedStream,
@@ -107,17 +123,42 @@ class _AppDrawerState extends State<AppDrawer>
                       ),
                       if (_isTeacher)
                         _buildResponsiveFlatButton(
-                          title: 'Grades',
+                          title: Text('Grades'),
                           onPressed: () => Navigator.of(context)
                               .pushReplacementNamed(GradesScreen.routeName),
                           icon: Icon(Icons.grade),
                         ),
                       if (_isTeacher)
-                        _buildResponsiveFlatButton(
-                          title: 'Requests',
-                          onPressed: () => Navigator.of(context)
-                              .pushNamed(RequestsScreen.routeName),
-                          icon: Icon(Icons.record_voice_over),
+                        FutureBuilder(
+                          future:
+                              getIt.get<FirebaseRequests>().getRequestsLength(),
+                          builder: (_, snapshot) {
+                            return Badge(
+                                showBadge: !(snapshot.connectionState ==
+                                        ConnectionState.waiting ||
+                                    snapshot.data <= 0),
+                                position: BadgePosition.bottomEnd(
+                                  end: 10,
+                                  bottom: 25,
+                                ),
+                                borderRadius: 0.5,
+                                badgeContent: Text(
+                                  snapshot.connectionState ==
+                                          ConnectionState.waiting
+                                      ? ''
+                                      : snapshot.data.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 10, color: Colors.white),
+                                ),
+                                child: _buildResponsiveFlatButton(
+                                  title: Text(
+                                    'Requests',
+                                  ),
+                                  onPressed: () => Navigator.of(context)
+                                      .pushNamed(RequestsScreen.routeName),
+                                  icon: Icon(Icons.record_voice_over),
+                                ));
+                          },
                         ),
                       Spacer(),
                       Align(

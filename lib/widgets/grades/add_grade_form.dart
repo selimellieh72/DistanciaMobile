@@ -1,13 +1,17 @@
+import 'package:edulb/application/auth/auth_bloc.dart';
+
 import 'package:edulb/helpers/already_exists_exception.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/helpers/db_helper.dart';
-import 'package:edulb/models/user_data.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flushbar/flushbar_helper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edulb/widgets/others/form_label.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:edulb/helpers/word_filtering_helper.dart';
-import 'package:provider/provider.dart';
+import '../core/user_bloc_get_user_data.dart';
 
 class AddGradeForm extends StatefulWidget {
   @override
@@ -46,12 +50,15 @@ class _AddGradeFormState extends State<AddGradeForm> {
 
     try {
       await DBHELPER.addGrade(
-        isTeacher: Provider.of<UserData>(context, listen: false).isTeacher,
+        isTeacher: context.bloc<AuthBloc>().state.getUserData().isTeacher,
         gradeName: _gradeName,
         discipline: _discipline,
         teacherId: FirebaseAuth.instance.currentUser.uid,
       );
       Navigator.of(context).pop();
+      FlushbarHelper.createSuccess(
+              message: 'Successfully added grade \'$_gradeName\'.')
+          .show(context);
     } on AlreadyExistsException catch (error) {
       setState(() {
         _isLoading = false;
@@ -68,7 +75,10 @@ class _AddGradeFormState extends State<AddGradeForm> {
       setState(() {
         _isLoading = false;
       });
-      CustomBuilders.showErrorSnackBar(context);
+      print(_);
+      Builder(builder: (context) {
+        CustomBuilders.showErrorSnackBar(context);
+      });
     }
   }
 

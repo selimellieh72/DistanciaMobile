@@ -1,6 +1,9 @@
+import 'package:edulb/application/auth/auth_bloc.dart';
+import '../core/user_bloc_get_user_data.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:edulb/models/user_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:edulb/domain/user_data.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -17,32 +20,33 @@ class Profile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Consumer<UserData>(
-                builder: (_, data, __) => Flexible(
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (_, state) => Flexible(
                   child: LayoutBuilder(builder: (_, constraints) {
                     final maxWidth = constraints.maxWidth;
                     return CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: maxWidth >= 45 ? 45 : 0,
-                      backgroundImage: data.imageUrl == ''
-                          ? null
-                          : NetworkImage(
-                              data.imageUrl,
-                            ),
+                      backgroundImage: NetworkImage(
+                        state.getUserData().imageUrl,
+                      ),
                     );
                   }),
                 ),
               ),
               Expanded(
                 child: FittedBox(
-                  child: Consumer<UserData>(
-                    builder: (_, data, __) => Text(
-                      '${data.firstName} ${data.lastName}',
-                      style: TextStyle(
-                        color: Color.fromRGBO(42, 42, 42, 1),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                  child: BlocBuilder<AuthBloc, AuthState>(
+                    builder: (_, state) {
+                      final UserData userData = state.getUserData();
+                      return Text(
+                        '${userData.firstName} ${userData.lastName}',
+                        style: TextStyle(
+                          color: Color.fromRGBO(42, 42, 42, 1),
+                          fontWeight: FontWeight.w700,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
