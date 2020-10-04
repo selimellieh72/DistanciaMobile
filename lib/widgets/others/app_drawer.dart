@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:badges/badges.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
+
 import 'package:edulb/application/auth/auth_bloc.dart';
 
 import 'package:edulb/domain/app_info.dart';
-import 'package:edulb/infrastracture/auth/firebase_auth.dart';
+import 'package:edulb/domain/requests/I_requests.dart';
+
 import 'package:edulb/infrastracture/requests/firebase_requests.dart';
 import 'package:edulb/injectable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,13 +58,13 @@ class _AppDrawerState extends State<AppDrawer>
     if (isAnimationCompleted) {
       isSideBarOpenedSink.add(false);
       _animationController.reverse();
-      Provider.of<AppInfo>(context, listen: false).setIsDrawerOpened(false);
+      context.bloc<AppDrawerBloc>().add(AppDrawerEvent.drawerClosed());
     } else {
       isSideBarOpenedSink.add(true);
 
       _animationController.forward();
       final appInfo = Provider.of<AppInfo>(context, listen: false);
-      appInfo.setIsDrawerOpened(true);
+      context.bloc<AppDrawerBloc>().add(AppDrawerEvent.drawerOpened());
       if (appInfo.isEditting) {
         appInfo.setIsEditting();
       }
@@ -129,9 +131,10 @@ class _AppDrawerState extends State<AppDrawer>
                           icon: Icon(Icons.grade),
                         ),
                       if (_isTeacher)
-                        FutureBuilder(
-                          future:
-                              getIt.get<FirebaseRequests>().getRequestsLength(),
+                        FutureBuilder<int>(
+                          future: getIt
+                              .get<IRequestsRepository>()
+                              .getRequestsLength(),
                           builder: (_, snapshot) {
                             return Badge(
                                 showBadge: !(snapshot.connectionState ==

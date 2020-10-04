@@ -4,9 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:edulb/helpers/already_exists_exception.dart';
 import 'package:edulb/helpers/does_not_exist_exception.dart';
-import 'package:edulb/domain/pending_request.dart';
+import 'package:edulb/domain/requests/pending_request.dart';
 import 'package:edulb/domain/user_data.dart';
-import 'package:edulb/domain/grade.dart';
+import 'package:edulb/domain/grades/grade.dart';
 
 class DBHELPER {
   static Future<UserData> fetchUser(String id) async {

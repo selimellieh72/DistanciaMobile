@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:edulb/helpers/db_helper.dart';
-import 'package:edulb/domain/pending_request.dart';
+import 'package:edulb/domain/requests/pending_request.dart';
 import 'package:edulb/domain/user_data.dart';
 import 'package:edulb/widgets/requests/request_item.dart';
 

@@ -1,4 +1,7 @@
+import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 import 'package:edulb/application/auth/auth_bloc.dart';
+import 'package:edulb/application/grades/grades_bloc.dart';
+import 'package:edulb/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -52,24 +55,36 @@ class _GradesScreenState extends State<GradesScreen> {
       appBar: AppBar(
         toolbarHeight: 1,
       ),
-      body: StackWidget(
-        screenTitle: 'Grades',
-        widget: GradesList(setShowEdit),
-        showEdit: _showEdit,
+      body: BlocProvider(
+        create: (_) =>
+            getIt.get<GradesBloc>()..add(GradesEvent.watchGradesStarted()),
+        child: BlocBuilder<GradesBloc, GradesState>(
+          builder: (_, state) => StackWidget(
+            screenTitle: 'Grades',
+            widget: GradesList(),
+            showEdit: state.maybeMap(
+              gradesLoaded: (s) => s.grades.length == 0 ? false : true,
+              orElse: () => false,
+            ),
+          ),
+        ),
       ),
-      floatingActionButton: Consumer<AppInfo>(
-        builder: (_, appInfo, ch) {
-          print(appInfo.isDrawerOpened.toString() + " drawer");
-          print(appInfo.isEditting.toString() + " edit mode");
-          if (appInfo.isEditting || appInfo.isDrawerOpened) {
-            print('here');
-            return Container();
-          }
-          return FloatingActionButton(
-            onPressed: () => _addButtonHandler(userData.isTeacher, context),
-            child: Icon(Icons.add),
-          );
-        },
+      floatingActionButton: BlocBuilder<AppDrawerBloc, AppDrawerState>(
+        builder: (_, state) => Consumer<AppInfo>(
+          builder: (_, appInfo, ch) {
+            print(state);
+            return state.map(
+              closeDrawer: (_) => !appInfo.isEditting
+                  ? FloatingActionButton(
+                      onPressed: () =>
+                          _addButtonHandler(userData.isTeacher, context),
+                      child: Icon(Icons.add),
+                    )
+                  : Container(),
+              openDrawer: (_) => Container(),
+            );
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

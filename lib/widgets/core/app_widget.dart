@@ -1,3 +1,4 @@
+import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 import 'package:edulb/application/auth/auth_bloc.dart';
 
 import 'package:edulb/domain/app_info.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               getIt.get<AuthBloc>()..add(AuthEvent.checkAuthStatus()),
+        ),
+        BlocProvider(
+          create: (_) => AppDrawerBloc(),
         ),
       ],
       child: MultiProvider(

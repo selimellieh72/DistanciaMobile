@@ -6,5 +6,6 @@ import 'package:injectable/injectable.dart';
 abstract class FirebaseInjectableModule {
   @lazySingleton
   FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
-  FirebaseFirestore get firebaseFirestor => FirebaseFirestore.instance;
+  @lazySingleton
+  FirebaseFirestore get firebaseFirestore => FirebaseFirestore.instance;
 }
