@@ -7,6 +7,7 @@ import 'package:edulb/injectable.dart';
 import 'package:edulb/screens/both/auth_screen.dart';
 import 'package:edulb/screens/both/grades_screen.dart';
 import 'package:edulb/screens/both/home.dart';
+import 'package:edulb/screens/both/homework_screen.dart';
 import 'package:edulb/screens/both/splash_screen.dart';
 import 'package:edulb/screens/both/tab_screen.dart';
 import 'package:edulb/screens/teachers/requests.dart';
@@ -55,19 +56,15 @@ class MyApp extends StatelessWidget {
                   ),
               textTheme: ThemeData.light().textTheme.copyWith(
                     headline6: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
                       fontWeight: FontWeight.w600,
-                      fontSize: 30,
-                      color: Color.fromRGBO(42, 42, 42, 1),
                     ),
                     subtitle2: TextStyle(
-                      fontFamily: 'OpenSans',
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
-                    bodyText1: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 16,
-                    ),
+                    bodyText1: TextStyle(fontSize: 15, color: Colors.white),
                   ),
             ),
             routes: {
@@ -76,6 +73,7 @@ class MyApp extends StatelessWidget {
               RequestsScreen.routeName: (_) => RequestsScreen(),
               AuthScreen.routeName: (_) => AuthScreen(),
               Home.routeName: (_) => Home(),
+              HomeworkScreen.routeName: (_) => HomeworkScreen(),
             },
             home: SplashScreen()),
       ),

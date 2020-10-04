@@ -3,7 +3,6 @@ import 'package:badges/badges.dart';
 import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 
 import 'package:edulb/application/auth/auth_bloc.dart';
-import 'package:edulb/customIcon/menu_icon.dart';
 
 import 'package:edulb/domain/app_info.dart';
 import 'package:edulb/domain/requests/I_requests.dart';
