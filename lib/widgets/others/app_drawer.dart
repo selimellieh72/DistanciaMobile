@@ -3,12 +3,13 @@ import 'package:badges/badges.dart';
 import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 
 import 'package:edulb/application/auth/auth_bloc.dart';
+import 'package:edulb/customIcon/menu_icon.dart';
 
 import 'package:edulb/domain/app_info.dart';
 import 'package:edulb/domain/requests/I_requests.dart';
 
-import 'package:edulb/infrastracture/requests/firebase_requests.dart';
 import 'package:edulb/injectable.dart';
+import 'package:edulb/screens/both/home.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -123,6 +124,12 @@ class _AppDrawerState extends State<AppDrawer>
                       SizedBox(
                         height: 10,
                       ),
+                      _buildResponsiveFlatButton(
+                        title: Text('home'),
+                        onPressed: () => Navigator.of(context)
+                            .pushReplacementNamed(Home.routeName),
+                        icon: Icon(Icons.home),
+                      ),
                       if (_isTeacher)
                         _buildResponsiveFlatButton(
                           title: Text('Grades'),
@@ -184,7 +191,7 @@ class _AppDrawerState extends State<AppDrawer>
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         Container(
                           alignment: Alignment.topLeft,
@@ -194,7 +201,7 @@ class _AppDrawerState extends State<AppDrawer>
                             progress: _animationController.view,
                             size: 30,
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),

@@ -52,9 +52,7 @@ class _GradesScreenState extends State<GradesScreen> {
     Provider.of<AppInfo>(context, listen: false).resetAppInfo();
     final userData = context.bloc<AuthBloc>().state.getUserData();
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 1,
-      ),
+      backgroundColor: Color.fromRGBO(222, 222, 222, 1),
       body: BlocProvider(
         create: (_) =>
             getIt.get<GradesBloc>()..add(GradesEvent.watchGradesStarted()),

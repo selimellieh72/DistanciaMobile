@@ -81,6 +81,8 @@ flutter:
         - asset: assets/fonts/Poppins-Regular.ttf
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 700
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans-Regular.ttf
@@ -88,6 +90,9 @@ flutter:
           weight: 700
         - asset: assets/fonts/OpenSans-Italic.ttf
           style: italic
+    - family:  Customicons
+      fonts:
+         - asset: assets/fonts/Customicons.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
