@@ -1,3 +1,4 @@
+import 'package:edulb/domain/homeworks/homework_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,11 +47,20 @@ class DBHELPER {
     }
   }
 
-  static Stream<QuerySnapshot> fetchHomeworks(String gradeId) {
+  static Stream<List<HomeworkItem>> fetchHomeworks(String gradeId) {
     return FirebaseFirestore.instance
         .collection('grades/$gradeId/homeworks')
         .orderBy('createdAt')
-        .snapshots();
+        .snapshots()
+        .map(
+          (snap) => snap.docs
+              .map(
+                (document) => HomeworkItem.fromFirestore(document),
+              )
+              .toList()
+              .reversed
+              .toList(),
+        );
   }
 
   static Future<void> addGrade({

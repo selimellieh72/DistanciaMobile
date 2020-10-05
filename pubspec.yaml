@@ -44,6 +44,7 @@ dependencies:
   freezed_annotation: ^0.12.0
   dartz: ^0.9.1
   badges: ^1.1.3
+  gradient_widgets: ^0.5.2
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +84,8 @@ flutter:
           weight: 700
         - asset: assets/fonts/Poppins-SemiBold.ttf
           weight: 600
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans-Regular.ttf
@@ -90,9 +93,7 @@ flutter:
           weight: 700
         - asset: assets/fonts/OpenSans-Italic.ttf
           style: italic
-    - family:  Customicons
-      fonts:
-         - asset: assets/fonts/Customicons.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 

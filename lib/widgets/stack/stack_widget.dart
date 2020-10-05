@@ -1,62 +1,73 @@
-import 'package:edulb/application/auth/auth_bloc.dart';
-
+import 'package:edulb/helpers/custom_builders.dart';
+import 'package:edulb/widgets/drawer/app_drawer.dart';
+import 'package:edulb/widgets/drawer/drawer_icon.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:edulb/widgets/grades/edit_widget.dart';
-import 'package:edulb/widgets/others/app_drawer.dart';
-import 'package:edulb/widgets/core/user_bloc_get_user_data.dart';
 
 class StackWidget extends StatelessWidget {
-  final screenTitle;
+  final String title;
   final Widget widget;
-  final bool showEdit;
-  StackWidget({
-    @required this.screenTitle,
-    @required this.widget,
-    this.showEdit = true,
-  });
+  final Widget addWidget;
+  StackWidget(
+    this.title,
+    this.widget,
+    this.addWidget,
+  );
   @override
   Widget build(BuildContext context) {
-    final userData = context.bloc<AuthBloc>().state.getUserData();
-    return Stack(
-      children: [
-        Positioned(
-          right: 5,
-          child: userData.isTeacher && showEdit ? EditWidget() : Container(),
-        ),
-        Column(
-          children: [
-            SizedBox(
-              height: 45,
-            ),
-            Row(
+    final screenSize = MediaQuery.of(context).size;
+    return Scaffold(
+      backgroundColor: Color.fromRGBO(222, 222, 222, 1),
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: Column(
               children: [
                 SizedBox(
-                  width: 10,
+                  height: screenSize.height * 0.02,
                 ),
-                Text(
-                  screenTitle,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
+                Row(
+                  children: [
+                    DrawerIcon(),
+                    Expanded(
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(fontSize: 40),
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
-            Divider(
-              height: 2,
-              color: Colors.black,
-              indent: 10,
-              endIndent: 10,
-              thickness: 0.5,
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+            height: double.infinity,
+            margin: EdgeInsets.only(top: screenSize.height * 0.11),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
             ),
-            SizedBox(
-              height: 15,
-            ),
-            Expanded(
-              child: widget,
-            ),
-          ],
+            child: widget,
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => CustomBuilders.showResponsiveBottomSheet(
+          context: context,
+          child: addWidget,
         ),
-        AppDrawer(),
-      ],
+      ),
+      drawer: AppDrawer(),
     );
   }
 }

@@ -1,5 +1,5 @@
+import 'package:edulb/domain/homeworks/homework_item.dart' as domain;
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:edulb/helpers/db_helper.dart';
 
@@ -11,7 +11,7 @@ class HomeworksList extends StatelessWidget {
   const HomeworksList(this.gradeId);
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
+    return StreamBuilder<List<domain.HomeworkItem>>(
       stream: DBHELPER.fetchHomeworks(gradeId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -19,7 +19,7 @@ class HomeworksList extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        final _homeworks = snapshot.data.docs.reversed.toList();
+        final _homeworks = snapshot.data;
         if (_homeworks.isEmpty) {
           return Center(
             child: Text('No homeworks available - Please add one.'),
@@ -28,9 +28,7 @@ class HomeworksList extends StatelessWidget {
         return ListView.builder(
           itemCount: _homeworks.length,
           itemBuilder: (_, i) => HomeworkItem(
-            title: _homeworks[i].data()['title'],
-            instructions: _homeworks[i].data()['instructions'],
-            date: _homeworks[i].data()['createdAt'].toDate(),
+            _homeworks[i],
           ),
         );
       },

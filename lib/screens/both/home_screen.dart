@@ -1,10 +1,11 @@
+import 'package:edulb/widgets/drawer/drawer_icon.dart';
 import 'package:edulb/widgets/homeWidgets/calendar_button.dart';
 import 'package:edulb/widgets/homeWidgets/chat_button.dart';
 import 'package:edulb/widgets/homeWidgets/classes_button.dart';
 import 'package:edulb/widgets/homeWidgets/exams_button.dart';
 import 'package:edulb/widgets/homeWidgets/grade_button.dart';
 import 'package:edulb/widgets/homeWidgets/homeworks_button.dart';
-import 'package:edulb/widgets/others/app_drawer.dart';
+import 'package:edulb/widgets/drawer/app_drawer.dart';
 
 import 'package:flutter/material.dart';
 
@@ -25,12 +26,14 @@ class Home extends StatelessWidget {
                 SizedBox(
                   height: screenSize.height * 0.07,
                 ),
-                Text(
-                  'Home',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .copyWith(fontSize: 50),
+                Row(
+                  children: [
+                    DrawerIcon(),
+                    Text(
+                      'Home',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ],
                 )
               ],
             ),
@@ -80,9 +83,9 @@ class Home extends StatelessWidget {
               ],
             ),
           ),
-          AppDrawer(),
         ],
       ),
+      drawer: AppDrawer(),
     );
   }
 }

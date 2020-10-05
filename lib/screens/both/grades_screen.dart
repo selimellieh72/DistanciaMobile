@@ -54,21 +54,21 @@ class _GradesScreenState extends State<GradesScreen> {
         print(editState);
         return Scaffold(
           backgroundColor: Color.fromRGBO(222, 222, 222, 1),
-          body: editState.maybeMap(
-            gradeLoading: (_) => Center(
-              child: CircularProgressIndicator(),
-            ),
-            orElse: () => BlocBuilder<GradesBloc, GradesState>(
-              builder: (_, state) => StackWidget(
-                screenTitle: 'Grades',
-                widget: GradesList(),
-                showEdit: state.maybeMap(
-                  gradesLoaded: (s) => s.grades.length != 0,
-                  orElse: () => false,
-                ),
-              ),
-            ),
-          ),
+          // body: editState.maybeMap(
+          //   gradeLoading: (_) => Center(
+          //     child: CircularProgressIndicator(),
+          //   ),
+          //   // orElse: () => BlocBuilder<GradesBloc, GradesState>(
+          //   //   builder: (_, state) => StackWidget(
+          //   //     screenTitle: 'Grades',
+          //   //     widget: GradesList(),
+          //   //     showEdit: state.maybeMap(
+          //   //       gradesLoaded: (s) => s.grades.length != 0,
+          //   //       orElse: () => false,
+          //   //     ),
+          //   //   ),
+          //   ),
+          // ),
           floatingActionButton: BlocBuilder<AppDrawerBloc, AppDrawerState>(
             builder: (_, state) => state.map(
               closeDrawer: (_) => editState.maybeMap(

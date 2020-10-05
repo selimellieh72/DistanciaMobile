@@ -77,7 +77,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
             FormLabel('Instructions'),
             TextFormField(
               maxLines: 4,
-              maxLength: 160,
+              maxLength: 200,
               decoration: InputDecoration(
                 hintText: 'Page 130 do exercise 1.',
               ),

@@ -6,7 +6,8 @@ import 'package:edulb/application/grades/grades_bloc.dart';
 import 'package:edulb/injectable.dart';
 import 'package:edulb/screens/both/auth_screen.dart';
 import 'package:edulb/screens/both/grades_screen.dart';
-import 'package:edulb/screens/both/home.dart';
+import 'package:edulb/screens/both/home_screen.dart';
+import 'package:edulb/screens/both/homework_details_screen.dart';
 import 'package:edulb/screens/both/homework_screen.dart';
 import 'package:edulb/screens/both/splash_screen.dart';
 import 'package:edulb/screens/both/tab_screen.dart';
@@ -56,7 +57,28 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
-                  bodyText1: TextStyle(fontSize: 15, color: Colors.white),
+                  bodyText1: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                  headline5: TextStyle(
+                    color: Color.fromRGBO(42, 42, 42, 1),
+                    fontSize: 50,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  bodyText2: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  headline1: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(42, 42, 42, 1),
+                  ),
                 ),
           ),
           routes: {
@@ -77,6 +99,7 @@ class MyApp extends StatelessWidget {
             AuthScreen.routeName: (_) => AuthScreen(),
             Home.routeName: (_) => Home(),
             HomeworkScreen.routeName: (_) => HomeworkScreen(),
+            HomeworkDetailsScreen.routeName: (_) => HomeworkDetailsScreen(),
           },
           home: SplashScreen()),
     );

@@ -1,11 +1,10 @@
 import 'package:edulb/application/auth/auth_bloc.dart';
 
 import 'package:edulb/screens/both/auth_screen.dart';
+import 'package:edulb/screens/both/home_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'home.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
