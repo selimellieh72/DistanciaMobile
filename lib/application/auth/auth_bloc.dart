@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
-import 'package:edulb/domain/auth/i_auth.dart';
+import 'package:edulb/domain/auth/i_auth_repository.dart';
 import 'package:edulb/domain/user_data.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edulb/domain/auth/i_auth.dart';
+import 'package:edulb/domain/auth/i_auth_repository.dart';
 
 import 'package:edulb/injectable.dart';
 

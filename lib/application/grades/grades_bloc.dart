@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:edulb/domain/grades/grade.dart';
 import 'package:edulb/domain/grades/grades_failures.dart';
-import 'package:edulb/domain/grades/i_grades.dart';
+import 'package:edulb/domain/grades/i_grades_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 

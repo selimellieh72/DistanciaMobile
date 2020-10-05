@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:edulb/domain/user_data.dart';
-import 'package:edulb/screens/both/homework_screen.dart';
 import 'package:edulb/screens/students/exams_screen.dart';
 import 'package:edulb/widgets/core/user_bloc_get_user_data.dart';
 

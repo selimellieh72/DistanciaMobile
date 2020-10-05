@@ -3,7 +3,7 @@ import 'package:edulb/application/auth/auth_bloc.dart';
 import 'package:edulb/helpers/already_exists_exception.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/helpers/db_helper.dart';
-import 'package:flushbar/flushbar.dart';
+
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edulb/widgets/others/form_label.dart';
@@ -76,9 +76,8 @@ class _AddGradeFormState extends State<AddGradeForm> {
         _isLoading = false;
       });
       print(_);
-      Builder(builder: (context) {
-        CustomBuilders.showErrorSnackBar(context);
-      });
+
+      CustomBuilders.showErrorSnackBar(context);
     }
   }
 

@@ -2,7 +2,7 @@ import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/widgets/homeworks/add_homework.dart';
 import 'package:edulb/widgets/homeworks/homeworks_list.dart';
 import 'package:edulb/widgets/others/app_drawer.dart';
-import 'package:edulb/widgets/stack/stack_widget.dart';
+
 import 'package:flutter/material.dart';
 
 class HomeworkScreen extends StatelessWidget {

@@ -15,7 +15,7 @@ class GradesList extends StatelessWidget {
           message: s.gradeFailure
               .map(unexcpectedServerError: (_) => 'Unexpected server error'),
         ).show(context),
-        orElse: () {},
+        orElse: () => Container(),
       ),
       builder: (context, state) {
         return state.map(
@@ -24,8 +24,6 @@ class GradesList extends StatelessWidget {
           ),
           gradesLoaded: (s) {
             final _gradeItems = s.grades;
-            // Future.delayed(Duration(seconds: 0))
-            //     .then((_) => setIsEdit(_gradeItems.length != 0));
 
             return Padding(
               padding: const EdgeInsets.all(10.0),

@@ -1,12 +1,11 @@
 import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 import 'package:edulb/application/auth/auth_bloc.dart';
+import 'package:edulb/application/grades/edit_grades/edit_grades_bloc.dart';
 import 'package:edulb/application/grades/grades_bloc.dart';
-import 'package:edulb/injectable.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
-import 'package:edulb/domain/app_info.dart';
 import 'package:edulb/widgets/grades/grades_list.dart';
 import 'package:edulb/widgets/stack/stack_widget.dart';
 import 'package:edulb/helpers/custom_builders.dart';
@@ -49,42 +48,44 @@ class _GradesScreenState extends State<GradesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AppInfo>(context, listen: false).resetAppInfo();
     final userData = context.bloc<AuthBloc>().state.getUserData();
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(222, 222, 222, 1),
-      body: BlocProvider(
-        create: (_) =>
-            getIt.get<GradesBloc>()..add(GradesEvent.watchGradesStarted()),
-        child: BlocBuilder<GradesBloc, GradesState>(
-          builder: (_, state) => StackWidget(
-            screenTitle: 'Grades',
-            widget: GradesList(),
-            showEdit: state.maybeMap(
-              gradesLoaded: (s) => s.grades.length == 0 ? false : true,
-              orElse: () => false,
+    return BlocBuilder<EditGradesBloc, EditGradesState>(
+      builder: (_, editState) {
+        print(editState);
+        return Scaffold(
+          backgroundColor: Color.fromRGBO(222, 222, 222, 1),
+          body: editState.maybeMap(
+            gradeLoading: (_) => Center(
+              child: CircularProgressIndicator(),
+            ),
+            orElse: () => BlocBuilder<GradesBloc, GradesState>(
+              builder: (_, state) => StackWidget(
+                screenTitle: 'Grades',
+                widget: GradesList(),
+                showEdit: state.maybeMap(
+                  gradesLoaded: (s) => s.grades.length != 0,
+                  orElse: () => false,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-      floatingActionButton: BlocBuilder<AppDrawerBloc, AppDrawerState>(
-        builder: (_, state) => Consumer<AppInfo>(
-          builder: (_, appInfo, ch) {
-            print(state);
-            return state.map(
-              closeDrawer: (_) => !appInfo.isEditting
-                  ? FloatingActionButton(
-                      onPressed: () =>
-                          _addButtonHandler(userData.isTeacher, context),
-                      child: Icon(Icons.add),
-                    )
-                  : Container(),
+          floatingActionButton: BlocBuilder<AppDrawerBloc, AppDrawerState>(
+            builder: (_, state) => state.map(
+              closeDrawer: (_) => editState.maybeMap(
+                gradeEdit: (_) => Container(),
+                orElse: () => FloatingActionButton(
+                  onPressed: () =>
+                      _addButtonHandler(userData.isTeacher, context),
+                  child: Icon(Icons.add),
+                ),
+              ),
               openDrawer: (_) => Container(),
-            );
-          },
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            ),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+        );
+      },
     );
   }
 }

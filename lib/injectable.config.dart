@@ -10,13 +10,14 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import 'application/auth/auth_bloc.dart';
+import 'application/grades/edit_grades/edit_grades_bloc.dart';
 import 'infrastracture/auth/firebase_auth.dart';
 import 'infrastracture/grades/firebase_grades.dart';
 import 'infrastracture/core/firebase_injectable.dart';
 import 'infrastracture/requests/firebase_requests.dart';
 import 'application/grades/grades_bloc.dart';
-import 'domain/auth/i_auth.dart';
-import 'domain/grades/i_grades.dart';
+import 'domain/auth/i_auth_repository.dart';
+import 'domain/grades/i_grades_repository.dart';
 import 'domain/requests/I_requests.dart';
 
 /// adds generated dependencies
@@ -39,6 +40,7 @@ GetIt $initGetIt(
   gh.lazySingleton<IRequestsRepository>(
       () => FirebaseRequests(get<FirebaseFirestore>()));
   gh.factory<AuthBloc>(() => AuthBloc(get<IAuth>()));
+  gh.factory<EditGradesBloc>(() => EditGradesBloc(get<IGradesRepository>()));
   gh.factory<GradesBloc>(() => GradesBloc(get<IGradesRepository>()));
   return get;
 }

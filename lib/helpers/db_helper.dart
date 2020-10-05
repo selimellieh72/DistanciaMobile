@@ -206,26 +206,4 @@ class DBHELPER {
       },
     );
   }
-
-  static void deleteGradeWithIds(List<String> gradeIds) {
-    gradeIds.forEach(
-      (id) async {
-        final _grade =
-            await FirebaseFirestore.instance.collection('grades').doc(id).get();
-        FirebaseFirestore.instance.collection('grades').doc(id).delete();
-        // TODO: Implement  with cloud functions for more security
-
-        final _gradeName = _grade.data()['gradeName'];
-        final _teacherId = _grade.data()['teacherId'];
-        final _toRemoveRequests = await FirebaseFirestore.instance
-            .collection('requests')
-            .where('gradeName', isEqualTo: _gradeName)
-            .where('teacherId', isEqualTo: _teacherId)
-            .get();
-        _toRemoveRequests.docs.forEach((request) {
-          request.reference.delete();
-        });
-      },
-    );
-  }
 }

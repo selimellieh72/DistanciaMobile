@@ -1,0 +1,6 @@
+analyzer:
+  exclude:
+    - "*g.dart"
+    - "*.freezed.dart"
+    - "lib/**/*.g.dart"
+    - "lib/**/*.freezed.dart"

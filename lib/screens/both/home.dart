@@ -1,4 +1,3 @@
-import 'package:edulb/screens/both/homework_screen.dart';
 import 'package:edulb/widgets/homeWidgets/calendar_button.dart';
 import 'package:edulb/widgets/homeWidgets/chat_button.dart';
 import 'package:edulb/widgets/homeWidgets/classes_button.dart';
@@ -6,11 +5,8 @@ import 'package:edulb/widgets/homeWidgets/exams_button.dart';
 import 'package:edulb/widgets/homeWidgets/grade_button.dart';
 import 'package:edulb/widgets/homeWidgets/homeworks_button.dart';
 import 'package:edulb/widgets/others/app_drawer.dart';
-import 'package:edulb/widgets/others/home_widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'grades_screen.dart';
+import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
   static const routeName = '/home';

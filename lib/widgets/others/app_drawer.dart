@@ -3,8 +3,8 @@ import 'package:badges/badges.dart';
 import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 
 import 'package:edulb/application/auth/auth_bloc.dart';
+import 'package:edulb/application/grades/edit_grades/edit_grades_bloc.dart';
 
-import 'package:edulb/domain/app_info.dart';
 import 'package:edulb/domain/requests/I_requests.dart';
 
 import 'package:edulb/injectable.dart';
@@ -16,7 +16,7 @@ import 'package:edulb/screens/both/grades_screen.dart';
 import 'package:edulb/screens/teachers/requests.dart';
 import 'package:edulb/widgets/auth/logout_button.dart';
 import 'package:edulb/widgets/others/profile.dart';
-import 'package:provider/provider.dart';
+
 import 'package:rxdart/rxdart.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -63,11 +63,14 @@ class _AppDrawerState extends State<AppDrawer>
       isSideBarOpenedSink.add(true);
 
       _animationController.forward();
-      final appInfo = Provider.of<AppInfo>(context, listen: false);
+
       context.bloc<AppDrawerBloc>().add(AppDrawerEvent.drawerOpened());
-      if (appInfo.isEditting) {
-        appInfo.setIsEditting();
-      }
+      context.bloc<EditGradesBloc>().state.maybeMap(
+            gradeEdit: (_) => context
+                .bloc<EditGradesBloc>()
+                .add(EditGradesEvent.editGradeStopped()),
+            orElse: () {},
+          );
     }
   }
 

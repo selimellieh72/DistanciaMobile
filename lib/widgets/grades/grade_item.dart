@@ -1,12 +1,11 @@
 import 'package:edulb/application/auth/auth_bloc.dart';
-
-import 'package:edulb/domain/app_info.dart';
+import 'package:edulb/application/grades/edit_grades/edit_grades_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edulb/screens/both/tab_screen.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:provider/provider.dart';
+import '../core/user_bloc_get_user_data.dart';
 
 class GradeItem extends StatelessWidget {
   final String gradeName;
@@ -26,24 +25,23 @@ class GradeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = context.bloc<AuthBloc>().state.maybeMap(
-          authenticated: (state) => state.user,
-          orElse: () {},
-        );
-    final appInfo = Provider.of<AppInfo>(context);
+    final userData = context.bloc<AuthBloc>().state.getUserData();
 
-    return InkWell(
-      onTap: appInfo.isEditting
-          ? () => appInfo.addOrRemoveSelectedGradeId(id)
-          : () {
-              Navigator.of(context)
-                  .pushReplacementNamed(TabsScreen.routeName, arguments: id);
-            },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          appInfo.isEditting
-              ? Stack(
+    return BlocBuilder<EditGradesBloc, EditGradesState>(
+      builder: (_, state) {
+        return InkWell(
+          onTap: state.maybeMap(
+            gradeEdit: (_) => () => context.bloc<EditGradesBloc>().add(
+                  EditGradesEvent.editGradeAddedOrRemoved(id),
+                ),
+            orElse: () => () => Navigator.of(context)
+                .pushReplacementNamed(TabsScreen.routeName, arguments: id),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              state.maybeMap(
+                gradeEdit: (s) => Stack(
                   children: [
                     Icon(
                       MdiIcons.book,
@@ -63,7 +61,7 @@ class GradeItem extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: !appInfo.selectedGradesIds.contains(id)
+                          child: !s.editedGradesIds.contains(id)
                               ? Icon(
                                   MdiIcons.checkCircleOutline,
                                   size: 25,
@@ -78,39 +76,42 @@ class GradeItem extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
-              : Icon(
+                ),
+                orElse: () => Icon(
                   MdiIcons.book,
                   size: 100,
                   color: Color.fromRGBO(90, 90, 90, 1),
                 ),
-          FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(
-              discipline,
-              style: TextStyle(
-                color: Color.fromRGBO(42, 42, 42, 1),
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-                letterSpacing: 0.5,
-                wordSpacing: 2,
               ),
-            ),
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  discipline,
+                  style: TextStyle(
+                    color: Color.fromRGBO(42, 42, 42, 1),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    letterSpacing: 0.5,
+                    wordSpacing: 2,
+                  ),
+                ),
+              ),
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  userData.isTeacher ? gradeName : userData.firstName,
+                  style: TextStyle(
+                    color: Color.fromRGBO(42, 42, 42, 1),
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 0.5,
+                    wordSpacing: 2,
+                  ),
+                ),
+              )
+            ],
           ),
-          FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(
-              userData.isTeacher ? gradeName : userData.firstName,
-              style: TextStyle(
-                color: Color.fromRGBO(42, 42, 42, 1),
-                fontWeight: FontWeight.w300,
-                letterSpacing: 0.5,
-                wordSpacing: 2,
-              ),
-            ),
-          )
-        ],
-      ),
+        );
+      },
     );
   }
 }
