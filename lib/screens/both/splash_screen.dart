@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
           unAuthenticated: (_) =>
               Navigator.of(context).pushReplacementNamed(AuthScreen.routeName),
           authenticated: (_) =>
-              Navigator.of(context).pushReplacementNamed(Home.routeName),
+              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName),
         );
       },
       child: Scaffold(

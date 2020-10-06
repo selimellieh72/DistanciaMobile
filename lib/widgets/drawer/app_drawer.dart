@@ -1,5 +1,6 @@
 import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 import 'package:edulb/application/auth/auth_bloc.dart';
+import 'package:edulb/screens/both/home_screen.dart';
 import 'package:edulb/widgets/drawer/profile_drawer.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,44 +39,47 @@ class _AppDrawerState extends State<AppDrawer> {
     final sizeScreen = MediaQuery.of(context).size;
 
     final _isTeacher = context.bloc<AuthBloc>().state.getUserData();
-    return Drawer(
-      child: Column(
-        children: [
-          SizedBox(
-            height: sizeScreen.height * 0.03,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                iconSize: 40,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  context
-                      .bloc<AppDrawerBloc>()
-                      .add(AppDrawerEvent.drawerClosed());
-                },
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ProfileDrawer(),
-              _buildResponsiveFlatButton(
-                title: Text(
-                  'Home',
-                  style: Theme.of(context).textTheme.headline1,
+    return Container(
+      width: double.infinity,
+      child: Drawer(
+        child: Column(
+          children: [
+            SizedBox(
+              height: sizeScreen.height * 0.03,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.close),
+                  iconSize: 40,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context
+                        .bloc<AppDrawerBloc>()
+                        .add(AppDrawerEvent.drawerClosed());
+                  },
                 ),
-                // onPressed: () =>
-                //     Navigator.of(context).pushReplacementNamed(Home.routeName),
-                icon: Icon(Icons.home),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ProfileDrawer(),
+                _buildResponsiveFlatButton(
+                  title: Text(
+                    'Home',
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                  onPressed: () => Navigator.of(context)
+                      .pushReplacementNamed(HomeScreen.routeName),
+                  icon: Icon(Icons.home),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -78,10 +78,7 @@ class _HomeworkItemState extends State<HomeworkItem> {
           arguments: _homework),
       onTap: _toggleIsExpanded,
       child: AnimatedContainer(
-        margin: EdgeInsets.symmetric(
-          vertical: 5,
-          horizontal: 0,
-        ),
+        margin: EdgeInsets.only(bottom: 10),
         constraints: BoxConstraints(
           maxHeight: _isExpanded ? 500 : screenSize.height * 0.11,
           minHeight: _isExpanded ? 100 : screenSize.height * 0.11,

@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
             TabsScreen.routeName: (_) => TabsScreen(),
             RequestsScreen.routeName: (_) => RequestsScreen(),
             AuthScreen.routeName: (_) => AuthScreen(),
-            Home.routeName: (_) => Home(),
+            HomeScreen.routeName: (_) => HomeScreen(),
             HomeworkScreen.routeName: (_) => HomeworkScreen(),
             HomeworkDetailsScreen.routeName: (_) => HomeworkDetailsScreen(),
           },

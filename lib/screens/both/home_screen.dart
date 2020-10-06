@@ -9,7 +9,7 @@ import 'package:edulb/widgets/drawer/app_drawer.dart';
 
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
 
   @override
@@ -24,16 +24,15 @@ class Home extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: screenSize.height * 0.07,
+                  height: screenSize.height * 0.03,
                 ),
-                Row(
-                  children: [
-                    DrawerIcon(),
-                    Text(
-                      'Home',
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                  ],
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: DrawerIcon(),
+                ),
+                Text(
+                  'Home',
+                  style: Theme.of(context).textTheme.headline5,
                 )
               ],
             ),
