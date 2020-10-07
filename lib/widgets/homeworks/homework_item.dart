@@ -1,14 +1,16 @@
-import 'package:edulb/screens/both/homework_details_screen.dart';
-import '../../domain/homeworks/homework_item.dart' as domain;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'package:edulb/screens/both/homework_details_screen.dart';
+
+import '../../domain/homeworks/homework_item.dart' as domain;
+
 class HomeworkItem extends StatefulWidget {
   final domain.HomeworkItem homework;
-
-  HomeworkItem(
+  const HomeworkItem({
+    Key key,
     this.homework,
-  );
+  }) : super(key: key);
 
   @override
   _HomeworkItemState createState() => _HomeworkItemState();
@@ -49,7 +51,7 @@ class _HomeworkItemState extends State<HomeworkItem> {
             ),
           ),
         ),
-        Expanded(
+        Flexible(
           child: Text(
             description,
             style: TextStyle(
@@ -107,7 +109,8 @@ class _HomeworkItemState extends State<HomeworkItem> {
             Flexible(
               fit: FlexFit.tight,
               flex: 4,
-              child: _buildTitleWithDescription(_homework.title, 'jhonny eid'),
+              child: _buildTitleWithDescription(
+                  _homework.title, 'jhonny eisssssd'),
             ),
             Flexible(
                 fit: FlexFit.tight,

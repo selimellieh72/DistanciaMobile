@@ -1,6 +1,7 @@
 import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 import 'package:edulb/application/auth/auth_bloc.dart';
 import 'package:edulb/screens/both/home_screen.dart';
+import 'package:edulb/widgets/auth/logout_button.dart';
 import 'package:edulb/widgets/drawer/profile_drawer.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,37 +48,28 @@ class _AppDrawerState extends State<AppDrawer> {
             SizedBox(
               height: sizeScreen.height * 0.03,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.close),
-                  iconSize: 40,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    context
-                        .bloc<AppDrawerBloc>()
-                        .add(AppDrawerEvent.drawerClosed());
-                  },
-                ),
-              ],
+            IconButton(
+              icon: Icon(Icons.close),
+              iconSize: 40,
+              onPressed: () {
+                Navigator.of(context).pop();
+                context
+                    .bloc<AppDrawerBloc>()
+                    .add(AppDrawerEvent.drawerClosed());
+              },
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ProfileDrawer(),
-                _buildResponsiveFlatButton(
-                  title: Text(
-                    'Home',
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  onPressed: () => Navigator.of(context)
-                      .pushReplacementNamed(HomeScreen.routeName),
-                  icon: Icon(Icons.home),
-                ),
-              ],
+            ProfileDrawer(),
+            _buildResponsiveFlatButton(
+              title: Text(
+                'Home',
+                style: Theme.of(context).textTheme.headline1,
+              ),
+              onPressed: () => Navigator.of(context)
+                  .pushReplacementNamed(HomeScreen.routeName),
+              icon: Icon(Icons.home),
             ),
+            Spacer(),
+            LogoutButton(),
           ],
         ),
       ),

@@ -20,6 +20,9 @@ class HomeworksList extends StatelessWidget {
           );
         }
         final _homeworks = snapshot.data;
+        for (var homework in _homeworks.reversed) {
+          print(homework.title);
+        }
         if (_homeworks.isEmpty) {
           return Center(
             child: Text('No homeworks available - Please add one.'),
@@ -28,7 +31,8 @@ class HomeworksList extends StatelessWidget {
         return ListView.builder(
           itemCount: _homeworks.length,
           itemBuilder: (_, i) => HomeworkItem(
-            _homeworks[i],
+            key: ValueKey(_homeworks[i].id),
+            homework: _homeworks[i],
           ),
         );
       },

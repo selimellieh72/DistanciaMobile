@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:edulb/widgets/grades/grades_list.dart';
-import 'package:edulb/widgets/stack/stack_widget.dart';
+import 'package:edulb/widgets/stack/background_widget.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 
 import 'package:edulb/widgets/requests/request_widget.dart';

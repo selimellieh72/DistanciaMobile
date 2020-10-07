@@ -24,4 +24,20 @@ class HomeworkItem {
       date: data['createdAt'].toDate(),
     );
   }
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is HomeworkItem &&
+        o.id == id &&
+        o.title == title &&
+        o.instructions == instructions &&
+        o.date == date;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^ title.hashCode ^ instructions.hashCode ^ date.hashCode;
+  }
 }

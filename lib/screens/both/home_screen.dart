@@ -48,38 +48,40 @@ class HomeScreen extends StatelessWidget {
                 topRight: Radius.circular(30),
               ),
             ),
-            child: Row(
-              children: [
-                Column(
-                  children: [
-                    ClassesButton(),
-                    SizedBox(
-                      height: screenSize.height * 0.013,
-                    ),
-                    ExamsButton(),
-                    SizedBox(
-                      height: screenSize.height * 0.013,
-                    ),
-                    CalendarButton(),
-                  ],
-                ),
-                SizedBox(
-                  width: screenSize.width * 0.048,
-                ),
-                Column(
-                  children: [
-                    HomeworksButton(),
-                    SizedBox(
-                      height: screenSize.height * 0.013,
-                    ),
-                    ChatButton(),
-                    SizedBox(
-                      height: screenSize.height * 0.013,
-                    ),
-                    GradesButton(),
-                  ],
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      ClassesButton(),
+                      SizedBox(
+                        height: screenSize.height * 0.013,
+                      ),
+                      ExamsButton(),
+                      SizedBox(
+                        height: screenSize.height * 0.013,
+                      ),
+                      CalendarButton(),
+                    ],
+                  ),
+                  SizedBox(
+                    width: screenSize.width * 0.048,
+                  ),
+                  Column(
+                    children: [
+                      HomeworksButton(),
+                      SizedBox(
+                        height: screenSize.height * 0.013,
+                      ),
+                      ChatButton(),
+                      SizedBox(
+                        height: screenSize.height * 0.013,
+                      ),
+                      GradesButton(),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

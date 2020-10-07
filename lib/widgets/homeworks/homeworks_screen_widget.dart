@@ -27,7 +27,7 @@ class HomeworksScreenWidget extends StatelessWidget {
             Text(
               'Physics',
               style: _textStyle,
-            ),
+            ), // margin: EdgeInsets.only(top: screenSize.height * 0.11),
             Icon(
               Icons.arrow_drop_down,
               size: 25,

@@ -59,6 +59,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
           children: [
             FormLabel('Title'),
             TextFormField(
+              maxLength: 15,
               decoration: InputDecoration(hintText: 'Physics'),
               validator: (value) {
                 if (value.isEmpty) {

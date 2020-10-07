@@ -1,7 +1,6 @@
 import 'package:edulb/domain/homeworks/homework_item.dart';
+import 'package:edulb/widgets/homeworks/homeworks_details/upload_response_button.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomeworkDetailsWidgets extends StatelessWidget {
   @override
@@ -29,8 +28,7 @@ class HomeworkDetailsWidgets extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                flex: 1,
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -50,14 +48,15 @@ class HomeworkDetailsWidgets extends StatelessWidget {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  'deadDline',
-                  style: Theme.of(context).textTheme.headline5.copyWith(
-                        fontSize: 40,
-                        color: Colors.white,
-                      ),
+              Expanded(
+                child: FittedBox(
+                  child: Text(
+                    'deadDline',
+                    style: Theme.of(context).textTheme.headline5.copyWith(
+                          fontSize: 40,
+                          color: Colors.white,
+                        ),
+                  ),
                 ),
               ),
             ],
@@ -100,54 +99,19 @@ class HomeworkDetailsWidgets extends StatelessWidget {
                           'My work',
                           style: Theme.of(context).textTheme.headline1,
                         ),
-                        Row(
-                          children: [
-                            GradientButton(
-                              increaseWidthBy: 50,
-                              increaseHeightBy: 6,
-                              callback: () {},
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Color.fromRGBO(207, 94, 254, 1),
-                                  Color.fromRGBO(8, 119, 204, 1),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(
-                                      'Upload',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText2
-                                          .copyWith(fontSize: 20),
-                                    ),
-                                    Icon(MdiIcons.uploadOutline,
-                                        color: Colors.white, size: 30)
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Spacer()
-                          ],
-                        )
+                        UploadResponseButton(),
                       ],
                     ),
                   ),
                   Expanded(
                     child: Column(
                       children: [
-                        Text(
-                          'Final Grade',
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        SizedBox(
-                          height: screenSize.height * 0.02,
+                        FittedBox(
+                          child: Text(
+                            'Final Grade',
+                            style: Theme.of(context).textTheme.headline1,
+                            overflow: TextOverflow.fade,
+                          ),
                         ),
                         Text(
                           'Homework not graded',
@@ -159,7 +123,51 @@ class HomeworkDetailsWidgets extends StatelessWidget {
                     ),
                   )
                 ],
-              )
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Submited',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Not submited',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.close,
+                    color: Theme.of(context).errorColor,
+                  )
+                ],
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: FlatButton(
+                  onPressed: () {},
+                  child: Text('Submit'),
+                ),
+              ),
             ],
           ),
         )

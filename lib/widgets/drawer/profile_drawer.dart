@@ -39,6 +39,9 @@ class ProfileDrawer extends StatelessWidget {
                 backgroundColor: Color.fromRGBO(112, 112, 112, 1),
               ),
             ),
+            SizedBox(
+              width: 15,
+            ),
             Flexible(
               flex: 2,
               child: Column(
