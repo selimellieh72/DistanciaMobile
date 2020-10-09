@@ -40,27 +40,12 @@ class DBHELPER {
         'title': title,
         'instructions': instructions,
         'teacherId': FirebaseAuth.instance.currentUser.uid,
+        'gradeId': gradeId,
         'createdAt': Timestamp.now(),
       });
     } catch (error) {
       throw (error);
     }
-  }
-
-  static Stream<List<HomeworkItem>> fetchHomeworks(String gradeId) {
-    return FirebaseFirestore.instance
-        .collection('grades/$gradeId/homeworks')
-        .orderBy('createdAt')
-        .snapshots()
-        .map(
-          (snap) => snap.docs
-              .map(
-                (document) => HomeworkItem.fromFirestore(document),
-              )
-              .toList()
-              .reversed
-              .toList(),
-        );
   }
 
   static Future<void> addGrade({

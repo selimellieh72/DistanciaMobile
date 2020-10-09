@@ -40,6 +40,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
       FlushbarHelper.createSuccess(message: 'Homework added successfuly')
           .show(context);
     } catch (error) {
+      print('here');
       // CustomBuilders.showErrorSnackBar(context);
       print(error);
       setState(() {

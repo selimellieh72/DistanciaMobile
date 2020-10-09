@@ -1,6 +1,7 @@
 import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 import 'package:edulb/application/auth/auth_bloc.dart';
 import 'package:edulb/screens/both/home_screen.dart';
+import 'package:edulb/screens/teachers/requests.dart';
 import 'package:edulb/widgets/auth/logout_button.dart';
 import 'package:edulb/widgets/drawer/profile_drawer.dart';
 
@@ -67,6 +68,11 @@ class _AppDrawerState extends State<AppDrawer> {
               onPressed: () => Navigator.of(context)
                   .pushReplacementNamed(HomeScreen.routeName),
               icon: Icon(Icons.home),
+            ),
+            IconButton(
+              icon: Icon(Icons.people),
+              onPressed: () => Navigator.of(context)
+                  .pushReplacementNamed(RequestsScreen.routeName),
             ),
             Spacer(),
             LogoutButton(),

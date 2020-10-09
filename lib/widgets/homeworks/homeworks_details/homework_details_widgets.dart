@@ -1,6 +1,8 @@
+import 'package:edulb/application/homeworks/submit_homework/submit_homework_bloc.dart';
 import 'package:edulb/domain/homeworks/homework_item.dart';
 import 'package:edulb/widgets/homeworks/homeworks_details/upload_response_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeworkDetailsWidgets extends StatelessWidget {
   @override
@@ -99,7 +101,7 @@ class HomeworkDetailsWidgets extends StatelessWidget {
                           'My work',
                           style: Theme.of(context).textTheme.headline1,
                         ),
-                        UploadResponseButton(),
+                        UploadResponseButton(_homework.isSubmitted),
                       ],
                     ),
                   ),
@@ -127,45 +129,56 @@ class HomeworkDetailsWidgets extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Submited',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(
+              BlocBuilder<SubmitHomeworkBloc, SubmitHomeworkState>(
+                builder: (_, state) {
+                  final _submitedIcon = Icon(
                     Icons.check,
                     color: Colors.green,
-                  )
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Not submited',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(
-                    Icons.close,
-                    color: Theme.of(context).errorColor,
-                  )
-                ],
+                  );
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        state.maybeMap(
+                          successSubmit: (_) => 'submited',
+                          orElse: () => _homework.isSubmitted
+                              ? 'submited '
+                              : 'Not submited',
+                        ),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      state.maybeMap(
+                        successSubmit: (_) => _submitedIcon,
+                        orElse: () => _homework.isSubmitted
+                            ? _submitedIcon
+                            : Icon(
+                                Icons.close,
+                                color: Theme.of(context).errorColor,
+                              ),
+                      ),
+                    ],
+                  );
+                },
               ),
               Align(
                 alignment: Alignment.center,
-                child: FlatButton(
-                  onPressed: () {},
-                  child: Text('Submit'),
+                child: BlocBuilder<SubmitHomeworkBloc, SubmitHomeworkState>(
+                  builder: (_, state) => FlatButton(
+                    onPressed: state.maybeMap(
+                      toSubmitHomework: (_) => () => context
+                          .bloc<SubmitHomeworkBloc>()
+                          .add(SubmitHomeworkEvent.submitHomework(
+                            gradeId: _homework.gradeId,
+                            homeworkId: _homework.id,
+                          )),
+                      orElse: () => null,
+                    ),
+                    child: Text('Submit'),
+                  ),
                 ),
               ),
             ],

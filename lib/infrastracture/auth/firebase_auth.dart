@@ -22,6 +22,10 @@ class FirebaseAuthentication implements IAuth {
     }
   }
 
+  Option<String> getUserId() {
+    return optionOf(_firebaseAuth.currentUser?.uid);
+  }
+
   @override
   Future<void> logOut() async {
     await _firebaseAuth.signOut();

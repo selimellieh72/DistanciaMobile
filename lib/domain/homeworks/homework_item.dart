@@ -6,38 +6,27 @@ class HomeworkItem {
   final String id;
   final String title;
   final String instructions;
+  final String gradeId;
+  final bool isSubmitted;
   final DateTime date;
 
   HomeworkItem({
     @required this.id,
     @required this.title,
     @required this.instructions,
+    @required this.gradeId,
+    this.isSubmitted,
     @required this.date,
   });
 
-  factory HomeworkItem.fromFirestore(DocumentSnapshot snap) {
+  factory HomeworkItem.fromFirestore(DocumentSnapshot snap, bool isSubmitted) {
     final data = snap.data();
     return HomeworkItem(
-      id: snap.id,
-      title: data['title'],
-      instructions: data['instructions'],
-      date: data['createdAt'].toDate(),
-    );
-  }
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is HomeworkItem &&
-        o.id == id &&
-        o.title == title &&
-        o.instructions == instructions &&
-        o.date == date;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^ title.hashCode ^ instructions.hashCode ^ date.hashCode;
+        id: snap.id,
+        title: data['title'],
+        instructions: data['instructions'],
+        gradeId: data['gradeId'],
+        date: data['createdAt'].toDate(),
+        isSubmitted: isSubmitted);
   }
 }

@@ -2,12 +2,12 @@ import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 import 'package:edulb/application/auth/auth_bloc.dart';
 import 'package:edulb/application/grades/edit_grades/edit_grades_bloc.dart';
 import 'package:edulb/application/grades/grades_bloc.dart';
+import 'package:edulb/widgets/grades/grades_list.dart';
+import 'package:edulb/widgets/stack/background_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:edulb/widgets/grades/grades_list.dart';
-import 'package:edulb/widgets/stack/background_widget.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 
 import 'package:edulb/widgets/requests/request_widget.dart';
@@ -25,15 +25,9 @@ class _GradesScreenState extends State<GradesScreen> {
   bool _showEdit = false;
   void _addButtonHandler(bool isTeacher, BuildContext ctx) {
     if (isTeacher) {
-      CustomBuilders.showResponsiveBottomSheet(
-        context: ctx,
-        child: AddGrade(),
-      );
+      CustomBuilders.showResponsiveBottomSheet(context: ctx, child: AddGrade());
     } else {
-      CustomBuilders.showResponsiveBottomSheet(
-        context: ctx,
-        child: Request(),
-      );
+      CustomBuilders.showResponsiveBottomSheet(context: ctx, child: Request());
     }
   }
 
@@ -54,36 +48,46 @@ class _GradesScreenState extends State<GradesScreen> {
         print(editState);
         return Scaffold(
           backgroundColor: Color.fromRGBO(222, 222, 222, 1),
-          // body: editState.maybeMap(
-          //   gradeLoading: (_) => Center(
-          //     child: CircularProgressIndicator(),
-          //   ),
-          //   // orElse: () => BlocBuilder<GradesBloc, GradesState>(
-          //   //   builder: (_, state) => StackWidget(
-          //   //     screenTitle: 'Grades',
-          //   //     widget: GradesList(),
-          //   //     showEdit: state.maybeMap(
-          //   //       gradesLoaded: (s) => s.grades.length != 0,
-          //   //       orElse: () => false,
-          //   //     ),
-          //   //   ),
-          //   ),
-          // ),
-          floatingActionButton: BlocBuilder<AppDrawerBloc, AppDrawerState>(
-            builder: (_, state) => state.map(
-              closeDrawer: (_) => editState.maybeMap(
-                gradeEdit: (_) => Container(),
-                orElse: () => FloatingActionButton(
-                  onPressed: () =>
-                      _addButtonHandler(userData.isTeacher, context),
-                  child: Icon(Icons.add),
+          body: editState.maybeMap(
+            gradeLoading: (_) => Center(
+              child: CircularProgressIndicator(),
+            ),
+            orElse: () => BlocBuilder<GradesBloc, GradesState>(
+              builder: (_, state) => BackgroundWidget(
+                child: GradesList(),
+                title: 'Grades',
+                floatingActionButton: editState.maybeMap(
+                  gradeEdit: (_) => null,
+                  orElse: () => FloatingActionButton(
+                    onPressed: () =>
+                        _addButtonHandler(userData.isTeacher, context),
+                    child: Icon(Icons.add),
+                  ),
                 ),
               ),
-              openDrawer: (_) => Container(),
+
+              // showEdit: state.maybeMap(
+              //   gradesLoaded: (s) => s.grades.length != 0,
+              //   orElse: () => false,
+              // ),
             ),
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
+
+          // floatingActionButton: BlocBuilder<AppDrawerBloc, AppDrawerState>(
+          //   builder: (_, state) => state.map(
+          //     closeDrawer: (_) => editState.maybeMap(
+          //       gradeEdit: (_) => Container(),
+          //       orElse: () => FloatingActionButton(
+          //         onPressed: () =>
+          //             _addButtonHandler(userData.isTeacher, context),
+          //         child: Icon(Icons.add),
+          //       ),
+          //     ),
+          //     openDrawer: (_) => Container(),
+          //   ),
+          // ),
+          // floatingActionButtonLocation:
+          //     FloatingActionButtonLocation.centerFloat,
         );
       },
     );

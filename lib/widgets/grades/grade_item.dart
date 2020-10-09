@@ -1,5 +1,6 @@
 import 'package:edulb/application/auth/auth_bloc.dart';
 import 'package:edulb/application/grades/edit_grades/edit_grades_bloc.dart';
+import 'package:edulb/screens/both/homework_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +36,7 @@ class GradeItem extends StatelessWidget {
                   EditGradesEvent.editGradeAddedOrRemoved(id),
                 ),
             orElse: () => () => Navigator.of(context)
-                .pushReplacementNamed(TabsScreen.routeName, arguments: id),
+                .pushReplacementNamed(HomeworkScreen.routeName, arguments: id),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
