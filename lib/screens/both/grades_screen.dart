@@ -46,48 +46,50 @@ class _GradesScreenState extends State<GradesScreen> {
     return BlocBuilder<EditGradesBloc, EditGradesState>(
       builder: (_, editState) {
         print(editState);
-        return Scaffold(
-          backgroundColor: Color.fromRGBO(222, 222, 222, 1),
-          body: editState.maybeMap(
-            gradeLoading: (_) => Center(
-              child: CircularProgressIndicator(),
-            ),
-            orElse: () => BlocBuilder<GradesBloc, GradesState>(
-              builder: (_, state) => BackgroundWidget(
-                child: GradesList(),
-                title: 'Grades',
-                floatingActionButton: editState.maybeMap(
-                  gradeEdit: (_) => null,
-                  orElse: () => FloatingActionButton(
-                    onPressed: () =>
-                        _addButtonHandler(userData.isTeacher, context),
-                    child: Icon(Icons.add),
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: Color.fromRGBO(222, 222, 222, 1),
+            body: editState.maybeMap(
+              gradeLoading: (_) => Center(
+                child: CircularProgressIndicator(),
+              ),
+              orElse: () => BlocBuilder<GradesBloc, GradesState>(
+                builder: (_, state) => BackgroundWidget(
+                  child: GradesList(),
+                  title: 'Grades',
+                  floatingActionButton: editState.maybeMap(
+                    gradeEdit: (_) => null,
+                    orElse: () => FloatingActionButton(
+                      onPressed: () =>
+                          _addButtonHandler(userData.isTeacher, context),
+                      child: Icon(Icons.add),
+                    ),
                   ),
                 ),
+
+                // showEdit: state.maybeMap(
+                //   gradesLoaded: (s) => s.grades.length != 0,
+                //   orElse: () => false,
+                // ),
               ),
-
-              // showEdit: state.maybeMap(
-              //   gradesLoaded: (s) => s.grades.length != 0,
-              //   orElse: () => false,
-              // ),
             ),
-          ),
 
-          // floatingActionButton: BlocBuilder<AppDrawerBloc, AppDrawerState>(
-          //   builder: (_, state) => state.map(
-          //     closeDrawer: (_) => editState.maybeMap(
-          //       gradeEdit: (_) => Container(),
-          //       orElse: () => FloatingActionButton(
-          //         onPressed: () =>
-          //             _addButtonHandler(userData.isTeacher, context),
-          //         child: Icon(Icons.add),
-          //       ),
-          //     ),
-          //     openDrawer: (_) => Container(),
-          //   ),
-          // ),
-          // floatingActionButtonLocation:
-          //     FloatingActionButtonLocation.centerFloat,
+            // floatingActionButton: BlocBuilder<AppDrawerBloc, AppDrawerState>(
+            //   builder: (_, state) => state.map(
+            //     closeDrawer: (_) => editState.maybeMap(
+            //       gradeEdit: (_) => Container(),
+            //       orElse: () => FloatingActionButton(
+            //         onPressed: () =>
+            //             _addButtonHandler(userData.isTeacher, context),
+            //         child: Icon(Icons.add),
+            //       ),
+            //     ),
+            //     openDrawer: (_) => Container(),
+            //   ),
+            // ),
+            // floatingActionButtonLocation:
+            //     FloatingActionButtonLocation.centerFloat,
+          ),
         );
       },
     );
