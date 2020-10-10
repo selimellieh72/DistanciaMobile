@@ -15,78 +15,88 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(222, 222, 222, 1),
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: screenSize.height * 0.03,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: DrawerIcon(),
-                ),
-                Text(
-                  'Home',
-                  style: Theme.of(context).textTheme.headline5,
-                )
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(17, 20, 17, 0),
-            height: screenSize.height * 0.8,
-            margin: EdgeInsets.only(top: screenSize.height * 0.2),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            child: SingleChildScrollView(
-              child: Row(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(222, 222, 222, 1),
+        body: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Column(
-                    children: [
-                      ClassesButton(),
-                      SizedBox(
-                        height: screenSize.height * 0.013,
-                      ),
-                      ExamsButton(),
-                      SizedBox(
-                        height: screenSize.height * 0.013,
-                      ),
-                      CalendarButton(),
-                    ],
-                  ),
                   SizedBox(
-                    width: screenSize.width * 0.048,
+                    height: screenSize.height * 0.005,
                   ),
-                  Column(
-                    children: [
-                      HomeworksButton(),
-                      SizedBox(
-                        height: screenSize.height * 0.013,
-                      ),
-                      ChatButton(),
-                      SizedBox(
-                        height: screenSize.height * 0.013,
-                      ),
-                      GradesButton(),
-                    ],
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: screenSize.width * 0.02,
+                        ),
+                        DrawerIcon(),
+                      ],
+                    ),
                   ),
+                  Text(
+                    'Home',
+                    style: Theme.of(context).textTheme.headline5,
+                  )
                 ],
               ),
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.fromLTRB(17, 20, 17, 0),
+              height: screenSize.height * 0.8,
+              margin: EdgeInsets.only(top: screenSize.height * 0.17),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+              child: SingleChildScrollView(
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        ClassesButton(),
+                        SizedBox(
+                          height: screenSize.height * 0.013,
+                        ),
+                        ExamsButton(),
+                        SizedBox(
+                          height: screenSize.height * 0.013,
+                        ),
+                        CalendarButton(),
+                      ],
+                    ),
+                    SizedBox(
+                      width: screenSize.width * 0.048,
+                    ),
+                    Column(
+                      children: [
+                        HomeworksButton(),
+                        SizedBox(
+                          height: screenSize.height * 0.013,
+                        ),
+                        ChatButton(),
+                        SizedBox(
+                          height: screenSize.height * 0.013,
+                        ),
+                        GradesButton(),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        drawer: AppDrawer(),
       ),
-      drawer: AppDrawer(),
     );
   }
 }

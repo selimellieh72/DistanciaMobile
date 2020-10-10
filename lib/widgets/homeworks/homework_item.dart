@@ -17,6 +17,13 @@ class HomeworkItem extends StatefulWidget {
 }
 
 class _HomeworkItemState extends State<HomeworkItem> {
+  String _formatHomeworkTitle(String title) {
+    if (title.length >= 7) {
+      return title.substring(0, 4) + '...';
+    }
+    return title;
+  }
+
   String _formatInstructions(String instructions) {
     if (instructions.length >= 17 && !_isExpanded) {
       return instructions.substring(0, 13) + '...';
@@ -110,7 +117,9 @@ class _HomeworkItemState extends State<HomeworkItem> {
               fit: FlexFit.tight,
               flex: 4,
               child: _buildTitleWithDescription(
-                  _homework.title, 'jhonny eisssssd'),
+                _formatHomeworkTitle(_homework.title),
+                'jhonny eid',
+              ),
             ),
             Flexible(
                 fit: FlexFit.tight,

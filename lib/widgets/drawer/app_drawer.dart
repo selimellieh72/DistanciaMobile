@@ -39,8 +39,8 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     final sizeScreen = MediaQuery.of(context).size;
+    final _isTeacher = context.bloc<AuthBloc>().state.getUserData().isTeacher;
 
-    final _isTeacher = context.bloc<AuthBloc>().state.getUserData();
     return Container(
       width: double.infinity,
       child: Drawer(
@@ -49,15 +49,20 @@ class _AppDrawerState extends State<AppDrawer> {
             SizedBox(
               height: sizeScreen.height * 0.03,
             ),
-            IconButton(
-              icon: Icon(Icons.close),
-              iconSize: 40,
-              onPressed: () {
-                Navigator.of(context).pop();
-                context
-                    .bloc<AppDrawerBloc>()
-                    .add(AppDrawerEvent.drawerClosed());
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.close),
+                  iconSize: 40,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context
+                        .bloc<AppDrawerBloc>()
+                        .add(AppDrawerEvent.drawerClosed());
+                  },
+                ),
+              ],
             ),
             ProfileDrawer(),
             _buildResponsiveFlatButton(
@@ -69,13 +74,14 @@ class _AppDrawerState extends State<AppDrawer> {
                   .pushReplacementNamed(HomeScreen.routeName),
               icon: Icon(Icons.home),
             ),
-            IconButton(
-              icon: Icon(Icons.people),
-              onPressed: () => Navigator.of(context)
-                  .pushReplacementNamed(RequestsScreen.routeName),
-            ),
+            if (_isTeacher)
+              IconButton(
+                icon: Icon(Icons.people),
+                onPressed: () => Navigator.of(context)
+                    .pushReplacementNamed(RequestsScreen.routeName),
+              ),
             Spacer(),
-            LogoutButton(),
+            Align(alignment: Alignment.bottomRight, child: LogoutButton()),
           ],
         ),
       ),

@@ -34,7 +34,10 @@ class _UploadResponseButtonState extends State<UploadResponseButton> {
           GradientButton(
             increaseWidthBy: 50,
             increaseHeightBy: 6,
-            callback: widget.isSubmitted ? null : _uploadFile,
+            callback: widget.isSubmitted ||
+                    state == SubmitHomeworkState.successSubmit()
+                ? null
+                : _uploadFile,
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,

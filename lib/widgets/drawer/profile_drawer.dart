@@ -24,6 +24,13 @@ class ProfileDrawer extends StatelessWidget {
         borderRadius: BorderRadius.all(
           Radius.circular(20),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(0, 76, 255, 50),
+            blurRadius: 20,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (_, state) => Row(

@@ -177,7 +177,39 @@ class HomeworkDetailsWidgets extends StatelessWidget {
                           )),
                       orElse: () => null,
                     ),
-                    child: Text('Submit'),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        width: screenSize.width * 0.31,
+                        height: screenSize.height * 0.07,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color.fromRGBO(94, 231, 254, 1),
+                                Color.fromRGBO(8, 119, 204, 1),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromRGBO(0, 185, 255, 0.5),
+                                offset: Offset(0, 3),
+                                blurRadius: 12,
+                              ),
+                            ]),
+                        child: Center(
+                          child: Text(
+                            'Submit',
+                            style:
+                                Theme.of(context).textTheme.headline6.copyWith(
+                                      fontSize: 20,
+                                    ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),

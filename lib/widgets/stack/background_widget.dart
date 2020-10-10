@@ -20,10 +20,21 @@ class BackgroundWidget extends StatelessWidget {
         backgroundColor: Color.fromRGBO(222, 222, 222, 1),
         body: Column(
           children: [
-            DrawerIcon(),
-            Text(
-              title,
-              style: const TextStyle(color: Colors.black),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                DrawerIcon(),
+                Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      .copyWith(fontSize: 40),
+                ),
+                SizedBox(
+                  width: 35,
+                ),
+              ],
             ),
             Expanded(
               child: Container(
