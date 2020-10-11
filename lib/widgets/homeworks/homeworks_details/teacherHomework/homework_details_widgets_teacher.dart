@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class HomeworksDetailsWidgetsTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final HomeworkItem _homework = ModalRoute.of(context).settings.arguments;
+    // final HomeworkItem _homework = ModalRoute.of(context).settings.arguments;
     final screenSize = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,4 +1,5 @@
 import 'package:edulb/application/auth/auth_bloc.dart';
+import 'package:edulb/application/homeworks/fetch_submits/fetch_submits_bloc.dart';
 import 'package:edulb/application/homeworks/submit_homework/submit_homework_bloc.dart';
 import 'package:edulb/domain/homeworks/homework_item.dart';
 import 'package:edulb/injectable.dart';
@@ -22,7 +23,12 @@ class HomeworkDetailsScreen extends StatelessWidget {
       child: BackgroundWidget(
         title: _homework.title,
         child: _isTeacher
-            ? HomeworksDetailsWidgetsTeacher()
+            ? BlocProvider(
+                create: (_) => getIt.get<FetchSubmitsBloc>()
+                  ..add(FetchSubmitsEvent.fetchSubmitsStarted(
+                      homeworkId: _homework.id, gradeId: _homework.gradeId)),
+                child: HomeworksDetailsWidgetsTeacher(),
+              )
             : HomeworkDetailsWidgets(),
       ),
     );

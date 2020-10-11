@@ -39,4 +39,9 @@ extension FirebaseFirestoreX on FirebaseFirestore {
   }) {
     return collection('grades/$gradeId/homeworks/$uniqueHomeworkId/responses');
   }
+
+  Future<List<dynamic>> getGradeMembersIds(String gradeId) async {
+    final _grade = await collection('grades').doc(gradeId).get();
+    return _grade.data()['usersIds'];
+  }
 }

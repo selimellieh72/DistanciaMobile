@@ -5,6 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:edulb/domain/auth/i_auth_repository.dart';
 import 'package:edulb/domain/homeworks/homework_failures.dart';
 import 'package:edulb/domain/homeworks/homework_item.dart';
+import 'package:edulb/domain/homeworks/submit.dart';
+import 'package:edulb/domain/user_data.dart';
 import 'package:edulb/injectable.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -80,6 +82,39 @@ class FirebaseHomeworkRepository extends IHomeworksRepository {
       );
       return right<HomeworkFailure, Unit>(unit);
     } catch (e) {
+      return left(HomeworkFailure.unexpectedServerError());
+    }
+  }
+
+  @override
+  Future<Either<HomeworkFailure, List<Submit>>> getHomeworkSubmits(
+      {String homeworkId, String gradeId}) async {
+    try {
+      final _gradeMembersIds = await _firestore.getGradeMembersIds(gradeId);
+      final _responses = await _firestore
+          .getHomeworkResponses(gradeId: gradeId, uniqueHomeworkId: homeworkId)
+          .get();
+
+      Map<String, String> _submittedUsersWithFileUrl = {};
+      _responses.docs.forEach((response) =>
+          _submittedUsersWithFileUrl.putIfAbsent(
+              response.data()['userId'], () => response.data()['fileUrl']));
+      final List<Submit> _submits = await Future.wait(_gradeMembersIds.map(
+        (userId) async {
+          final _userData = UserData.fromFirestore(
+              await _firestore.collection('users').doc(userId).get());
+          if (_submittedUsersWithFileUrl.containsKey(userId)) {
+            return Submit(
+              user: _userData,
+              submittedFileUrl: some(_submittedUsersWithFileUrl[userId]),
+            );
+          }
+          return Submit(user: _userData, submittedFileUrl: none());
+        },
+      ).toList());
+      return right<HomeworkFailure, List<Submit>>(_submits);
+    } catch (e) {
+      print(e);
       return left(HomeworkFailure.unexpectedServerError());
     }
   }

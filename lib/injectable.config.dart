@@ -12,6 +12,7 @@ import 'package:injectable/injectable.dart';
 
 import 'application/auth/auth_bloc.dart';
 import 'application/grades/edit_grades/edit_grades_bloc.dart';
+import 'application/homeworks/fetch_submits/fetch_submits_bloc.dart';
 import 'infrastracture/auth/firebase_auth.dart';
 import 'infrastracture/grades/firebase_grades.dart';
 import 'infrastracture/homeworks/firebase_homework_repository.dart';
@@ -54,6 +55,8 @@ GetIt $initGetIt(
       () => WatchHomeworksBloc(get<IHomeworksRepository>()));
   gh.factory<AuthBloc>(() => AuthBloc(get<IAuth>()));
   gh.factory<EditGradesBloc>(() => EditGradesBloc(get<IGradesRepository>()));
+  gh.factory<FetchSubmitsBloc>(
+      () => FetchSubmitsBloc(get<IHomeworksRepository>()));
   gh.factory<GradesBloc>(() => GradesBloc(get<IGradesRepository>()));
   return get;
 }
