@@ -16,13 +16,13 @@ class HomeworksButton extends StatelessWidget {
       Icon(
         MdiIcons.bookOpenPageVariantOutline,
         color: Color.fromRGBO(255, 0, 0, 1),
-        size: 100,
+        size: screenSize.height * 0.11,
       ),
       Text(
         'Homeworks',
         style: TextStyle(
             color: Color.fromRGBO(255, 0, 0, 0.68),
-            fontSize: 25,
+            fontSize: 22,
             fontWeight: FontWeight.w500,
             fontFamily: 'Poppins'),
       ),

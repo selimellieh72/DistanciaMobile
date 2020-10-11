@@ -16,26 +16,6 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  Widget _buildResponsiveFlatButton(
-      {Widget button, Widget title, Function onPressed, Icon icon}) {
-    return LayoutBuilder(
-      builder: (ctx, constraints) {
-        final maxWidth = constraints.maxWidth;
-        if (maxWidth >= 150) {
-          if (button != null) {
-            return button;
-          }
-          return FlatButton.icon(
-            onPressed: onPressed,
-            icon: icon,
-            label: title,
-          );
-        }
-        return Container();
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final sizeScreen = MediaQuery.of(context).size;
@@ -65,23 +45,54 @@ class _AppDrawerState extends State<AppDrawer> {
               ],
             ),
             ProfileDrawer(),
-            _buildResponsiveFlatButton(
-              title: Text(
-                'Home',
-                style: Theme.of(context).textTheme.headline1,
-              ),
-              onPressed: () => Navigator.of(context)
-                  .pushReplacementNamed(HomeScreen.routeName),
-              icon: Icon(Icons.home),
+            SizedBox(
+              height: sizeScreen.height * 0.046,
             ),
-            if (_isTeacher)
-              IconButton(
-                icon: Icon(Icons.people),
-                onPressed: () => Navigator.of(context)
-                    .pushReplacementNamed(RequestsScreen.routeName),
+            Container(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FlatButton.icon(
+                    onPressed: () => Navigator.of(context)
+                        .pushReplacementNamed(HomeScreen.routeName),
+                    label: Text('Home',
+                        style: Theme.of(context).textTheme.headline1),
+                    icon: Icon(
+                      Icons.home,
+                      color: Color.fromRGBO(42, 42, 42, 1),
+                    ),
+                  ),
+                  if (_isTeacher)
+                    FlatButton.icon(
+                      icon: Icon(
+                        Icons.people,
+                        color: Color.fromRGBO(42, 42, 42, 1),
+                      ),
+                      label: Text(
+                        'Request',
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      onPressed: () => Navigator.of(context)
+                          .pushReplacementNamed(RequestsScreen.routeName),
+                    )
+                ],
               ),
+            ),
+
+            // onPressed: () => Navigator.of(context)
+            //     .pushReplacementNamed(RequestsScreen.routeName),
+
+            //     Icon(Icons.people,color: ,),
+            //     Text(
+            //       'Requests',
+            //       style: Theme.of(context).textTheme.headline1,
+            //     )
+
+            // ),
+
             Spacer(),
-            Align(alignment: Alignment.bottomRight, child: LogoutButton()),
+            Align(alignment: Alignment.bottomCenter, child: LogoutButton()),
           ],
         ),
       ),

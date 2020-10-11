@@ -43,39 +43,62 @@ class GradeItem extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
-                height: _screenSize.height * 0.05,
-                width: _screenSize.width * 0.05,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromRGBO(94, 231, 254, 1),
-                      Color.fromRGBO(8, 204, 60, 1),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: _screenSize.height * 0.12,
-                      child: SvgPicture.asset('assets/icons/grade.svg'),
-                    ),
-                    Text(
-                      discipline,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                    userData.isTeacher
-                        ? Text(
-                            gradeName,
-                            style: Theme.of(context).textTheme.bodyText1,
-                          )
-                        : Container(),
+              height: _screenSize.height * 0.05,
+              width: _screenSize.width * 0.05,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color.fromRGBO(94, 231, 254, 1),
+                    Color.fromRGBO(8, 204, 60, 1),
                   ],
-                )),
+                ),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: _screenSize.height * 0.12,
+                            child: SvgPicture.asset('assets/icons/grade.svg'),
+                          ),
+                          Text(
+                            discipline,
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                          userData.isTeacher
+                              ? Text(
+                                  gradeName,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                      bottom: 5,
+                      right: 5,
+                      child: state.maybeMap(
+                        gradeEdit: (state) => Icon(
+                          !state.editedGradesIds.contains(id)
+                              ? MdiIcons.checkCircleOutline
+                              : MdiIcons.checkCircle,
+                          size: 30,
+                          color: Color.fromRGBO(230, 230, 230, 1),
+                        ),
+                        orElse: () => Container(),
+                      ))
+                ],
+              ),
+            ),
 
             // child: Column(
             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,7 +1,10 @@
+import 'dart:wasm';
+
 import 'package:edulb/application/app_drawer/app_drawer_bloc.dart';
 import 'package:edulb/application/auth/auth_bloc.dart';
 import 'package:edulb/application/grades/edit_grades/edit_grades_bloc.dart';
 import 'package:edulb/application/grades/grades_bloc.dart';
+import 'package:edulb/widgets/bottom%20Navigation%20Bar/custom_bottom_navigation_bar.dart';
 import 'package:edulb/widgets/grades/grades_list.dart';
 import 'package:edulb/widgets/stack/background_widget.dart';
 
@@ -47,51 +50,47 @@ class _GradesScreenState extends State<GradesScreen> {
       builder: (_, editState) {
         print(editState);
         return SafeArea(
-          child: Scaffold(
-            backgroundColor: Color.fromRGBO(222, 222, 222, 1),
-            body: editState.maybeMap(
-              gradeLoading: (_) => Center(
-                child: CircularProgressIndicator(),
-              ),
-              orElse: () => BlocBuilder<GradesBloc, GradesState>(
-                builder: (_, state) => BackgroundWidget(
-                  child: GradesList(),
-                  title: 'Grades',
-                  floatingActionButton: editState.maybeMap(
-                    gradeEdit: (_) => null,
-                    orElse: () => FloatingActionButton(
-                      onPressed: () =>
-                          _addButtonHandler(userData.isTeacher, context),
-                      child: Icon(Icons.add),
-                    ),
-                  ),
+          child: editState.maybeMap(
+            gradeLoading: (_) => Center(
+              child: CircularProgressIndicator(),
+            ),
+            orElse: () => BlocBuilder<GradesBloc, GradesState>(
+              builder: (_, state) => BackgroundWidget(
+                child: GradesList(),
+                title: 'Grades',
+                customNavigator: CustomBottomNavigationBar(
+                  add: () => userData.isTeacher
+                      ? CustomBuilders.showResponsiveBottomSheet(
+                          context: context, child: AddGrade())
+                      : CustomBuilders.showResponsiveBottomSheet(
+                          context: context, child: Request()),
                 ),
-
-                // showEdit: state.maybeMap(
-                //   gradesLoaded: (s) => s.grades.length != 0,
-                //   orElse: () => false,
-                // ),
               ),
             ),
 
-            // floatingActionButton: BlocBuilder<AppDrawerBloc, AppDrawerState>(
-            //   builder: (_, state) => state.map(
-            //     closeDrawer: (_) => editState.maybeMap(
-            //       gradeEdit: (_) => Container(),
-            //       orElse: () => FloatingActionButton(
-            //         onPressed: () =>
-            //             _addButtonHandler(userData.isTeacher, context),
-            //         child: Icon(Icons.add),
-            //       ),
-            //     ),
-            //     openDrawer: (_) => Container(),
-            //   ),
+            // showEdit: state.maybeMap(
+            //   gradesLoaded: (s) => s.grades.length != 0,
+            //   orElse: () => false,
             // ),
-            // floatingActionButtonLocation:
-            //     FloatingActionButtonLocation.centerFloat,
           ),
         );
       },
     );
+
+    // floatingActionButton: BlocBuilder<AppDrawerBloc, AppDrawerState>(
+    //   builder: (_, state) => state.map(
+    //     closeDrawer: (_) => editState.maybeMap(
+    //       gradeEdit: (_) => Container(),
+    //       orElse: () => FloatingActionButton(
+    //         onPressed: () =>
+    //             _addButtonHandler(userData.isTeacher, context),
+    //         child: Icon(Icons.add),
+    //       ),
+    //     ),
+    //     openDrawer: (_) => Container(),
+    //   ),
+    // ),
+    // floatingActionButtonLocation:
+    //     FloatingActionButtonLocation.centerFloat,
   }
 }

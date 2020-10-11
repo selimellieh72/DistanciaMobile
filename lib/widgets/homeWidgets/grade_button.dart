@@ -16,7 +16,7 @@ class GradesButton extends StatelessWidget {
       Icon(
         MdiIcons.book,
         color: Color.fromRGBO(255, 119, 0, 0.43),
-        size: 70,
+        size: screenSize.height * 0.08,
       ),
       Text(
         'Grades',

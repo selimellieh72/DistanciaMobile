@@ -228,10 +228,12 @@ class _AuthFormState extends State<AuthForm>
                       ),
                       child: Row(
                         children: [
-                          Text(
-                            'Are you a teacher?',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
+                          FittedBox(
+                            child: Text(
+                              'Are you a teacher?',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                           ),
                           SizedBox(

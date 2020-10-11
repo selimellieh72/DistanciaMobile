@@ -14,7 +14,7 @@ class ExamsButton extends StatelessWidget {
       Icon(
         MdiIcons.clipboardText,
         color: Color.fromRGBO(189, 199, 61, 0.6),
-        size: 100,
+        size: screenSize.height * 0.11,
       ),
       Text(
         'Exams',

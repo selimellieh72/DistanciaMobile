@@ -30,7 +30,6 @@ class GradesList extends StatelessWidget {
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 1 / 1,
                   mainAxisSpacing: 10,
                 ),
                 itemCount: _gradeItems.length,

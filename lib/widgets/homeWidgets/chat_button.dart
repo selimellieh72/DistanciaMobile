@@ -14,7 +14,7 @@ class ChatButton extends StatelessWidget {
       Icon(
         MdiIcons.forumOutline,
         color: Color.fromRGBO(197, 0, 255, 0.3),
-        size: 70,
+        size: screenSize.height * 0.08,
       ),
       Text(
         'Chat',

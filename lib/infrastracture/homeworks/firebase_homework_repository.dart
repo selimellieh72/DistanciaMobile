@@ -38,9 +38,14 @@ class FirebaseHomeworkRepository extends IHomeworksRepository {
       (snap) async {
         List<HomeworkItem> _homeworksList = [];
         for (var homeDoc in snap.docs) {
+          final _teacherData = UserData.fromFirestore(await _firestore
+              .collection('users')
+              .doc(homeDoc.data()['teacherId'])
+              .get());
           final _isSubmitted = await homeDoc.homeworkIsSubmitted();
           print(_isSubmitted);
-          final _homItem = HomeworkItem.fromFirestore(homeDoc, _isSubmitted);
+          final _homItem = HomeworkItem.fromFirestore(
+              isSubmitted: _isSubmitted, snap: homeDoc, teacher: _teacherData);
           _homeworksList.add(_homItem);
         }
         return right<HomeworkFailure, List<HomeworkItem>>(

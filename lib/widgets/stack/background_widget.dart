@@ -8,12 +8,13 @@ class BackgroundWidget extends StatelessWidget {
   final String title;
   final Widget child;
   final Widget floatingActionButton;
+  final Widget customNavigator;
   bool drawerCheck = true;
-  BackgroundWidget({
-    @required this.title,
-    @required this.child,
-    this.floatingActionButton,
-  });
+  BackgroundWidget(
+      {@required this.title,
+      @required this.child,
+      this.floatingActionButton,
+      this.customNavigator});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,6 +59,7 @@ class BackgroundWidget extends StatelessWidget {
         ),
         floatingActionButton: floatingActionButton,
         drawer: AppDrawer(),
+        bottomNavigationBar: customNavigator,
       ),
     );
   }

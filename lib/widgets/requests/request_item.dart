@@ -29,11 +29,14 @@ class RequestItem extends StatelessWidget {
           ),
           title: Text(
             '$studentFirstName $studentLastName',
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.subtitle2,
           ),
           subtitle: Text(
             'Wants to join grade \'$gradeName\'.',
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                .copyWith(color: Colors.black),
             overflow: TextOverflow.clip,
           ),
           trailing: Row(

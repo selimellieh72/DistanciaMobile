@@ -14,7 +14,7 @@ class ClassesButton extends StatelessWidget {
       Icon(
         MdiIcons.monitor,
         color: Color.fromRGBO(56, 185, 78, 1),
-        size: 70,
+        size: screenSize.height * 0.078,
       ),
       Text(
         'Classes',

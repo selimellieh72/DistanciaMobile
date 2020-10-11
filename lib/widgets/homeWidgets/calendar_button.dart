@@ -11,8 +11,11 @@ class CalendarButton extends StatelessWidget {
       screenSize.height * 0.2,
       Color.fromRGBO(128, 0, 115, 0.89),
       screenSize.width * 0.42,
-      Icon(MdiIcons.calendarMonthOutline,
-          color: Color.fromRGBO(128, 0, 0115, 0.68), size: 70),
+      Icon(
+        MdiIcons.calendarMonthOutline,
+        color: Color.fromRGBO(128, 0, 0115, 0.68),
+        size: screenSize.height * 0.078,
+      ),
       Text(
         'Calendar',
         style: TextStyle(

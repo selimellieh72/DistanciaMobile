@@ -17,6 +17,14 @@ class HomeworkItem extends StatefulWidget {
 }
 
 class _HomeworkItemState extends State<HomeworkItem> {
+  String _formatTeacherName(
+      {@required String firstName, @required String lastName}) {
+    if (lastName.length >= 7 || firstName.length >= 7) {
+      return '$lastName ${firstName.substring(0, 1)}.';
+    }
+    return '${lastName} ${firstName}';
+  }
+
   String _formatHomeworkTitle(String title) {
     if (title.length >= 7) {
       return title.substring(0, 4) + '...';
@@ -51,10 +59,12 @@ class _HomeworkItemState extends State<HomeworkItem> {
       children: [
         FittedBox(
           child: Container(
-            child: Text(
-              title,
-              textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.headline6,
+            child: FittedBox(
+              child: Text(
+                title,
+                textAlign: TextAlign.left,
+                style: Theme.of(context).textTheme.headline6,
+              ),
             ),
           ),
         ),
@@ -82,10 +92,9 @@ class _HomeworkItemState extends State<HomeworkItem> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return GestureDetector(
-      onHorizontalDragEnd: (_) => Navigator.of(context).pushReplacementNamed(
+      onTap: () => Navigator.of(context).pushReplacementNamed(
           HomeworkDetailsScreen.routeName,
           arguments: _homework),
-      onTap: _toggleIsExpanded,
       child: AnimatedContainer(
         margin: EdgeInsets.only(bottom: 10),
         constraints: BoxConstraints(
@@ -118,7 +127,10 @@ class _HomeworkItemState extends State<HomeworkItem> {
               flex: 4,
               child: _buildTitleWithDescription(
                 _formatHomeworkTitle(_homework.title),
-                'jhonny eid',
+                _formatTeacherName(
+                  lastName: _homework.teacher.lastName,
+                  firstName: _homework.teacher.firstName,
+                ),
               ),
             ),
             Flexible(
