@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:edulb/domain/auth/i_auth_repository.dart';
+import 'package:edulb/domain/homeworks/homework_failures.dart';
 import 'package:edulb/injectable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -30,6 +31,9 @@ extension FirebaseFirestoreX on FirebaseFirestore {
     final _userGradesQuery = await this.userGradeCollection();
     final _userGrades = await _userGradesQuery.get();
     final _gradesId = _userGrades.docs.map((grade) => grade.id).toList();
+    // if (_gradesId.length == 0) {
+    //   return left(HomeworkFailure.unexpectedServerError());
+    // }
     return collectionGroup('homeworks').where('gradeId', whereIn: _gradesId);
   }
 

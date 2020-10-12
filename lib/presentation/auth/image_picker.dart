@@ -18,7 +18,10 @@ class _ImagePickerState extends State<ImagePicker> {
     final _isCamera = await showDialog(
       context: context,
       child: AlertDialog(
-        title: Text('Choose image'),
+        title: Text(
+          'Choose image',
+          style: const TextStyle(color: Colors.black),
+        ),
         content: Text(
             'Do you want to take your image or choose one from the gallery?'),
         actions: [

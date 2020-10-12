@@ -30,7 +30,7 @@ class FirebaseHomeworkRepository extends IHomeworksRepository {
     @required Option<String> gradeId,
   }) async* {
     final _query = await gradeId.fold(
-      () async => _firestore.userHomeworksCollection(),
+      () async => await _firestore.userHomeworksCollection(),
       (gradeId) async => _firestore.homeworksCollection(gradeId),
     );
 

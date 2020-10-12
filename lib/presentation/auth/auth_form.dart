@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-import 'package:edulb/presentation/images/image_picker.dart';
+import 'package:edulb/presentation/auth/image_picker.dart';
 import 'package:edulb/helpers/auth_validation.dart';
 
 class AuthForm extends StatefulWidget {

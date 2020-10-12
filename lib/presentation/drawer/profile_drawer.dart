@@ -71,7 +71,7 @@ class ProfileDrawer extends StatelessWidget {
                                     style:
                                         Theme.of(context).textTheme.bodyText2),
                                 Text(
-                                  'Student',
+                                  userData.isTeacher ? 'Teacher' : 'Student',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText2
