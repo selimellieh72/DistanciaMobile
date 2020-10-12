@@ -1,5 +1,7 @@
 import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/helpers/word_filtering_helper.dart';
+import 'package:edulb/widgets/core/create_button.dart';
+import 'package:edulb/widgets/core/custom_input_feild.dart';
 import 'package:edulb/widgets/others/form_label.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
@@ -59,9 +61,9 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FormLabel('Title'),
-            TextFormField(
+            CustomInputFeild(
               maxLength: 15,
-              decoration: InputDecoration(hintText: 'Physics'),
+              hintText: 'Physics',
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Please enter a title.';
@@ -77,12 +79,10 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
               height: 10,
             ),
             FormLabel('Instructions'),
-            TextFormField(
+            CustomInputFeild(
               maxLines: 4,
               maxLength: 200,
-              decoration: InputDecoration(
-                hintText: 'Page 130 do exercise 1.',
-              ),
+              hintText: 'Page 130 do exercise 1.',
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Please enter some instructions.';
@@ -94,16 +94,34 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
             SizedBox(
               height: 20,
             ),
+            FormLabel('Due Date'),
+            RaisedButton(
+              elevation: 15,
+              color: Color.fromRGBO(233, 233, 233, 1),
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                      color: Color.fromRGBO(204, 204, 204, 1), width: 2),
+                  borderRadius: BorderRadius.circular(20)),
+              onPressed: () => showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime.now(),
+                lastDate: DateTime.now().add(
+                  Duration(days: 365),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('19/20/2020'),
+                ],
+              ),
+            ),
             Align(
               alignment: Alignment.center,
-              child: FlatButton(
+              child: CreateButton(
                 onPressed: _submitForm,
-                child: _isLoading
-                    ? CircularProgressIndicator()
-                    : Text(
-                        'Create!',
-                        style: TextStyle(fontSize: 18),
-                      ),
+                isLoading: _isLoading,
               ),
             )
           ],

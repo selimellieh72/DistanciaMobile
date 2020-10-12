@@ -6,11 +6,12 @@ class AddGrade extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Chip(
-          label: Text(
-            'Add grade',
-            style: Theme.of(context).textTheme.headline6,
-          ),
+        Text(
+          'Add a new grade',
+          style: Theme.of(context)
+              .textTheme
+              .bodyText2
+              .copyWith(color: Color.fromRGBO(42, 42, 42, 1)),
         ),
         SizedBox(
           height: 15,

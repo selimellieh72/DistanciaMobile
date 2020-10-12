@@ -1,11 +1,20 @@
 import 'package:edulb/domain/homeworks/homework_item.dart';
 import 'package:edulb/widgets/homeworks/homeworks_details/teacherHomework/teacher_homework_pannel.dart';
+import 'package:edulb/widgets/homeworks/homeworks_helper.dart';
 import 'package:flutter/material.dart';
 
 class HomeworksDetailsWidgetsTeacher extends StatelessWidget {
+  String _formatTeacherName(
+      {@required String firstName, @required String lastName}) {
+    if (lastName.length >= 7 || firstName.length >= 7) {
+      return '$lastName ${firstName.substring(0, 1)}.';
+    }
+    return '${lastName} ${firstName}';
+  }
+
   @override
   Widget build(BuildContext context) {
-    // final HomeworkItem _homework = ModalRoute.of(context).settings.arguments;
+    final HomeworkItem _homework = ModalRoute.of(context).settings.arguments;
     final screenSize = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +50,10 @@ class HomeworksDetailsWidgetsTeacher extends StatelessWidget {
                     ),
                     FittedBox(
                       child: Text(
-                        'Johnny Eid',
+                        HomeworksHelper.formatTeacherName(
+                          lastName: _homework.teacher.lastName,
+                          firstName: _homework.teacher.firstName,
+                        ),
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     )

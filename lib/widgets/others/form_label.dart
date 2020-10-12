@@ -10,7 +10,10 @@ class FormLabel extends StatelessWidget {
       child: Text(
         label,
         textAlign: TextAlign.start,
-        style: Theme.of(context).textTheme.subtitle2,
+        style: Theme.of(context)
+            .textTheme
+            .bodyText2
+            .copyWith(color: Color.fromRGBO(42, 42, 42, 1)),
       ),
     );
   }

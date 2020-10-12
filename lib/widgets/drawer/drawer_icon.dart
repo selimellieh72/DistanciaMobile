@@ -7,8 +7,8 @@ class DrawerIcon extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       child: Container(
-        height: screenSize.height * 0.03,
-        width: screenSize.width * 0.08,
+        height: screenSize.height * 0.035,
+        width: screenSize.width * 0.085,
         child: SvgPicture.asset('assets/icons/Hamburger Menu.svg'),
         /* IconButton(
         icon: Icon(

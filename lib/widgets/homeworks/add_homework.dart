@@ -12,11 +12,12 @@ class AddHomework extends StatelessWidget {
         SizedBox(
           height: 15,
         ),
-        Chip(
-          label: Text(
-            'Add homework',
-            style: Theme.of(context).textTheme.headline6,
-          ),
+        Text(
+          'Add homework',
+          style: Theme.of(context)
+              .textTheme
+              .bodyText2
+              .copyWith(color: Color.fromRGBO(42, 42, 42, 1)),
         ),
         Divider(),
         AddHomeworkForm(id),

@@ -3,6 +3,8 @@ import 'package:edulb/application/auth/auth_bloc.dart';
 import 'package:edulb/helpers/already_exists_exception.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/helpers/db_helper.dart';
+import 'package:edulb/widgets/core/create_button.dart';
+import 'package:edulb/widgets/core/custom_input_feild.dart';
 
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:edulb/helpers/word_filtering_helper.dart';
+import 'package:gradient_widgets/gradient_widgets.dart';
 import '../core/user_bloc_get_user_data.dart';
 
 class AddGradeForm extends StatefulWidget {
@@ -83,46 +86,44 @@ class _AddGradeFormState extends State<AddGradeForm> {
 
   @override
   Widget build(BuildContext context) {
+    final _screeSize = MediaQuery.of(context).size;
     return Form(
       key: _formKey,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FormLabel('Grade name'),
-            TextFormField(
-              maxLength: 20,
-              decoration: InputDecoration(
-                hintText: 'Grade 9',
-              ),
+            FormLabel('Grade'),
+            CustomInputFeild(
+              hintText: 'Enter grade...',
               validator: (value) => _validator(
                 value,
                 'grade',
               ),
+              maxLength: 20,
               onSaved: (gradeName) => _gradeName = gradeName,
             ),
             SizedBox(
               height: 15,
             ),
             FormLabel('Discipline'),
-            TextFormField(
-              maxLength: 14,
-              decoration: InputDecoration(
-                hintText: 'Physics',
-              ),
+            CustomInputFeild(
+              hintText: 'Enter discipline...',
               validator: (value) => _validator(
                 value,
                 'discipline',
               ),
               onSaved: (discipline) => _discipline = discipline,
+              maxLength: 20,
             ),
             SizedBox(
               height: 20,
             ),
-            FlatButton(
+            CreateButton(
+              isLoading: _isLoading,
               onPressed: _submitForm,
-              child: _isLoading ? CircularProgressIndicator() : Text('Create!'),
-            ),
+            )
           ],
         ),
       ),

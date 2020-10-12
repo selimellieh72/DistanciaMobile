@@ -1,4 +1,5 @@
 import 'package:edulb/application/homeworks/fetch_submits/fetch_submits_bloc.dart';
+import 'package:edulb/widgets/homeworks/homeworks_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -40,23 +41,32 @@ class TeacherDetailsWidgetsPannel extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Name',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1
-                                  .copyWith(
-                                    color: Colors.white,
-                                  ),
+                            Flexible(
+                              flex: 2,
+                              child: Text(
+                                'Name',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1
+                                    .copyWith(
+                                      color: Colors.white,
+                                    ),
+                              ),
                             ),
-                            Text(
-                              'Status',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1
-                                  .copyWith(
-                                    color: Colors.white,
-                                  ),
+                            Flexible(
+                              flex: 1,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Status',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline1
+                                      .copyWith(
+                                        color: Colors.white,
+                                      ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -66,36 +76,72 @@ class TeacherDetailsWidgetsPannel extends StatelessWidget {
                             itemBuilder: (_, i) => Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  '${state.submits[i].user.firstName} ${state.submits[i].user.lastName}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      .copyWith(fontWeight: FontWeight.w600),
+                                Flexible(
+                                  flex: 2,
+                                  child: Text(
+                                    HomeworksHelper.formatTeacherName(
+                                      lastName: state.submits[i].user.lastName,
+                                      firstName:
+                                          state.submits[i].user.firstName,
+                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        .copyWith(fontWeight: FontWeight.w600),
+                                  ),
                                 ),
-                                GestureDetector(
-                                  onTap: state.submits[i].submittedFileUrl.fold(
-                                      () => () {},
-                                      (fileUrl) => () => _launchUrl(fileUrl)),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        state.submits[i].submittedFileUrl.fold(
-                                            () => 'Not submitted',
-                                            (_) => 'Submitted'),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600),
+                                Flexible(
+                                  flex: 1,
+                                  child: GestureDetector(
+                                    onTap: state.submits[i].submittedFileUrl
+                                        .fold(
+                                            () => () {},
+                                            (fileUrl) =>
+                                                () => _launchUrl(fileUrl)),
+                                    child: Container(
+                                      width: 125,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          state.submits[i].submittedFileUrl
+                                              .fold(
+                                            () => Text(
+                                              'Empty',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Color.fromRGBO(
+                                                          255, 149, 149, 1)),
+                                            ),
+                                            (_) => Text(
+                                              'Submitted',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ),
+                                          state.submits[i].submittedFileUrl
+                                              .fold(
+                                                  () => SvgPicture.asset(
+                                                        'assets/icons/eye.svg',
+                                                        color: Color.fromRGBO(
+                                                            172, 172, 172, 1),
+                                                      ),
+                                                  (a) => SvgPicture.asset(
+                                                        'assets/icons/eye.svg',
+                                                      ))
+                                        ],
                                       ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      SvgPicture.asset(
-                                        'assets/icons/eye.svg',
-                                      )
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ],
