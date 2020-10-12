@@ -10,6 +10,7 @@ class HomeworkItem {
   final String gradeId;
   final bool isSubmitted;
   final UserData teacher;
+  final DateTime dueDate;
   final DateTime date;
 
   HomeworkItem({
@@ -19,6 +20,7 @@ class HomeworkItem {
     @required this.gradeId,
     this.isSubmitted,
     @required this.teacher,
+    @required this.dueDate,
     @required this.date,
   });
 
@@ -29,12 +31,14 @@ class HomeworkItem {
   }) {
     final data = snap.data();
     return HomeworkItem(
-        id: snap.id,
-        title: data['title'],
-        instructions: data['instructions'],
-        gradeId: data['gradeId'],
-        date: data['createdAt'].toDate(),
-        isSubmitted: isSubmitted,
-        teacher: teacher);
+      id: snap.id,
+      title: data['title'],
+      instructions: data['instructions'],
+      gradeId: data['gradeId'],
+      date: data['createdAt'].toDate(),
+      isSubmitted: isSubmitted,
+      teacher: teacher,
+      dueDate: data['dueDate'].toDate(),
+    );
   }
 }

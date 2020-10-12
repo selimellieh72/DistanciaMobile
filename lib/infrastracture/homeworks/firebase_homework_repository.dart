@@ -37,6 +37,9 @@ class FirebaseHomeworkRepository extends IHomeworksRepository {
     yield* _query.orderBy('createdAt').snapshots().asyncMap(
       (snap) async {
         List<HomeworkItem> _homeworksList = [];
+        if (snap.docs.length == 0) {
+          return right<HomeworkFailure, List<HomeworkItem>>([]);
+        }
         for (var homeDoc in snap.docs) {
           final _teacherData = UserData.fromFirestore(await _firestore
               .collection('users')

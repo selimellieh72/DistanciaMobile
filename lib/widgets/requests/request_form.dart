@@ -37,7 +37,9 @@ class _RequestFormState extends State<RequestForm> {
         _teacherEmail,
         _gradeName,
       );
-      FlushbarHelper.createSuccess(message: 'Succesfully sent the request!');
+      Navigator.of(context).pop();
+      FlushbarHelper.createSuccess(message: 'Succesfully sent the request!')
+          .show(context);
     } on DoesNotExistException catch (error) {
       Navigator.of(context).pop();
       FlushbarHelper.createError(message: error.message).show(context);

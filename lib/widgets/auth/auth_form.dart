@@ -167,7 +167,9 @@ class _AuthFormState extends State<AuthForm>
                 children: [
                   _buildCustomTextField(
                       'Email address',
-                      (email) => AuthValidation.validateEmail(email),
+                      _isLogin
+                          ? null
+                          : (email) => AuthValidation.validateEmail(email),
                       (String email) => _email = email,
                       false),
                   _buildFadeTransition(
@@ -201,7 +203,10 @@ class _AuthFormState extends State<AuthForm>
                   ),
                   _buildCustomTextField(
                     'Password',
-                    (password) => AuthValidation.validatePassword(password),
+                    _isLogin
+                        ? null
+                        : (password) =>
+                            AuthValidation.validatePassword(password),
                     (String password) => _password = password,
                     true,
                     _passwordController,
@@ -228,11 +233,13 @@ class _AuthFormState extends State<AuthForm>
                       ),
                       child: Row(
                         children: [
-                          FittedBox(
-                            child: Text(
-                              'Are you a teacher?',
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                          Expanded(
+                            child: FittedBox(
+                              child: Text(
+                                'Are you a teacher?',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
                             ),
                           ),

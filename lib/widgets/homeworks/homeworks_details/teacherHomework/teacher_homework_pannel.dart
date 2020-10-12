@@ -43,28 +43,32 @@ class TeacherDetailsWidgetsPannel extends StatelessWidget {
                           children: [
                             Flexible(
                               flex: 2,
-                              child: Text(
-                                'Name',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline1
-                                    .copyWith(
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
+                              child: FittedBox(
                                 child: Text(
-                                  'Status',
+                                  'Name',
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline1
                                       .copyWith(
                                         color: Colors.white,
                                       ),
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: FittedBox(
+                                  child: Text(
+                                    'Status',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1
+                                        .copyWith(
+                                          color: Colors.white,
+                                        ),
+                                  ),
                                 ),
                               ),
                             ),

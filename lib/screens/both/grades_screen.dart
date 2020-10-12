@@ -26,13 +26,6 @@ class GradesScreen extends StatefulWidget {
 
 class _GradesScreenState extends State<GradesScreen> {
   bool _showEdit = false;
-  void _addButtonHandler(bool isTeacher, BuildContext ctx) {
-    if (isTeacher) {
-      CustomBuilders.showResponsiveBottomSheet(context: ctx, child: AddGrade());
-    } else {
-      CustomBuilders.showResponsiveBottomSheet(context: ctx, child: Request());
-    }
-  }
 
   void setShowEdit(bool value) {
     if (_showEdit == value) {

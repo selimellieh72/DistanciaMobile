@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/helpers/word_filtering_helper.dart';
 import 'package:edulb/widgets/core/create_button.dart';
@@ -5,6 +6,7 @@ import 'package:edulb/widgets/core/custom_input_feild.dart';
 import 'package:edulb/widgets/others/form_label.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AddHomeworkForm extends StatefulWidget {
   final String id;
@@ -24,8 +26,10 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
 
   var _isLoading = false;
 
+  DateTime _dateTime;
+
   void _submitForm() async {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState.validate() || _dateTime == null) {
       return;
     }
     _formKey.currentState.save();
@@ -34,10 +38,10 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
     });
     try {
       await DBHELPER.addHomework(
-        gradeId: widget.id,
-        title: _title,
-        instructions: _instructions,
-      );
+          gradeId: widget.id,
+          title: _title,
+          instructions: _instructions,
+          dueDate: Timestamp.fromDate(_dateTime));
       Navigator.of(context).pop();
       FlushbarHelper.createSuccess(message: 'Homework added successfuly')
           .show(context);
@@ -49,6 +53,19 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
         _isLoading = false;
       });
     }
+  }
+
+  void _pickDate() async {
+    final _date = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(
+          Duration(days: 365),
+        ));
+    setState(() {
+      _dateTime = _date;
+    });
   }
 
   @override
@@ -102,18 +119,13 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
                   side: BorderSide(
                       color: Color.fromRGBO(204, 204, 204, 1), width: 2),
                   borderRadius: BorderRadius.circular(20)),
-              onPressed: () => showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime.now(),
-                lastDate: DateTime.now().add(
-                  Duration(days: 365),
-                ),
-              ),
+              onPressed: _pickDate,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('19/20/2020'),
+                  Text(_dateTime == null
+                      ? 'Pick date'
+                      : DateFormat.yMd().format(_dateTime)),
                 ],
               ),
             ),

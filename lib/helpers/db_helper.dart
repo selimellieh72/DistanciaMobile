@@ -32,6 +32,7 @@ class DBHELPER {
     @required String title,
     @required String instructions,
     @required String gradeId,
+    @required Timestamp dueDate,
   }) async {
     try {
       await FirebaseFirestore.instance
@@ -41,6 +42,7 @@ class DBHELPER {
         'instructions': instructions,
         'teacherId': FirebaseAuth.instance.currentUser.uid,
         'gradeId': gradeId,
+        'dueDate': dueDate,
         'createdAt': Timestamp.now(),
       });
     } catch (error) {

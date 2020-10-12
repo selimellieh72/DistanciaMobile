@@ -43,8 +43,6 @@ class GradeItem extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
-              height: _screenSize.height * 0.05,
-              width: _screenSize.width * 0.05,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -66,7 +64,7 @@ class GradeItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            height: _screenSize.height * 0.12,
+                            height: _screenSize.height * 0.10,
                             child: SvgPicture.asset('assets/icons/grade.svg'),
                           ),
                           Text(
@@ -74,9 +72,16 @@ class GradeItem extends StatelessWidget {
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           userData.isTeacher
-                              ? Text(
-                                  gradeName,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                              ? FittedBox(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    child: Text(
+                                      gradeName,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
                                 )
                               : Container(),
                         ],
