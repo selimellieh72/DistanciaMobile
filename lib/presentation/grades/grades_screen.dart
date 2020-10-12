@@ -1,3 +1,6 @@
+import 'package:edulb/presentation/core/background_widget.dart';
+import 'package:edulb/presentation/core/custom_bottom_navigation_bar.dart';
+import 'package:edulb/presentation/homeWidget/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,8 +9,6 @@ import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/application/auth/auth_bloc.dart';
 import 'package:edulb/application/grades/edit_grades/edit_grades_bloc.dart';
 import 'package:edulb/application/grades/grades_bloc.dart';
-import 'package:edulb/presentation/bottom%20Navigation%20Bar/custom_bottom_navigation_bar.dart';
-import 'package:edulb/presentation/default_background/background_widget.dart';
 import 'package:edulb/presentation/grades/add_grade.dart';
 import 'package:edulb/presentation/grades/grades_list.dart';
 import 'package:edulb/presentation/request/request_widget.dart';
@@ -38,9 +39,10 @@ class _GradesScreenState extends State<GradesScreen> {
     return BlocBuilder<EditGradesBloc, EditGradesState>(
       builder: (_, editState) {
         print(editState);
+
         return SafeArea(
           child: editState.maybeMap(
-            gradeLoading: (_) => Center(
+            gradeLoading: (s) => Center(
               child: CircularProgressIndicator(),
             ),
             orElse: () => BlocBuilder<GradesBloc, GradesState>(
@@ -53,6 +55,27 @@ class _GradesScreenState extends State<GradesScreen> {
                           context: context, child: AddGrade())
                       : CustomBuilders.showResponsiveBottomSheet(
                           context: context, child: Request()),
+                  cancelEditMode: () {
+                    context
+                        .bloc<EditGradesBloc>()
+                        .add(EditGradesEvent.editGradeStopped());
+                  },
+                  // delete: (s) {
+                  //   if (s.editedGradesIds.length == 0) {
+                  //     return;
+                  //   }
+                  //   context
+                  //       .bloc<EditGradesBloc>()
+                  //       .add(EditGradesEvent.gradesRemoved());
+                  // },
+                  edit: null,
+                  homeTarget: () => Navigator.of(context)
+                      .pushReplacementNamed(HomeScreen.routeName),
+                  setEditMode: () {
+                    context
+                        .bloc<EditGradesBloc>()
+                        .add(EditGradesEvent.editGradeStarted());
+                  },
                 ),
               ),
             ),

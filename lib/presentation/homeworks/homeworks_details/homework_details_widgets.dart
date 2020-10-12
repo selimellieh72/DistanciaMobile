@@ -1,3 +1,4 @@
+import 'package:edulb/presentation/homeworks/format_name.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edulb/application/homeworks/submit_homework/submit_homework_bloc.dart';
 import 'package:edulb/domain/homeworks/homework_item.dart';
 import 'package:edulb/presentation/homeworks/homeworks_details/upload_response_button.dart';
-import 'package:edulb/presentation/homeworks/homeworks_helper.dart';
 
 class HomeworkDetailsWidgets extends StatelessWidget {
   @override
@@ -46,7 +46,7 @@ class HomeworkDetailsWidgets extends StatelessWidget {
                     ),
                     FittedBox(
                       child: Text(
-                        HomeworksHelper.formatTeacherName(
+                        FormatName.formatName(
                             firstName: _homework.teacher.firstName,
                             lastName: _homework.teacher.lastName),
                         style: Theme.of(context).textTheme.bodyText1,

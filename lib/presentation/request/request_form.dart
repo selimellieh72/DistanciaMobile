@@ -92,10 +92,15 @@ class _RequestFormState extends State<RequestForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CreateButton(gradientColors: [
-                  Color.fromRGBO(94, 231, 254, 1),
-                  Color.fromRGBO(8, 204, 60, 1)
-                ], onPressed: () => _saveForm(context), isLoading: _isLoading),
+                CreateButton(
+                  text: 'Send',
+                  gradientColors: [
+                    Color.fromRGBO(94, 231, 254, 1),
+                    Color.fromRGBO(8, 204, 60, 1)
+                  ],
+                  onPressed: () => _saveForm(context),
+                  isLoading: _isLoading,
+                ),
               ],
             )
           ],

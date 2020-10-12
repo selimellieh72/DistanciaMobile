@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:edulb/presentation/grades/edit_widget.dart';
+import 'package:edulb/presentation/core/edit_widget.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final add;
+  final edit;
+  final delete;
+  final setEditMode;
+  final homeTarget;
+  final cancelEditMode;
 
   CustomBottomNavigationBar({
     this.add,
+    this.edit,
+    this.delete,
+    this.setEditMode,
+    this.homeTarget,
+    this.cancelEditMode,
   });
   @override
   Widget build(BuildContext context) {
@@ -28,7 +38,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
             topRight: Radius.circular(20),
           ),
         ),
-        child: EditWidget(add: add),
+        child: EditWidget(
+          add: add,
+          edit: edit,
+          delete: delete,
+          setEditMode: setEditMode,
+          homeTarget: homeTarget,
+          cancelEditMode: cancelEditMode,
+        ),
       ),
     );
   }

@@ -15,6 +15,7 @@ import 'package:edulb/helpers/db_helper.dart';
 import 'package:edulb/presentation/core/create_button.dart';
 import 'package:edulb/presentation/core/custom_input_feild.dart';
 import 'package:edulb/presentation/others/form_label.dart';
+import 'package:provider/provider.dart';
 
 class AddGradeForm extends StatefulWidget {
   @override
@@ -124,6 +125,7 @@ class _AddGradeFormState extends State<AddGradeForm> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CreateButton(
+                  text: 'Create',
                   isLoading: _isLoading,
                   onPressed: _submitForm,
                   gradientColors: [

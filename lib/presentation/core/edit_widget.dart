@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,8 +13,21 @@ import 'package:edulb/presentation/homeWidget/home_screen.dart';
 
 class EditWidget extends StatelessWidget {
   final add;
+  final edit;
+  final delete;
+  final setEditMode;
+  final homeTarget;
+  final cancelEditMode;
 
-  const EditWidget({Key key, this.add}) : super(key: key);
+  const EditWidget(
+      {Key key,
+      this.add,
+      this.edit,
+      this.delete,
+      this.homeTarget,
+      this.setEditMode,
+      this.cancelEditMode})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +50,11 @@ class EditWidget extends StatelessWidget {
               children: state.maybeMap(
                   gradeEdit: (s) => [
                         _containerTemplate(
-                            SvgPicture.asset('assets/icons/edit.svg'), () {}),
+                            SvgPicture.asset('assets/icons/edit.svg'), edit),
                         _containerTemplate(
-                            SvgPicture.asset('assets/icons/delete.svg'), () {
+                            SvgPicture.asset('assets/icons/delete.svg'),
+                            // delete
+                            () {
                           if (s.editedGradesIds.length == 0) {
                             return null;
                           }
@@ -47,32 +64,42 @@ class EditWidget extends StatelessWidget {
                         }),
                         _containerTemplate(
                             SvgPicture.asset('assets/icons/back-arrow.svg'),
-                            () {
-                          context
-                              .bloc<EditGradesBloc>()
-                              .add(EditGradesEvent.editGradeStopped());
-                        }),
+                            cancelEditMode
+                            //     () {
+                            //   context
+                            //       .bloc<EditGradesBloc>()
+                            //       .add(EditGradesEvent.editGradeStopped());
+                            // }
+                            ),
                       ],
                   orElse: () => userData.isTeacher
                       ? [
                           _containerTemplate(
-                              SvgPicture.asset('assets/icons/edit.svg'), () {
-                            context
-                                .bloc<EditGradesBloc>()
-                                .add(EditGradesEvent.editGradeStarted());
-                          }),
+                              SvgPicture.asset('assets/icons/edit.svg'),
+                              setEditMode
+                              //     () {
+                              //   context
+                              //       .bloc<EditGradesBloc>()
+                              //       .add(EditGradesEvent.editGradeStarted()
+                              //       );
+                              // }
+                              ),
                           _containerTemplate(
                               SvgPicture.asset('assets/icons/home.svg'),
-                              () => Navigator.of(context)
-                                  .pushReplacementNamed(HomeScreen.routeName)),
+                              homeTarget
+                              // () => Navigator.of(context)
+                              //     .pushReplacementNamed(HomeScreen.routeName)
+                              ),
                           _containerTemplate(
                               SvgPicture.asset('assets/icons/add.svg'), add),
                         ]
                       : [
                           _containerTemplate(
                               SvgPicture.asset('assets/icons/home.svg'),
-                              () => Navigator.of(context)
-                                  .pushReplacementNamed(HomeScreen.routeName)),
+                              homeTarget
+                              // () => Navigator.of(context)
+                              //     .pushReplacementNamed(HomeScreen.routeName)
+                              ),
                           _containerTemplate(
                               SvgPicture.asset('assets/icons/add.svg'), add),
                         ])),

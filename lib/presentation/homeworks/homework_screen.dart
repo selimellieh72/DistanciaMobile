@@ -1,3 +1,4 @@
+import 'package:edulb/presentation/core/background_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,7 +7,6 @@ import 'package:edulb/application/auth/auth_bloc.dart';
 import 'package:edulb/application/homeworks/watch_homeworks_bloc.dart';
 import 'package:edulb/helpers/custom_builders.dart';
 import 'package:edulb/injectable.dart';
-import 'package:edulb/presentation/default_background/background_widget.dart';
 import 'package:edulb/presentation/homeworks/add_homework.dart';
 import 'package:edulb/presentation/homeworks/homeworks_screen_widget.dart';
 

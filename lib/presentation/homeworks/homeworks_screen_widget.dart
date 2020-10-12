@@ -12,29 +12,33 @@ class HomeworksScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gradeId = ModalRoute.of(context).settings.arguments;
+    final screenSize = MediaQuery.of(context).size;
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'FIlter By:',
-              style: _textStyle,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text(
-              'Physics',
-              style: _textStyle,
-            ), // margin: EdgeInsets.only(top: screenSize.height * 0.11),
-            Icon(
-              Icons.arrow_drop_down,
-              size: 25,
-            ),
-          ],
+        SizedBox(
+          height: screenSize.height * .02,
         ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.end,
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Text(
+        //       'FIlter By:',
+        //       style: _textStyle,
+        //     ),
+        //     SizedBox(
+        //       width: 5,
+        //     ),
+        //     Text(
+        //       'Physics',
+        //       style: _textStyle,
+        //     ), // margin: EdgeInsets.only(top: screenSize.height * 0.11),
+        //     Icon(
+        //       Icons.arrow_drop_down,
+        //       size: 25,
+        //     ),
+        //   ],
+        // ),
         Expanded(child: HomeworksList(gradeId)),
       ],
     );

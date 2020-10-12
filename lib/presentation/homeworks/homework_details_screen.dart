@@ -1,3 +1,4 @@
+import 'package:edulb/presentation/core/background_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,7 +7,6 @@ import 'package:edulb/application/homeworks/fetch_submits/fetch_submits_bloc.dar
 import 'package:edulb/application/homeworks/submit_homework/submit_homework_bloc.dart';
 import 'package:edulb/domain/homeworks/homework_item.dart';
 import 'package:edulb/injectable.dart';
-import 'package:edulb/presentation/default_background/background_widget.dart';
 import 'package:edulb/presentation/homeworks/homeworks_details/homework_details_widgets.dart';
 import 'package:edulb/presentation/homeworks/homeworks_details/homework_details_widgets_teacher.dart';
 import 'package:edulb/presentation/core/user_bloc_get_user_data.dart';

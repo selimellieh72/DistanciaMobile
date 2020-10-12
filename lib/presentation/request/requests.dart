@@ -1,6 +1,6 @@
+import 'package:edulb/presentation/core/background_widget.dart';
 import 'package:flutter/material.dart';
 
-import 'package:edulb/presentation/default_background/background_widget.dart';
 import 'package:edulb/presentation/request/request_items.dart';
 
 class RequestsScreen extends StatelessWidget {

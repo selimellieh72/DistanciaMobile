@@ -1,9 +1,9 @@
+import 'package:edulb/presentation/homeworks/format_name.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:edulb/domain/homeworks/homework_item.dart';
 import 'package:edulb/presentation/homeworks/homeworks_details/teacher_homework_pannel.dart';
-import 'package:edulb/presentation/homeworks/homeworks_helper.dart';
 
 class HomeworksDetailsWidgetsTeacher extends StatelessWidget {
   @override
@@ -44,7 +44,7 @@ class HomeworksDetailsWidgetsTeacher extends StatelessWidget {
                     ),
                     FittedBox(
                       child: Text(
-                        HomeworksHelper.formatTeacherName(
+                        FormatName.formatName(
                           lastName: _homework.teacher.lastName,
                           firstName: _homework.teacher.firstName,
                         ),

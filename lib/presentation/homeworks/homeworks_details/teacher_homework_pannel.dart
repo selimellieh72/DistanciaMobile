@@ -1,3 +1,4 @@
+import 'package:edulb/presentation/homeworks/format_name.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:edulb/application/homeworks/fetch_submits/fetch_submits_bloc.dart';
-import 'package:edulb/presentation/homeworks/homeworks_helper.dart';
 
 class TeacherDetailsWidgetsPannel extends StatelessWidget {
   void _launchUrl(String url) async {
@@ -87,7 +87,7 @@ class TeacherDetailsWidgetsPannel extends StatelessWidget {
                                 Flexible(
                                   flex: 2,
                                   child: Text(
-                                    HomeworksHelper.formatTeacherName(
+                                    FormatName.formatName(
                                       lastName: state.submits[i].user.lastName,
                                       firstName:
                                           state.submits[i].user.firstName,

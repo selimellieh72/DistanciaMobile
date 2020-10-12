@@ -1,4 +1,5 @@
 import 'package:edulb/helpers/db_helper.dart';
+import 'package:edulb/presentation/homeworks/format_name.dart';
 import 'package:flutter/material.dart';
 
 class RequestItem extends StatelessWidget {
@@ -28,11 +29,14 @@ class RequestItem extends StatelessWidget {
             backgroundImage: NetworkImage(studentProfileImageUrl),
           ),
           title: Text(
-            '$studentFirstName $studentLastName',
+            FormatName.formatName(
+              firstName: studentFirstName,
+              lastName: studentLastName,
+            ),
             style: Theme.of(context).textTheme.subtitle2,
           ),
           subtitle: Text(
-            'Wants to join grade \'$gradeName\'.',
+            'Wants to join grade \'$gradeName\'',
             style: Theme.of(context)
                 .textTheme
                 .bodyText1

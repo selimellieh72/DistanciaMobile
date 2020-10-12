@@ -152,6 +152,7 @@ class _AddHomeworkFormState extends State<AddHomeworkForm> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CreateButton(
+                  text: 'Create',
                   onPressed: _submitForm,
                   isLoading: _isLoading,
                   gradientColors: [

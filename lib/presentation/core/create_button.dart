@@ -5,11 +5,13 @@ class CreateButton extends StatelessWidget {
   final Function onPressed;
   final bool isLoading;
   final List<Color> gradientColors;
+  final String text;
 
   CreateButton({
     @required this.onPressed,
     @required this.isLoading,
     @required this.gradientColors,
+    @required this.text,
   });
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class CreateButton extends StatelessWidget {
       child: isLoading
           ? CircularProgressIndicator()
           : Text(
-              'Create',
+              text,
               style: Theme.of(context)
                   .textTheme
                   .subtitle2
