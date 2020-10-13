@@ -59,9 +59,9 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "dev_assets/icon.png"
+  image_path: "dev_assets/logo.png"
   adaptive_icon_background: "#ffffff"
-  adaptive_icon_foreground: "dev_assets/icon.png"
+  adaptive_icon_foreground: "dev_assets/logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -84,6 +84,8 @@ flutter:
     - assets/icons/home.svg
     - assets/icons/back-arrow.svg
     - assets/icons/delete.svg
+    - assets/IMAGE/distancia.png
+    - assets/IMAGE/logo.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
