@@ -81,78 +81,84 @@ class TeacherDetailsWidgetsPannel extends StatelessWidget {
                         Expanded(
                           child: ListView.builder(
                             itemCount: state.submits.length,
-                            itemBuilder: (_, i) => Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  flex: 2,
-                                  child: Text(
-                                    FormatName.formatName(
-                                      lastName: state.submits[i].user.lastName,
-                                      firstName:
-                                          state.submits[i].user.firstName,
+                            itemBuilder: (_, i) => SingleChildScrollView(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    flex: 2,
+                                    child: Text(
+                                      FormatName.formatName(
+                                        lastName:
+                                            state.submits[i].user.lastName,
+                                        firstName:
+                                            state.submits[i].user.firstName,
+                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(
+                                              fontWeight: FontWeight.w600),
                                     ),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        .copyWith(fontWeight: FontWeight.w600),
                                   ),
-                                ),
-                                Flexible(
-                                  flex: 1,
-                                  child: GestureDetector(
-                                    onTap: state.submits[i].submittedFileUrl
-                                        .fold(
-                                            () => () {},
-                                            (fileUrl) =>
-                                                () => _launchUrl(fileUrl)),
-                                    child: Container(
-                                      width: 125,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          state.submits[i].submittedFileUrl
-                                              .fold(
-                                            () => Text(
-                                              'Empty',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText1
-                                                  .copyWith(
+                                  Flexible(
+                                    flex: 1,
+                                    child: GestureDetector(
+                                      onTap: state.submits[i].submittedFileUrl
+                                          .fold(
+                                              () => () {},
+                                              (fileUrl) =>
+                                                  () => _launchUrl(fileUrl)),
+                                      child: Container(
+                                        width: 125,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            state.submits[i].submittedFileUrl
+                                                .fold(
+                                              () => Text(
+                                                'Empty',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Color.fromRGBO(
+                                                            255, 149, 149, 1)),
+                                              ),
+                                              (_) => Text(
+                                                'Submitted',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    .copyWith(
                                                       fontWeight:
                                                           FontWeight.w600,
-                                                      color: Color.fromRGBO(
-                                                          255, 149, 149, 1)),
+                                                    ),
+                                              ),
                                             ),
-                                            (_) => Text(
-                                              'Submitted',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText1
-                                                  .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                            ),
-                                          ),
-                                          state.submits[i].submittedFileUrl
-                                              .fold(
-                                                  () => SvgPicture.asset(
-                                                        'assets/icons/eye.svg',
-                                                        color: Color.fromRGBO(
-                                                            172, 172, 172, 1),
-                                                      ),
-                                                  (a) => SvgPicture.asset(
-                                                        'assets/icons/eye.svg',
-                                                      ))
-                                        ],
+                                            state.submits[i].submittedFileUrl
+                                                .fold(
+                                                    () => SvgPicture.asset(
+                                                          'assets/icons/eye.svg',
+                                                          color: Color.fromRGBO(
+                                                              172, 172, 172, 1),
+                                                        ),
+                                                    (a) => SvgPicture.asset(
+                                                          'assets/icons/eye.svg',
+                                                        ))
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),

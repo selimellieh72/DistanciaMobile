@@ -97,10 +97,6 @@ class _HomeworkItemState extends State<HomeworkItem> {
           arguments: _homework),
       child: AnimatedContainer(
         margin: EdgeInsets.only(bottom: 10),
-        constraints: BoxConstraints(
-          maxHeight: _isExpanded ? 500 : screenSize.height * 0.11,
-          minHeight: _isExpanded ? 100 : screenSize.height * 0.11,
-        ),
         duration: Duration(milliseconds: 500),
         padding: EdgeInsets.fromLTRB(19, 9, 19, 9),
         width: double.infinity,

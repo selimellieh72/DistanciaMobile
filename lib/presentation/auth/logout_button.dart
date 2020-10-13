@@ -40,9 +40,12 @@ class LogoutButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(child: SvgPicture.asset('assets/icons/exit.svg')),
-            Text(
-              'Log Out',
-              style: Theme.of(context).textTheme.bodyText1,
+            FittedBox(
+              fit: BoxFit.contain,
+              child: Text(
+                'Log Out',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ),
           ],
         ),

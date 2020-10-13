@@ -56,6 +56,7 @@ class FirebaseHomeworkRepository extends IHomeworksRepository {
         );
       },
     ).onErrorReturnWith((e) {
+      print(e);
       return left(HomeworkFailure.unexpectedServerError());
     });
   }
