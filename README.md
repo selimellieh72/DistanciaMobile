@@ -68,7 +68,7 @@ $ flutter run
 
 ---
 
-> [selimellieh.com](https://www.selimellieh.me) &nbsp;&middot;&nbsp;
+> [selimellieh.me](https://www.selimellieh.me) &nbsp;&middot;&nbsp;
 > GitHub [@selimellieh72](https://github.com/selimellieh72) &nbsp;&middot;&nbsp;
 > Twitter [@selim_ellieh](https://twitter.com/selim_ellieh)
 
