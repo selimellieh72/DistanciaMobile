@@ -1,6 +1,6 @@
 
 <h1 align="center">
-  My Plans
+  Distancia Mobile
 </h1>
 
 <h4 align="center">A cross-platform app implementation of Disstancia ~ Digitilizing Education</h4>
