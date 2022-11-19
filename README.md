@@ -3,7 +3,7 @@
   Distancia Mobile
 </h1>
 
-<h4 align="center">A cross-platform app implementation of Disstancia ~ Digitilizing Education</h4>
+<h4 align="center">A cross-platform app implementation of Distancia ~ Digitilizing Education</h4>
 
 
 
